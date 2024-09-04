@@ -17,6 +17,7 @@ abstract class AttributeMatcher { // TODO [AK] Figure out what can be delegated 
     static final AttributeMatcher ANYTHING_CONTAINING_ALPHA_MATCHER = new RegExpMatcher(".*[A-Z].*");
     static final AttributeMatcher AS_NUMBER_MATCHER = new RegExpMatcher("^AS\\d+$");
     static final AttributeMatcher AS_SET_MATCHER = new RegExpMatcher("(^|.*:)AS-[A-Z0-9_-]*(:.*|$)");
+    static final AttributeMatcher CONN_I_MATCHER = new RegExpMatcher("^[A-Z0-9_-]+");
     static final AttributeMatcher DOMAIN_MATCHER = new RegExpMatcher("^[A-Z0-9/-]*(\\.[A-Z0-9-]+)*\\.?$");
     static final AttributeMatcher EMAIL_MATCHER = new RegExpMatcher("^.+@.+$");
     static final AttributeMatcher FILTER_SET_MATCHER = new RegExpMatcher("(^|.*:)FLTR-[A-Z0-9_-]*[A-Z0-9](:.*|$)");
@@ -90,8 +91,10 @@ abstract class AttributeMatcher { // TODO [AK] Figure out what can be delegated 
         attributeMatchers.put(AttributeType.DOMAIN, Sets.newHashSet(AttributeMatcher.DOMAIN_MATCHER, AttributeMatcher.IPV4_MATCHER, AttributeMatcher.IPV6_MATCHER));
         attributeMatchers.put(AttributeType.E_MAIL, Sets.newHashSet(AttributeMatcher.EMAIL_MATCHER));
         attributeMatchers.put(AttributeType.FILTER_SET, Sets.newHashSet(AttributeMatcher.FILTER_SET_MATCHER));
-        attributeMatchers.put(AttributeType.INET6NUM, Sets.newHashSet(AttributeMatcher.IPV6_MATCHER, AttributeMatcher.NETNAME_MATCHER));
-        attributeMatchers.put(AttributeType.INETNUM, Sets.newHashSet(AttributeMatcher.IPV4_MATCHER, AttributeMatcher.NETNAME_MATCHER));
+        attributeMatchers.put(AttributeType.INET6NUM, Sets.newHashSet(AttributeMatcher.IPV6_MATCHER, AttributeMatcher.NETNAME_MATCHER, AttributeMatcher.CONN_I_MATCHER));
+        attributeMatchers.put(AttributeType.INETNUM, Sets.newHashSet(AttributeMatcher.IPV4_MATCHER, AttributeMatcher.NETNAME_MATCHER, AttributeMatcher.CONN_I_MATCHER));
+        //test by gwy
+        attributeMatchers.put(AttributeType.CONN_i, Sets.newHashSet(AttributeMatcher.CONN_I_MATCHER));
         attributeMatchers.put(AttributeType.INET_RTR, Sets.newHashSet(AttributeMatcher.DOMAIN_MATCHER));
         attributeMatchers.put(AttributeType.IRT, Sets.newHashSet(AttributeMatcher.IRT_MATCHER));
         attributeMatchers.put(AttributeType.KEY_CERT, Sets.newHashSet(AttributeMatcher.KEY_CERT_MATCHER));

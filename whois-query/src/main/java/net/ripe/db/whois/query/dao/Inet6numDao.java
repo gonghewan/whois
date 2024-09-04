@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface Inet6numDao {
     List<Ipv6Entry> findByNetname(String netname);
+    List<Ipv6Entry> findByConni(String conni);
 }

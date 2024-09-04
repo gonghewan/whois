@@ -94,17 +94,22 @@ class RpslObjectSearcher {
 
     public Iterable<? extends ResponseObject> search(final Query query, final SourceContext sourceContext) {
         Iterable<? extends ResponseObject> result = Collections.emptyList();
+        LOGGER.info("[GWY LOG] has enter rpslObjectSearcher.search");
 
         if (query.hasSubstitutions()) {
+            LOGGER.info("[GWY LOG] query.hasSubstitutions");
             result = Collections.singleton(new MessageObject(QueryMessages.valueChangedDueToLatin1Conversion()));
         }
 
         if (query.isInverse()) {
+            LOGGER.info("[GWY LOG] query.isInverse");
             result = indexLookupReverse(query);
         } else if (query.isMatchPrimaryKeyOnly()) {
+            LOGGER.info("[GWY LOG] query.isMatchPrimaryKeyOnly");
             result = indexLookupDirect(query);
         } else {
             for (final ObjectType objectType : query.getObjectTypes()) {
+                LOGGER.info("[GWY LOG] objectType is: " + objectType.getName());
                 result = Iterables.concat(result, executeForObjectType(query, objectType));
             }
         }
@@ -128,18 +133,41 @@ class RpslObjectSearcher {
     private Iterable<ResponseObject> executeForObjectType(final Query query, final ObjectType type) {
         switch (type) {
             case AS_BLOCK:
+                LOGGER.info("[GWY LOG] AS_BLOCK");
                 return asBlockLookup(query);
             case INETNUM:
-                return query.getIpKeyOrNull() != null ? proxy(ipTreeLookup(ipv4Tree, query.getIpKeyOrNull(), query)) : proxy(inetnumDao.findByNetname(query.getSearchValue()));
+                LOGGER.info("[GWY LOG] INETNUM");
+                if (query.getIpKeyOrNull() != null){
+                    return proxy(ipTreeLookup(ipv4Tree, query.getIpKeyOrNull(), query));
+                }else{
+                    Iterable<ResponseObject> tmp_result = proxy(inetnumDao.findByNetname(query.getSearchValue()));
+                    for (final ResponseObject itr_tmp_result : tmp_result){
+                        return tmp_result;
+                    }
+                }
+                return  proxy(inetnumDao.findByConni(query.getSearchValue()));
             case INET6NUM:
-                return query.getIpKeyOrNull() != null ? proxy(ipTreeLookup(ipv6Tree, query.getIpKeyOrNull(), query)) : proxy(inet6numDao.findByNetname(query.getSearchValue()));
+                LOGGER.info("[GWY LOG] INET6NUM");
+                if (query.getIpKeyOrNull() != null){
+                    return proxy(ipTreeLookup(ipv6Tree, query.getIpKeyOrNull(), query));
+                }else{
+                    Iterable<ResponseObject> tmp_result = proxy(inet6numDao.findByNetname(query.getSearchValue()));
+                    for (final ResponseObject itr_tmp_result : tmp_result){
+                        return tmp_result;
+                    }
+                }
+                return  proxy(inet6numDao.findByConni(query.getSearchValue()));
             case DOMAIN:
+                LOGGER.info("[GWY LOG] DOMAIN");
                 return domainLookup(query);
             case ROUTE:
+                LOGGER.info("[GWY LOG] ROUTE");
                 return routeLookup(route4Tree, query);
             case ROUTE6:
+                LOGGER.info("[GWY LOG] ROUTE6");
                 return routeLookup(route6Tree, query);
             default:
+                LOGGER.info("[GWY LOG] default");
                 return indexLookup(query, type);
         }
     }
@@ -232,42 +260,53 @@ class RpslObjectSearcher {
     }
 
     private Iterable<ResponseObject> indexLookup(final Query query, final ObjectType type) {
+        LOGGER.info("[GWY LOG] has enter indexLookup");
         if (query.isKeysOnly() && (ObjectType.PERSON.equals(type) || ObjectType.ROLE.equals(type) || ObjectType.ORGANISATION.equals(type))) {
+            LOGGER.info("[GWY LOG] has enter indexLookup -- person");
             return Collections.emptyList();
         }
-
+        LOGGER.info("[GWY LOG] will enter indexLookup -- up");
         return indexLookup(query, type, query.getSearchValue());
     }
 
     private Iterable<ResponseObject> indexLookup(final Query query, final ObjectType type, final String searchValue) {
+        LOGGER.info("[GWY LOG] has enter indexLookup -- up, type is: " + type.getName() + " searchvalue is: " + searchValue);
         final ObjectTemplate objectTemplate = ObjectTemplate.getTemplate(type);
         final Set<AttributeType> keyAttributes = objectTemplate.getKeyAttributes();
 
         final Set<RpslObjectInfo> result = Sets.newTreeSet();
         for (final AttributeType lookupAttribute : objectTemplate.getLookupAttributes()) {
             if (!query.matchesObjectTypeAndAttribute(type, lookupAttribute)) {
+                LOGGER.info("[GWY LOG] not query.matchesObjectTypeAndAttribute");
                 continue;
             }
-
+            LOGGER.info("[GWY LOG] yes query.matchesObjectTypeAndAttribute");
             if (keyAttributes.contains(lookupAttribute)) {
                 try {
+                    LOGGER.info("[GWY LOG] yes keyAttributes.contains");
                     result.add(rpslObjectDao.findByKey(type, searchValue));
                 } catch (EmptyResultDataAccessException ignored) {
                     LOGGER.debug("{}: {}", ignored.getClass().getName(), ignored.getMessage());
                 }
             } else {
+                LOGGER.info("[GWY LOG] not keyAttributes.contains, will enter rpslObjectDao.findByAttribute");
                 result.addAll(filterByType(type, rpslObjectDao.findByAttribute(lookupAttribute, searchValue)));
+                LOGGER.info("[GWY LOG] result size: " + result.size());
             }
         }
+        LOGGER.info("[GWY LOG] result size: " + result.size());
 
         return proxy(result);
     }
 
     private static List<RpslObjectInfo> filterByType(final ObjectType type, final List<RpslObjectInfo> objectInfos) {
+        LOGGER.info("[GWY LOG] not keyAttributes.contains, has enter filterByType, type is " + type.getName());
         final List<RpslObjectInfo> result = Lists.newArrayList();
         for (final RpslObjectInfo objectInfo : objectInfos) {
+            LOGGER.info("[GWY LOG] has enter filterByType, objectInfo.getObjectType is " + objectInfo.getObjectType().getName());
             if (objectInfo.getObjectType().equals(type)) {
                 result.add(objectInfo);
+                LOGGER.info("[GWY LOG] has enter filterByType, objectInfo.getObjectType ++");
             }
         }
 

@@ -315,8 +315,10 @@ CREATE TABLE `inet6num` (
   `i6_lsb` varchar(20) NOT NULL DEFAULT '',
   `prefix_length` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `netname` varchar(80) NOT NULL DEFAULT '',
+  `conni` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`object_id`),
   KEY `netname` (`netname`),
+  KEY `conni` (`conni`),
   KEY `i6_msb` (`i6_msb`),
   KEY `i6_lsb` (`i6_lsb`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -351,13 +353,29 @@ CREATE TABLE `inetnum` (
   `begin_in` int(10) unsigned NOT NULL DEFAULT '0',
   `end_in` int(10) unsigned NOT NULL DEFAULT '0',
   `netname` varchar(80) NOT NULL DEFAULT '',
+  `conni` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`object_id`),
   KEY `netname` (`netname`),
+  KEY `conni` (`conni`),
   KEY `begin_in` (`begin_in`),
   KEY `end_in` (`end_in`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `conni`
+--
+
+DROP TABLE IF EXISTS `conni`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `conni` (
+  `object_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`object_id`),
+  KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 --
 -- Table structure for table `interface`
 --
@@ -970,6 +988,15 @@ DROP TABLE IF EXISTS `update_lock`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `update_lock` (
+  `global_lock` int(11) NOT NULL,
+  PRIMARY KEY (`global_lock`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+DROP TABLE IF EXISTS `transfer_update_lock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `transfer_update_lock` (
   `global_lock` int(11) NOT NULL,
   PRIMARY KEY (`global_lock`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -25,6 +25,7 @@ public final class IndexStrategies {
                 new Unindexed(AttributeType.ALIAS),
                 new Unindexed(AttributeType.ASSIGNMENT_SIZE),
                 new IndexWithAsBlock(AttributeType.AS_BLOCK),
+                new IndexWithConni(AttributeType.CONN_i),
                 new Unindexed(AttributeType.AS_NAME),
                 new IndexWithValue(AttributeType.AS_SET, "as_set", "as_set"),
                 new IndexWithAuth(AttributeType.AUTH, "auth", "auth"),

@@ -1,0 +1,86 @@
+person:         GWY-TEST
+mnt-by:         TEST-DBM-MNT
+address:        Somewhere in nowhere
+phone:          +12 34 5678900
+fax-no:         +12 34 5678900
+e-mail:         gonghewan@gmail.com
+nic-hdl:        GWY-TEST
+remarks:        This is an automatically created object.
+source:         TEST
+
+mntner:         TEST-DBM-MNT
+descr:          Managed by GWY
+admin-c:        GWY-TEST
+tech-c:         GWY-TEST
+upd-to:         gonghewan@gmail.com
+mnt-nfy:        gonghewan@gmail.com
+notify:         gonghewan@gmail.com
+mnt-by:         TEST-DBM-MNT
+auth:           MD5-PW $1$N2zhyJ3g$hzX7XTL84DtBkCWhBZE2c/
+source:         TEST
+remarks:        This is an example object.
+
+organisation:   ORG-CO1-TEST
+org-name:       Cernet Org
+org-type:       LIR
+address:        648 Some street
+address:        1019 EJ Amsterdam
+address:        NL
+e-mail:         gonghewan@gmail.com
+mnt-ref:        TEST-DBM-MNT
+mnt-by:         TEST-DBM-MNT
+source:         TEST
+
+inetnum:      0.0.0.0 - 255.255.255.255
+netname:      IANA-BLK
+conni:        BJ000001
+descr:        The whole IPv4 address space
+country:      CN # Country is really world wide
+org:          ORG-CO1-TEST
+admin-c:      GWY-TEST
+tech-c:       GWY-TEST
+status:       ALLOCATED UNSPECIFIED
+remarks:      The country is really worldwide.
+mnt-by:       TEST-DBM-MNT
+mnt-routes:   TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+as-block:     AS1 - AS4294967295
+descr:        whole as block
+org:          ORG-CO1-TEST
+admin-c:      GWY-TEST
+tech-c:       GWY-TEST
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+domain:       in-addr.arpa
+descr:        The whole IPv4 address space
+admin-c:      GWY-TEST
+tech-c:       GWY-TEST
+zone-c:       GWY-TEST
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+domain:       ip6.arpa
+descr:        The whole IPv6 address space
+admin-c:      GWY-TEST
+tech-c:       GWY-TEST
+zone-c:       GWY-TEST
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+domain:       e164.arpa
+descr:        The whole IPv6 address space
+admin-c:      GWY-TEST
+tech-c:       GWY-TEST
+zone-c:       GWY-TEST
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST

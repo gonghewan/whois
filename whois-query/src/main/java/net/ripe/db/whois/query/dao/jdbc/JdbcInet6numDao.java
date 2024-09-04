@@ -31,4 +31,15 @@ public class JdbcInet6numDao implements Inet6numDao {
                 new Ipv6EntryMapper(),
                 netname);
     }
+       
+    @Override
+    public List<Ipv6Entry> findByConni(final String conni) {
+        return jdbcTemplate.query(
+                "SELECT i6_msb, i6_lsb, prefix_length, object_id " +
+                        "FROM inet6num " +
+                        "WHERE conni = ? " +
+                        "ORDER BY i6_msb, i6_lsb, prefix_length ASC",
+                new Ipv6EntryMapper(),
+                conni);
+    }
 }

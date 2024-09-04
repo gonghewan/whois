@@ -72,6 +72,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.IMPORT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.IMPORT_VIA;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INET6NUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INETNUM;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CONN_i;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INET_RTR;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INJECT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INTERFACE;
@@ -250,6 +251,8 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                 new ObjectTemplate(ObjectType.INET6NUM, 6,
                         new AttributeTemplate(INET6NUM, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
                         new AttributeTemplate(NETNAME, MANDATORY, SINGLE, LOOKUP_KEY),
+                        // test by gwy
+                        new AttributeTemplate(CONN_i, MANDATORY, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(DESCR, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(COUNTRY, MANDATORY, MULTIPLE),
                         new AttributeTemplate(GEOFEED, OPTIONAL, SINGLE),
@@ -276,6 +279,8 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                 new ObjectTemplate(ObjectType.INETNUM, 5,
                         new AttributeTemplate(INETNUM, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
                         new AttributeTemplate(NETNAME, MANDATORY, SINGLE, LOOKUP_KEY),
+                        // test by gwy
+                        new AttributeTemplate(CONN_i, MANDATORY, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(DESCR, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(COUNTRY, MANDATORY, MULTIPLE),
                         new AttributeTemplate(GEOFEED, OPTIONAL, SINGLE),

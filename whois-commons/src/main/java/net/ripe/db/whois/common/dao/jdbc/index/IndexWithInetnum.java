@@ -25,12 +25,16 @@ class IndexWithInetnum extends IndexStrategyWithSingleLookupTable {
         final CIString netnameAttribute = object.getValueOrNullForAttribute(AttributeType.NETNAME);
         final String netname = netnameAttribute == null ? "" : netnameAttribute.toString();
 
+        final CIString conniAttribute = object.getValueOrNullForAttribute(AttributeType.CONN_i);
+        final String conni = conniAttribute == null ? "" : conniAttribute.toString();
+
         return jdbcTemplate.update(
-                "INSERT INTO inetnum (object_id, begin_in, end_in, netname) VALUES (?, ?, ?, ?)",
+                "INSERT INTO inetnum (object_id, begin_in, end_in, netname, conni) VALUES (?, ?, ?, ?, ?)",
                 objectInfo.getObjectId(),
                 resource.begin(),
                 resource.end(),
-                netname);
+                netname,
+                conni);
     }
 
     @Override

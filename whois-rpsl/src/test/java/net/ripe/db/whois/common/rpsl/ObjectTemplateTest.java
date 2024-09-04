@@ -137,6 +137,7 @@ public class ObjectTemplateTest {
         assertThat(template, is("" +
                 "inetnum:        [mandatory]  [single]     [primary/lookup key]\n" +
                 "netname:        [mandatory]  [single]     [lookup key]\n" +
+                "conni:          [mandatory]  [single]     [lookup key]\n" +
                 "descr:          [optional]   [multiple]   [ ]\n" +
                 "country:        [mandatory]  [multiple]   [ ]\n" +
                 "geofeed:        [optional]   [single]     [ ]\n" +
@@ -172,6 +173,7 @@ public class ObjectTemplateTest {
                 "\n" +
                 "inetnum:        [mandatory]  [single]     [primary/lookup key]\n" +
                 "netname:        [mandatory]  [single]     [lookup key]\n" +
+                "conni:          [mandatory]  [single]     [lookup key]\n" +
                 "descr:          [optional]   [multiple]   [ ]\n" +
                 "country:        [mandatory]  [multiple]   [ ]\n" +
                 "geofeed:        [optional]   [single]     [ ]\n" +

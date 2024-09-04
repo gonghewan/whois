@@ -167,6 +167,10 @@ public enum AttributeType implements Documented {
             .doc("The \"components:\" attribute defines what component routes are used to form the aggregate.")
             .syntax(COMPONENTS_SYNTAX)),
 
+    //test by gwy
+    CONN_i(new Builder("conni","ci")
+          .doc("test by gwy").syntax(NETNAME_SYNTAX)),
+
     COUNTRY(new Builder("country", "cy")
             .doc("Identifies the country.")
             .syntax(COUNTRY_CODE_SYNTAX)),
