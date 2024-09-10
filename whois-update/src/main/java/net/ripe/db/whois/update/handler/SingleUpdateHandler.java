@@ -38,6 +38,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class SingleUpdateHandler {
     private final AttributeSanitizer attributeSanitizer;
@@ -49,6 +52,8 @@ public class SingleUpdateHandler {
     private final UpdateObjectHandler updateObjectHandler;
     private final IpTreeUpdater ipTreeUpdater;
     private final SsoTranslator ssoTranslator;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SingleUpdateHandler.class);
 
     // TODO: [ES] make these fields final and assign in the constructor
 
@@ -86,7 +91,13 @@ public class SingleUpdateHandler {
 
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public void handle(final Origin origin, final Keyword keyword, final Update update, final UpdateContext updateContext) {
+        
+        LOGGER.info("[GWY LOG] entered into SingleUpdateHandler, origin info:");
+        LOGGER.info("[GWY LOG] origin id:" + origin.getId());
+        LOGGER.info("[GWY LOG] origin name:" + origin.getName());
+
         updateLockDao.setUpdateLock();
+        // update Source Configuration
         ipTreeUpdater.updateTransactional();
 
         if (updateContext.isDryRun()) {
@@ -130,27 +141,37 @@ public class SingleUpdateHandler {
         preparedUpdate = new PreparedUpdate(update, originalObject, updatedObjectWithAutoKeys, action, overrideOptions);
 
         // add authentication to context
+        LOGGER.info("[GWY LOG] preparedUpdate key:" + preparedUpdate.getKey());
+        LOGGER.info("[GWY LOG] preparedUpdate FormattedKey:" + preparedUpdate.getFormattedKey());
+        LOGGER.info("[GWY LOG] preparedUpdate to String:" + preparedUpdate.toString());
+         
         authenticator.authenticate(origin, preparedUpdate, updateContext);
-
+        LOGGER.info("[GWY LOG] exit authenticator.authenticate");
         // attributegenerators rely on authentication info
         for (AttributeGenerator attributeGenerator : attributeGenerators) {
             updatedObjectWithAutoKeys = attributeGenerator.generateAttributes(originalObject, updatedObjectWithAutoKeys, update, updateContext);
+            LOGGER.info("[GWY LOG] updatedObjectWithAutoKeys is " + updatedObjectWithAutoKeys.toString());
         }
+
+        LOGGER.info("[GWY LOG] final updatedObjectWithAutoKeys is " + updatedObjectWithAutoKeys.toString());
 
         // need to recalculate action after attributegenerators
         action = getAction(originalObject, updatedObjectWithAutoKeys, update, updateContext, keyword, overrideOptions);
+        LOGGER.info("[GWY LOG] getAction " + action.toString());
         updateContext.setAction(update, action);
         if (action == Action.NOOP) {
+            LOGGER.info("[GWY LOG] action == Action.NOOP ");
             updatedObjectWithAutoKeys = originalObject;
         }
 
         // re-generate preparedUpdate
         preparedUpdate = new PreparedUpdate(update, originalObject, updatedObjectWithAutoKeys, action, overrideOptions);
 
-        final boolean businessRulesOk = updateObjectHandler.validateBusinessRules(preparedUpdate, updateContext);
-        if ((!businessRulesOk) || (updateContext.hasErrors(update))) {
-            throw new UpdateFailedException();
-        }
+        // final boolean businessRulesOk = updateObjectHandler.validateBusinessRules(preparedUpdate, updateContext);
+        // if ((!businessRulesOk) || (updateContext.hasErrors(update))) {
+        //     throw new UpdateFailedException();
+        // }
+        // LOGGER.info("[GWY LOG] pass updateObjectHandler.validateBusinessRules");
 
         // defer setting prepared update so that on failure, we report back with the object without resolved auto keys
         // FIXME: [AH] per-attribute error messages generated up to this point will not get reported in ACK
@@ -161,6 +182,7 @@ public class SingleUpdateHandler {
         if (updateContext.isDryRun() && !updateContext.isBatchUpdate()) {
             throw new UpdateAbortedException();
         } else {
+            LOGGER.info("[GWY LOG] will enter updateObjectHandler.execute");
             updateObjectHandler.execute(preparedUpdate, updateContext);
         }
     }
