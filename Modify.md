@@ -4,7 +4,12 @@ Specific
 -------
 1.修改代码使其适配特定的数据格式
 
-2.删减部分权限认证
+2.删减businessRule认证
+
+3.增加md5密码生成脚本(python)
+
+4.修改domain类型的存储与索引
+
 
 环境配置
 -----------------------------------------
@@ -66,6 +71,7 @@ git clone git@git hub.com:RIPE-NCC/whois.git cd whois
 ```
 // 编译产出一版whois-db，产出路径在whois-db/target/xx(pom.xml中的version名).jar
 mvn clean install -Prelease
+
 // 将产出包移动至dbase的家目录下 
 sudo mkdir /home/dbase
 sudo mv whois-db/target/whois-db-1.0-SNAPSHOT.jar /home/dbase/whois.jar 
@@ -137,6 +143,9 @@ bean net.ripe.db.whois:name=Bootstrap
 run loadDump comment TEST.db
 //看到220 succeed 数据加载成功
 ```
+
+### Templates
+[Domain Template](http://1.51.2.207:1080/whois/metadata/templates/domain)
 
 ### Request with SyncUpdates
 
@@ -228,10 +237,10 @@ curl -v -4 -X POST -H "Content-Type: multipart/form-data; boundary=-------------
 curl -X GET -H 'Content-Type: application/json' 'http://localhost:1080/whois/test/Person/GWY-TEST'
 
 增:
-curl -X PUT -H 'Content-Type: application/json' --data @create_person_json.txt 'http://localhost:1080/whois/test/person?password=xxx'
+curl -X POST -H 'Content-Type: application/json' --data @create_person_json.txt 'http://localhost:1080/whois/test/person?password=xxx'
 
 改：
-curl -X POST -H 'Content-Type: application/json' --data @create_person_json.txt 'http://localhost:1080/whois/test/person?password=xxx'
+curl -X PUT -H 'Content-Type: application/json' --data @create_person_json.txt 'http://localhost:1080/whois/test/person?password=xxx'
 
 删：
 curl -v -4 -X DELETE -H 'Content-Type: application/json' -H 'Accept:application/json' --data @create_person_json.txt  http://localhost:1080/whois/test/person/GWY-TEST?password=xxx
@@ -243,7 +252,7 @@ curl -v -4 -X DELETE -H 'Content-Type: application/json' -H 'Accept:application/
 http://ip:port/whois/search?query-string=0.0.0.0
 ```
 
-### MD5 password generate
+### MD5 password generate example
 ```
 import crypt
 password = 'emptypassword'

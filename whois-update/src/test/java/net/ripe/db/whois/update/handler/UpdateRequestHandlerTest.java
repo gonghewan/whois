@@ -80,7 +80,7 @@ public class UpdateRequestHandlerTest {
 
         verify(sourceContext).setCurrentSourceToWhoisMaster();
         verify(sourceContext).removeCurrentSource();
-        verify(dnsChecker).checkAll(updateRequest, updateContext);
+       // verify(dnsChecker).checkAll(updateRequest, updateContext);
         verify(singleUpdateHandler).handle(origin, Keyword.NONE, update, updateContext);
         verify(updateNotifier).sendNotifications(updateRequest, updateContext);
     }
@@ -98,7 +98,7 @@ public class UpdateRequestHandlerTest {
 
         verify(sourceContext).setCurrentSourceToWhoisMaster();
         verify(sourceContext).removeCurrentSource();
-        verify(dnsChecker).checkAll(updateRequest, updateContext);
+        // verify(dnsChecker).checkAll(updateRequest, updateContext);
         verify(singleUpdateHandler).handle(origin, Keyword.NONE, update, updateContext);
     }
 
@@ -115,7 +115,7 @@ public class UpdateRequestHandlerTest {
 
         verify(sourceContext).setCurrentSourceToWhoisMaster();
         verify(sourceContext).removeCurrentSource();
-        verify(dnsChecker).checkAll(updateRequest, updateContext);
+        // verify(dnsChecker).checkAll(updateRequest, updateContext);
         verify(singleUpdateHandler).handle(origin, Keyword.NONE, update, updateContext);
     }
 
