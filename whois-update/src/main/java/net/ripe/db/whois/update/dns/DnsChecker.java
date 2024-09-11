@@ -90,9 +90,9 @@ public class DnsChecker {
             return false;
         }
 
-        if (!ObjectType.DOMAIN.equals(update.getType())) {
-            return false;
-        }
+        // if (!ObjectType.DOMAIN.equals(update.getType())) {
+        //     return false;
+        // }
 
         if (update.isOverride()) {
             return false;

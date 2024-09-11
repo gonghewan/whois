@@ -82,7 +82,7 @@ public class UpdateRequestHandler {
         try {
             sourceContext.setCurrentSourceToWhoisMaster();
 
-            dnsChecker.checkAll(updateRequest, updateContext);
+            //dnsChecker.checkAll(updateRequest, updateContext);
 
             for (final Update update : updateRequest.getUpdates()) {
                 ssoTranslator.populateCacheAuthToUuid(updateContext, update);

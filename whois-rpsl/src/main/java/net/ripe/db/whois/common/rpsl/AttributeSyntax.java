@@ -136,10 +136,12 @@ public interface AttributeSyntax extends Documented {
     AttributeSyntax DEFAULT_SYNTAX = new AttributeSyntaxParser(new DefaultParser(), "" +
             "to <peering> [action <action>] [networks <filter>]");
 
-    AttributeSyntax DOMAIN_SYNTAX = new AttributeSyntaxParser(new AttributeParser.DomainParser(), "" +
-            "Domain name as specified in RFC 1034 (point 5.2.1.2) with or\n" +
+    AttributeSyntax DOMAIN_SYNTAX = new AttributeSyntaxRegexp(254,
+            Pattern.compile("^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$"), "" +
+            "Domain name as specified in RFC 1034 with or\n" +
             "without trailing dot (\".\").  The total length should not exceed\n" +
-            "254 characters (octets).\n");
+            "254 characters (octets).\n"
+    );
 
     AttributeSyntax DS_RDATA_SYNTAX = new AttributeSyntaxParser(new AttributeParser.DsRdataParser(), "" +
             "<Keytag> <Algorithm> <Digest type> <Digest>\n" +

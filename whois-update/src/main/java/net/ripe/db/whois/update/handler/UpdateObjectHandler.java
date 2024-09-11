@@ -22,11 +22,15 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 class UpdateObjectHandler {
     private final RpslObjectUpdateDao rpslObjectUpdateDao;
     private final SsoTranslator ssoTranslator;
     private final Map<Action, Map<ObjectType, List<BusinessRuleValidator>>> validatorsByActionAndType;
+    private static final Logger LOGGER = LoggerFactory.getLogger(UpdateObjectHandler.class);
 
     @Autowired
     public UpdateObjectHandler(final RpslObjectUpdateDao rpslObjectUpdateDao,
@@ -64,24 +68,32 @@ class UpdateObjectHandler {
 
     @Transactional(propagation = Propagation.MANDATORY)
     public void execute(final PreparedUpdate update, final UpdateContext updateContext) {
+        LOGGER.info("[GWY LOG] entered into updateObjectHandler.execute");
+
         if (!updateContext.hasErrors(update)) {
+            LOGGER.info("[GWY LOG] !updateContext.hasErrors");
+
             final RpslObjectUpdateInfo updateInfo;
             final RpslObject updatedObject = ssoTranslator.translateFromCacheAuthToUuid(updateContext, update.getUpdatedObject());
             switch (update.getAction()) {
                 case CREATE:
+                    LOGGER.info("[GWY LOG] CREATE");
                     updateInfo = rpslObjectUpdateDao.createObject(updatedObject);
                     updateContext.updateInfo(update, updateInfo);
                     break;
                 case MODIFY:
+                    LOGGER.info("[GWY LOG] MODIFY");
                     updateInfo = rpslObjectUpdateDao.updateObject(update.getReferenceObject().getObjectId(), updatedObject);
                     updateContext.updateInfo(update, updateInfo);
                     break;
                 case DELETE:
+                    LOGGER.info("[GWY LOG] DELETE");
                     final RpslObject object = update.getReferenceObject();
                     updateInfo = rpslObjectUpdateDao.deleteObject(object.getObjectId(), object.getKey().toString());
                     updateContext.updateInfo(update, updateInfo);
                     break;
                 case NOOP:
+                    LOGGER.info("[GWY LOG] NOOP");
                     updateContext.addMessage(update, UpdateMessages.updateIsIdentical());
                     break;
                 default:
@@ -92,16 +104,21 @@ class UpdateObjectHandler {
 
     public boolean validateBusinessRules(final PreparedUpdate update, final UpdateContext updateContext) {
         // TODO [AK] There must be a better way to set the status than to count errors
+        LOGGER.info("[GWY LOG] entered into updateObjectHandler." + update.getKey());
+
         final int initialErrorCount = updateContext.getErrorCount(update);
 
         final Action action = update.getAction();
         final Map<ObjectType, List<BusinessRuleValidator>> validatorsByType = validatorsByActionAndType.get(action);
 
         final ObjectType type = update.getType();
+        LOGGER.info("[GWY LOG] entered into updateObjectHandler. objecttype is: " + type.toString());
         for (final BusinessRuleValidator businessRuleValidator : validatorsByType.get(type)) {
+            LOGGER.info("[GWY LOG] entered into updateObjectHandler. businessRuleValidator");
             businessRuleValidator.validate(update, updateContext);
         }
 
+        LOGGER.info("[GWY LOG] entered into updateObjectHandler. getErrorCount is: " + updateContext.getErrorCount(update));
         return updateContext.getErrorCount(update) == initialErrorCount;
     }
 }
