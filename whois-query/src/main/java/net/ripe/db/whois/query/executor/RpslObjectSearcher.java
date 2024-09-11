@@ -138,6 +138,7 @@ class RpslObjectSearcher {
             case INETNUM:
                 LOGGER.info("[GWY LOG] INETNUM");
                 if (query.getIpKeyOrNull() != null){
+                    LOGGER.info("[GWY LOG] INETNUM, query is:" + query.getIpKeyOrNull().toString());
                     return proxy(ipTreeLookup(ipv4Tree, query.getIpKeyOrNull(), query));
                 }else{
                     Iterable<ResponseObject> tmp_result = proxy(inetnumDao.findByNetname(query.getSearchValue()));
@@ -157,9 +158,9 @@ class RpslObjectSearcher {
                     }
                 }
                 return  proxy(inet6numDao.findByConni(query.getSearchValue()));
-            case DOMAIN:
-                LOGGER.info("[GWY LOG] DOMAIN");
-                return domainLookup(query);
+            // case DOMAIN:
+            //     LOGGER.info("[GWY LOG] DOMAIN");
+            //     return  proxy(domainDao.findByname(query.getSearchValue()));
             case ROUTE:
                 LOGGER.info("[GWY LOG] ROUTE");
                 return routeLookup(route4Tree, query);
@@ -238,6 +239,7 @@ class RpslObjectSearcher {
 
         return findEntries(key, tree, matchOperation);
     }
+
 
     @SuppressWarnings("unchecked")
     private List<IpEntry> findEntries(final IpInterval key, final IpTree tree, final Query.MatchOperation operation) {

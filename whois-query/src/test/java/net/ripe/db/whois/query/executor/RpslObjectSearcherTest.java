@@ -110,49 +110,49 @@ public class RpslObjectSearcherTest {
         assertQueryResult("-T irt person@domain.com", irt);
     }
 
-    @Test
-    public void ipv4_domain() {
-        final RpslObject domain = RpslObject.parse("domain: 1.168.192.in-addr.arpa");
-        final Ipv4Resource ipResource = Ipv4Resource.parse("192.168.1/24");
+    // @Test
+    // public void ipv4_domain() {
+    //     final RpslObject domain = RpslObject.parse("domain: 1.168.192.in-addr.arpa");
+    //     final Ipv4Resource ipResource = Ipv4Resource.parse("192.168.1/24");
 
-        mockRpslObjects(domain);
-        when(ipv4DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv4Entry(ipResource, infoFor(domain).getObjectId())));
+    //     mockRpslObjects(domain);
+    //     when(ipv4DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv4Entry(ipResource, infoFor(domain).getObjectId())));
 
-        assertQueryResult("-rT domain 1.168.192.in-addr.arpa", domain);
-    }
+    //     assertQueryResult("-rT domain 1.168.192.in-addr.arpa", domain);
+    // }
 
-    @Test
-    public void ipv4_domain_both_directions() {
-        final RpslObject domain = RpslObject.parse("domain: 1.168.192.in-addr.arpa");
-        final Ipv4Resource ipResource = Ipv4Resource.parse("192.168.1.1");
+    // @Test
+    // public void ipv4_domain_both_directions() {
+    //     final RpslObject domain = RpslObject.parse("domain: 1.168.192.in-addr.arpa");
+    //     final Ipv4Resource ipResource = Ipv4Resource.parse("192.168.1.1");
 
-        mockRpslObjects(domain);
-        when(ipv4DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv4Entry(ipResource, infoFor(domain).getObjectId())));
+    //     mockRpslObjects(domain);
+    //     when(ipv4DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv4Entry(ipResource, infoFor(domain).getObjectId())));
 
-        assertQueryResult("-d 192.168.1.1", domain);
-    }
+    //     assertQueryResult("-d 192.168.1.1", domain);
+    // }
 
-    @Test
-    public void ipv4_domain_both_directions_inverse() {
-        final RpslObject domain = RpslObject.parse("domain: 1.168.192.in-addr.arpa");
-        final Ipv4Resource ipResource = Ipv4Resource.parse("192.168.1/24");
+    // @Test
+    // public void ipv4_domain_both_directions_inverse() {
+    //     final RpslObject domain = RpslObject.parse("domain: 1.168.192.in-addr.arpa");
+    //     final Ipv4Resource ipResource = Ipv4Resource.parse("192.168.1/24");
 
-        mockRpslObjects(domain);
-        when(ipv4DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv4Entry(ipResource, infoFor(domain).getObjectId())));
+    //     mockRpslObjects(domain);
+    //     when(ipv4DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv4Entry(ipResource, infoFor(domain).getObjectId())));
 
-        assertQueryResult("-d 1.168.192.in-addr.arpa", domain);
-    }
+    //     assertQueryResult("-d 1.168.192.in-addr.arpa", domain);
+    // }
 
-    @Test
-    public void ipv6_domain() {
-        final RpslObject domain = RpslObject.parse("domain: 0.c.e.a.0.0.a.2.ip6.arpa");
-        final Ipv6Resource ipResource = Ipv6Resource.parse("2a00:aec0::/32");
+    // @Test
+    // public void ipv6_domain() {
+    //     final RpslObject domain = RpslObject.parse("domain: 0.c.e.a.0.0.a.2.ip6.arpa");
+    //     final Ipv6Resource ipResource = Ipv6Resource.parse("2a00:aec0::/32");
 
-        mockRpslObjects(domain);
-        when(ipv6DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv6Entry(ipResource, infoFor(domain).getObjectId())));
+    //     mockRpslObjects(domain);
+    //     when(ipv6DomainTree.findExactOrFirstLessSpecific(ipResource)).thenReturn(Lists.newArrayList(new Ipv6Entry(ipResource, infoFor(domain).getObjectId())));
 
-        assertQueryResult("-rT domain 0.c.e.a.0.0.a.2.ip6.arpa", domain);
-    }
+    //     assertQueryResult("-rT domain 0.c.e.a.0.0.a.2.ip6.arpa", domain);
+    // }
 
 
     @Test
