@@ -51,22 +51,22 @@ public class DomainAuthentication extends AuthenticationStrategyBase {
 
     @Override
     public List<RpslObject> authenticate(final PreparedUpdate update, final UpdateContext updateContext) {
-        final RpslObject rpslObject = update.getUpdatedObject();
-        final CIString domainString = rpslObject.getKey();
-        final Domain domain = Domain.parse(domainString);
+        // final RpslObject rpslObject = update.getUpdatedObject();
+        // final CIString domainString = rpslObject.getKey();
+        // final Domain domain = Domain.parse(domainString);
 
-        if (domain.getType() == Domain.Type.E164) {
+        //if (domain.getType() == Domain.Type.E164) {
             return Collections.emptyList();
-        }
+        //}
 
-        final IpInterval<?> reverseIp = domain.getReverseIp();
-        if (reverseIp instanceof Ipv4Resource) {
-            return authenticate(update, updateContext, reverseIp, ipv4Tree);
-        } else if (reverseIp instanceof Ipv6Resource) {
-            return authenticate(update, updateContext, reverseIp, ipv6Tree);
-        }
+        // final IpInterval<?> reverseIp = domain.getReverseIp();
+        // if (reverseIp instanceof Ipv4Resource) {
+        //     return authenticate(update, updateContext, reverseIp, ipv4Tree);
+        // } else if (reverseIp instanceof Ipv6Resource) {
+        //     return authenticate(update, updateContext, reverseIp, ipv6Tree);
+        // }
 
-        throw new IllegalArgumentException("Unexpected reverse ip: " + reverseIp);
+        // throw new IllegalArgumentException("Unexpected reverse ip: " + reverseIp);
     }
 
     @SuppressWarnings("unchecked")

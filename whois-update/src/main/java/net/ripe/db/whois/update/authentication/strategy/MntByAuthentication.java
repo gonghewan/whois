@@ -69,6 +69,8 @@ public class MntByAuthentication extends AuthenticationStrategyBase {
     @Override
     public List<RpslObject> authenticate(final PreparedUpdate update, final UpdateContext updateContext) {
         try {
+            LOGGER.info("[GWY LOG] entered into authenticate");
+
             return authenticateMntBy(update, updateContext);
         } catch (AuthenticationFailedException e) {
             return authenticateByAddressSpaceHolder(update, updateContext, e);
@@ -81,11 +83,13 @@ public class MntByAuthentication extends AuthenticationStrategyBase {
 
         if (keys.isEmpty()) {
             if (update.getAction().equals(Action.MODIFY)) {
+                LOGGER.info("[GWY LOG] entered into authenticate---modify");
                 authenticationObject = update.getUpdatedObject();
                 keys = authenticationObject.getValuesForAttribute(AttributeType.MNT_BY);
             }
 
             if (update.getAction().equals(Action.DELETE)) {
+                LOGGER.info("[GWY LOG] entered into authenticate---delete");
                 return Collections.emptyList();
             }
         }

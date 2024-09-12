@@ -252,6 +252,28 @@ curl -v -4 -X DELETE -H 'Content-Type: application/json' -H 'Accept:application/
 http://ip:port/whois/search?query-string=0.0.0.0
 ```
 
+### Request with mail
+[ubuntu配置mail server](https://blog.csdn.net/m0_56363537/article/details/127962135)
+实际上只有一种，就是列在文件/etc/mail/relay-domains,默认安装后无此文件，你可以创建它：
+abc.com (/etc/mail/relay-domains)
+abc.com relay (/etc/mail/access)
+
+sudo service sendmail restart //启动不起来看/var/log/mail.err
+
+```
+依次执行：
+telnet hostname 25
+mail from:"hello"<mail1@test-cernet.com>
+rcpt to:mail1@test-cernet.com
+data
+hello world!
+.
+邮件投送成功输出提示：
+250 2.0.0 48C1xH2S003505 Message accepted for delivery
+
+可以在/var/mail/mail1看到mail
+```
+
 ### MD5 password generate example
 ```
 import crypt

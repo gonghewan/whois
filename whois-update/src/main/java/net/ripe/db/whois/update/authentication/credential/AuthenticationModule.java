@@ -57,6 +57,7 @@ public class AuthenticationModule {
                                          final UpdateContext updateContext,
                                          final Collection<RpslObject> maintainers,
                                          final Class<? extends AuthenticationStrategy> authenticationStrategyClass) {
+        LOGGER.info("[GWY LOG] entered into authenticationModule.authenticate");
         final Credentials offered = update.getCredentials();
         boolean passwordRemovedRemark = false;
 
@@ -64,10 +65,15 @@ public class AuthenticationModule {
 
         final List<RpslObject> authenticatedCandidates = Lists.newArrayList();
         for (final RpslObject maintainer : maintainers) {
+            LOGGER.info("[GWY LOG] maintainer is: " + maintainer.toString());
             if (hasValidCredentialForCandidate(update, updateContext, offered, maintainer)) {
+                LOGGER.info("[GWY LOG] maintainer is: " + maintainer.toString() + "hasValidCredentialForCandidate");
+                
                 authenticatedCandidates.add(maintainer);
             } else {
                 if (hasPasswordRemovedRemark(maintainer)) {
+                    LOGGER.info("[GWY LOG] maintainer is: " + maintainer.toString() + "hasPasswordRemovedRemark");
+
                     passwordRemovedRemark = true;
                 }
             }
@@ -81,19 +87,27 @@ public class AuthenticationModule {
     }
 
     private boolean hasValidCredentialForCandidate(final PreparedUpdate update, final UpdateContext updateContext, final Credentials offered, final RpslObject maintainer) {
+        LOGGER.info("[GWY LOG] entered into authenticationModule.hasValidCredentialForCandidate");
+        
         final List<CIString> authAttributes = Lists.newArrayList(maintainer.getValuesForAttribute(AttributeType.AUTH));
         Collections.sort(authAttributes, AUTH_COMPARATOR);
 
         for (final CIString auth : authAttributes) {
             final Credential credential = getCredential(auth);
+
             if (credential == null) {
+                LOGGER.info("[GWY LOG] Skipping unknown credential:{}", auth);
+
                 LOGGER.warn("Skipping unknown credential: {}", auth);
                 continue;
             }
 
+            LOGGER.info("[GWY LOG] credential is " + credential.toString() + " auth is " + auth);
+
             final Class<? extends Credential> credentialClass = credential.getClass();
             for (CredentialValidator credentialValidator : credentialValidatorMap.get(credentialClass)) {
                 if (credentialValidator.hasValidCredential(update, updateContext, offered.ofType(credentialValidator.getSupportedOfferedCredentialType()), credential)) {
+                    LOGGER.info("[GWY LOG] credential is " + credential.toString() + "valid true");
                     return true;
                 }
             }

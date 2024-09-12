@@ -75,14 +75,18 @@ public class Authenticator {
 
     public void authenticate(final Origin origin, final PreparedUpdate update, final UpdateContext updateContext) {
         final Subject subject;
+        LOGGER.info("[GWY LOG] entered into authenticate");
 
         loggerContext.logCredentials(update.getUpdate());
 
         if (origin.isDefaultOverride()) {
+            LOGGER.info("[GWY LOG] origin.isDefaultOverride");
             subject = new Subject(Principal.OVERRIDE_MAINTAINER);
         } else if (update.isOverride()) {
+            LOGGER.info("[GWY LOG] origin.isOverride");
             subject = performOverrideAuthentication(origin, update, updateContext);
         } else {
+            LOGGER.info("[GWY LOG] origin.else");
             subject = performAuthentication(origin, update, updateContext);
         }
 
@@ -90,18 +94,24 @@ public class Authenticator {
     }
 
     private Subject performOverrideAuthentication(final Origin origin, final PreparedUpdate update, final UpdateContext updateContext) {
+        LOGGER.info("[GWY LOG] enter performOverrideAuthentication");
         final Set<OverrideCredential> overrideCredentials = update.getCredentials().ofType(OverrideCredential.class);
         final Set<Message> authenticationMessages = Sets.newLinkedHashSet();
 
         if (!origin.allowAdminOperations()) {
+            LOGGER.info("[GWY LOG] !origin.allowAdminOperations");
             authenticationMessages.add(UpdateMessages.overrideNotAllowedForOrigin(origin));
         }
 
         if (overrideCredentials.size() != 1) {
+            LOGGER.info("[GWY LOG] overrideCredentials.size() != 1");
+
             authenticationMessages.add(UpdateMessages.multipleOverridePasswords());
         }
 
+        LOGGER.info("[GWY LOG] overrideCredentials[0]: " + overrideCredentials.iterator().next().toString());
         if (!authenticationMessages.isEmpty()) {
+            LOGGER.info("[GWY LOG] authenticationMessages.isEmpty()");
             handleFailure(update, updateContext, authenticationMessages);
             return Subject.EMPTY;
         }
@@ -112,6 +122,8 @@ public class Authenticator {
             final String username = overrideValues.getUsername();
 
             if (!isAllowedToUseOverride(origin, updateContext, username)) {
+                LOGGER.info("[GWY LOG] user not equal @ripe.net");
+                LOGGER.info("[GWY LOG] !isAllowedToUseOverride(origin, updateContext, username)");
                 authenticationMessages.add(UpdateMessages.overrideOnlyAllowedByDbAdmins());
                 handleFailure(update, updateContext, authenticationMessages);
                 return Subject.EMPTY;
@@ -119,7 +131,9 @@ public class Authenticator {
 
             try {
                 final User user = userDao.getOverrideUser(username);
+                LOGGER.info("[GWY LOG] userDao.getOverrideUser(username): " + username);
                 if (user.isValidPassword(overrideValues.getPassword()) && user.getObjectTypes().contains(update.getType())) {
+                    LOGGER.info("[GWY LOG] user.isValidPassword");
                     updateContext.addMessage(update, UpdateMessages.overrideAuthenticationUsed());
                     return new Subject(Principal.OVERRIDE_MAINTAINER);
                 }
@@ -128,6 +142,8 @@ public class Authenticator {
             }
         }
 
+        LOGGER.info("[GWY LOG] OverrideCredential failed");
+        
         authenticationMessages.add(UpdateMessages.overrideAuthenticationFailed());
         handleFailure(update, updateContext, authenticationMessages);
         return Subject.EMPTY;
@@ -135,10 +151,14 @@ public class Authenticator {
 
     private boolean isAllowedToUseOverride(final Origin origin, final UpdateContext updateContext, final String overrideUsername) {
         if(ipRanges.isTrusted(IpInterval.parse(origin.getFrom()))) {
+            LOGGER.info("[GWY LOG] ipRanges.isTrusted");
+    
             return true;
         }
 
         if (updateContext.getUserSession() == null || updateContext.getUserSession().getUsername() == null || overrideUsername == null) {
+            LOGGER.info("[GWY LOG] updateContext.getUserSession failed");
+            
             return false;
         }
 
@@ -146,6 +166,7 @@ public class Authenticator {
     }
 
     private Subject performAuthentication(final Origin origin, final PreparedUpdate update, final UpdateContext updateContext) {
+        LOGGER.info("[GWY LOG] enter performAuthentication");
         final Set<Message> authenticationMessages = Sets.newLinkedHashSet();
         final Set<RpslObject> authenticatedObjects = Sets.newLinkedHashSet();
 
@@ -153,10 +174,16 @@ public class Authenticator {
         final Set<String> failedAuthentications = new HashSet<>();
 
         if (update.getCredentials().ofType(PasswordCredential.class).size() > 20) {
+            LOGGER.info("[GWY LOG] tooManyPasswordsSpecified");
             authenticationMessages.add(UpdateMessages.tooManyPasswordsSpecified());
         } else {
+            LOGGER.info("[GWY LOG] will try inetnum/autnum/domain/mntby/route Authentication");
             for (final AuthenticationStrategy authenticationStrategy : authenticationStrategies) {
+                LOGGER.info("[GWY LOG] authenticationStrategy name: " + authenticationStrategy.getName());
+
                 if (authenticationStrategy.supports(update)) {
+                    LOGGER.info("[GWY LOG] authenticationStrategy.supports(update)[has this atrribute]");
+
                     try {
                         authenticatedObjects.addAll(authenticationStrategy.authenticate(update, updateContext));
                         passedAuthentications.add(authenticationStrategy.getName());
@@ -170,17 +197,20 @@ public class Authenticator {
 
         final Set<Principal> principals = Sets.newLinkedHashSet();
         for (final RpslObject authenticatedObject : authenticatedObjects) {
+            LOGGER.info("[GWY LOG] authenticatedObject is: " + authenticatedObject.toString());
             principals.addAll(getPrincipals(authenticatedObject));
         }
 
         if (!principals.isEmpty() && !origin.isDefaultOverride()) {
             if (!origin.allowAdminOperations() || !ipRanges.isTrusted(IpInterval.parse(origin.getFrom()))) {
+                LOGGER.info("ripeMntnerUpdatesOnlyAllowedFromWithinNetwork");
                 authenticationMessages.add(UpdateMessages.ripeMntnerUpdatesOnlyAllowedFromWithinNetwork());
             }
         }
 
         final Subject subject = new Subject(principals, passedAuthentications, failedAuthentications);
         if (!authenticationMessages.isEmpty()) {
+            LOGGER.info("Authenticatot handleFailure");
             handleFailure(update, updateContext, authenticationMessages);
         }
 
@@ -205,6 +235,8 @@ public class Authenticator {
 
         for (final Message message : authenticationMessages) {
             updateContext.addMessage(update, message);
+            LOGGER.info("Authenticatot handleFailure: " + message.toString());
+
         }
     }
 }

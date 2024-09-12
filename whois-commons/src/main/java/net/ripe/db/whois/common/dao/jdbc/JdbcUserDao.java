@@ -20,10 +20,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Repository
 @RetryFor(RecoverableDataAccessException.class)
 public class JdbcUserDao implements UserDao {
     private final JdbcTemplate jdbcTemplate;
+    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUserDao.class);
 
     @Autowired
     public JdbcUserDao(final @Qualifier("aclDataSource") DataSource dataSource) {
@@ -41,14 +45,15 @@ public class JdbcUserDao implements UserDao {
     }
 
     private static final class UserMapper implements RowMapper<User> {
-        private static final Logger LOGGER = LoggerFactory.getLogger(UserMapper.class);
+        private static final Logger UserMapperLOGGER = LoggerFactory.getLogger(UserMapper.class);
         private static final Splitter OBJECTTYPE_SPLITTER = Splitter.on(',').trimResults().omitEmptyStrings();
+        
 
         @Override
         public User mapRow(final ResultSet rs, final int rowNum) throws SQLException {
             final String username = rs.getString(1);
             final String password = rs.getString(2);
-
+            UserMapperLOGGER.info("[GWY LOG] JdbcUserDao mapRow username: "+ username + "password" + password);
             final List<ObjectType> objectTypes = Lists.newArrayList();
             for (final String objectTypeString : OBJECTTYPE_SPLITTER.split(rs.getString(3))) {
                 try {

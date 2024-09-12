@@ -31,6 +31,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class InetnumStatusValidator implements BusinessRuleValidator {
 
@@ -40,6 +43,9 @@ public class InetnumStatusValidator implements BusinessRuleValidator {
     private final StatusDao statusDao;
     private final Ipv4Tree ipv4Tree;
     private final Maintainers maintainers;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(InetnumStatusValidator.class);
+
 
     @Autowired
     public InetnumStatusValidator(
@@ -74,10 +80,12 @@ public class InetnumStatusValidator implements BusinessRuleValidator {
         final InetnumStatus updateStatus = InetnumStatus.getStatusFor(update.getUpdatedObject().getValueForAttribute(AttributeType.STATUS));
 
         if(canChangeStatus(originalStatus, updateStatus)) {
+            LOGGER.info("[GWY LOG] canChangeStatus");
             return Collections.EMPTY_LIST;
         }
 
         if (originalStatus != updateStatus) {
+            LOGGER.info("[GWY LOG] originalStatus != updateStatus");
             validationMessages.add(UpdateMessages.statusChange());
         }
 
@@ -156,17 +164,26 @@ public class InetnumStatusValidator implements BusinessRuleValidator {
             final RpslObject rpslObject,
             final PreparedUpdate update,
             final List<Message> validationMessages) {
+        
+        LOGGER.info("[GWY LOG] entered into validateHierarchy");
+
         final CIString objectStatus = rpslObject.getValueForAttribute(AttributeType.STATUS);
 
         final Ipv4Entry parent = ipv4Tree.findFirstLessSpecific(Ipv4Resource.parse(rpslObject.getKey())).get(0);
+        LOGGER.info("[GWY LOG] entered into validateHierarchy, parent: " + parent.toString());
+        
         final CIString parentStatus = statusDao.getStatus(parent.getObjectId());
+        LOGGER.info("[GWY LOG] entered into validateHierarchy, parentStatus: " + parentStatus);
 
         final List<Ipv4Entry> children = ipv4Tree.findFirstMoreSpecific(Ipv4Resource.parse(rpslObject.getKey()));
         final List<Integer> childrenObjectIds = Lists.transform(children, IpEntry::getObjectId);
         final Map<Integer, CIString> childStatusMap = statusDao.getStatus(childrenObjectIds);
+        LOGGER.info("[GWY LOG] entered into validateHierarchy, childStatusMap: " + childStatusMap.values().toString());
 
         switch (update.getAction()) {
             case MODIFY: {
+                LOGGER.info("[GWY LOG] entered into validateHierarchy, Modify");
+
                 validateParentStatus(
                     parentStatus,
                     rpslObject.getValueForAttribute(AttributeType.STATUS),
@@ -184,6 +201,8 @@ public class InetnumStatusValidator implements BusinessRuleValidator {
             }
             break;
             case DELETE: {
+                LOGGER.info("[GWY LOG] entered into validateHierarchy, Delete");
+
                 children.forEach(child -> {
                     final CIString childStatus = childStatusMap.get(child.getObjectId());
                     final CIString childKey = CIString.ciString(child.getKey().toRangeString());
@@ -206,6 +225,8 @@ public class InetnumStatusValidator implements BusinessRuleValidator {
             final CIString parentStatus,
             final CIString childStatus,
             final List<Message> validationMessages) {
+        LOGGER.info("[GWY LOG] entered into validateParentStatus");
+
         if (!InetnumStatus.getStatusFor(childStatus).worksWithParentStatus(InetnumStatus.getStatusFor(parentStatus), false)) {
            validationMessages.add(UpdateMessages.incorrectParentStatus(Messages.Type.WARNING, ObjectType.INETNUM, parentStatus.toString()));
         }
@@ -216,6 +237,7 @@ public class InetnumStatusValidator implements BusinessRuleValidator {
             final CIString childStatus,
             final CIString childKey,
             final List<Message> validationMessages) {
+        LOGGER.info("[GWY LOG] entered into validateChildStatus");
         if (!InetnumStatus.getStatusFor(childStatus).worksWithParentStatus(InetnumStatus.getStatusFor(parentStatus), false)) {
             validationMessages.add(UpdateMessages.incorrectChildStatus(Messages.Type.WARNING, parentStatus.toString(), childStatus.toString(), childKey));
         }

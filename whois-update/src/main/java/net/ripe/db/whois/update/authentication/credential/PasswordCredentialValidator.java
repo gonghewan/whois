@@ -9,12 +9,15 @@ import net.ripe.db.whois.update.domain.UpdateContext;
 import net.ripe.db.whois.update.log.LoggerContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
 @Component
 class PasswordCredentialValidator implements CredentialValidator<PasswordCredential, PasswordCredential> {
     private final LoggerContext loggerContext;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PasswordCredentialValidator.class);
 
     @Autowired
     PasswordCredentialValidator(LoggerContext loggerContext) {
@@ -36,6 +39,7 @@ class PasswordCredentialValidator implements CredentialValidator<PasswordCredent
                                       final UpdateContext updateContext,
                                       final Collection<PasswordCredential> offeredCredentials,
                                       final PasswordCredential knownCredential) {
+        LOGGER.info("[GWY LOG] entered into PasswordCredentialValidator");
 
         for (final PasswordCredential offeredCredential : offeredCredentials) {
             try {
@@ -46,6 +50,7 @@ class PasswordCredentialValidator implements CredentialValidator<PasswordCredent
                             update.getUpdate(),
                             getClass().getCanonicalName(),
                             String.format("Validated %s against known encrypted password: %s)", update.getFormattedKey(), knownPassword));
+                    LOGGER.info("[GWY LOG] valid password");
 
                     return true;
                 }
