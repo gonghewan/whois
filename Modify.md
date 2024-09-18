@@ -275,20 +275,7 @@ hello world!
 ```
 
 ```
-安装maildrop
-下载地址：https://sourceforge.net/projects/courier/files/maildrop/
-
-wget https://sourceforge.net/projects/courier/files/maildrop/3.1.8/maildrop-3.1.8.tar.bz2/download
-tar xvfj maildrop-3.1.8.tar.bz2
-sudo apt-get install g++ libpcre3-dev
-groupadd maildrop
-sudo groupadd maildrop
-sudo useradd -g maildrop maildrop
-cd maildrop-3.1.8/
-sudo apt install libpcre2-dev
-id maildrop
-./configure --enable-maildrop-uid=1004 --enable-maildrop-gid=1004  --enable-trusted-users='root qmaild maildrop'
-
+(安装maildrop)[https://www.yunweiku.com/thread-206994-1-1.html]
 
 https://ftp.debian.org/debian/pool/main/libu/libunistring/
 下载并安装libunistring2_1.0-2_amd64.deb 和 libunistring-dev
@@ -298,16 +285,66 @@ apt-cache policy libunistring2
 wget http://mirrors.kernel.org/ubuntu/pool/main/libi/libidn2/libidn2-0_2.2.0-2_amd64.deb
 wget http://mirrors.kernel.org/ubuntu/pool/main/libi/libidn2/libidn2-0-dev_2.2.0-2_amd64.deb 
 wget http://archive.ubuntu.com/ubuntu/pool/main/libi/libidn2/libidn2-dev_2.2.0-2_amd64.deb
-
 sudo dpkg -i libidn2-dev_2.2.0-2_amd64.deb
 sudo apt-mark hold libidn2-dev
-
 sudo dpkg -i libidn2-0-dev_2.2.0-2_amd64.deb 
 sudo apt-mark hold libidn2-0-dev
-
 sudo dpkg -i libidn2-0_2.2.0-2_amd64.deb
 sudo apt-mark hold libidn2-0
+
+wget https://sourceforge.net/projects/courier/files/courier-unicode/2.1/courier-unicode-2.1.tar.bz2/download
+mv download courier-unicode-2.1.tar.bz2
+tar xivf courier-unicode-2.1.tar.bz2
+cd courier-unicode-2.1
+./configure
+make
+make install
+
+sudo apt-get install libcourier-unicode4
+
+//下载地址：https://sourceforge.net/projects/courier/files/maildrop/
+wget https://sourceforge.net/projects/courier/files/maildrop/3.1.8/maildrop-3.1.8.tar.bz2/download
+tar xvfj maildrop-3.1.8.tar.bz2
+sudo apt-get install g++ libpcre3-dev
+groupadd maildrop
+sudo groupadd maildrop
+sudo useradd -g maildrop maildrop
+cd maildrop-3.1.8/
+sudo apt install libpcre2-dev
+id maildrop
+./configure --enable-maildrop-uid=1004 --enable-maildrop-gid=1004 --enable-trusted-users='root qmaild maildrop dbase gwy'
+make
+sudo make install
+maildrop -v
+chmod 4755 /usr/local/bin/maildrop
 ```
+#### 邮件服务器搭建
+```
+//Postfix是一个邮件传输代理软件，用于电子邮件的收发过程
+//Dovecot是一个IMAP和POP3邮件服务器
+
+sudo apt-update
+sudo apt-get install -y postfix dovecot-imapd dovecot-pop3d
+//暂时选择Satellite system模式
+//编辑配置文件
+sudo vim /etc/dovecot/dovecot.conf
+//增加一行
+protocols = imap pop3 lmtp
+
+sudo apt install dovecot-lmtpd
+sudo systemctl restart postfix dovecot
+sudo apt install mailutils
+
+//测试一下
+telnet localhost 110 # POP3
+telnet localhost 143 # IMAP
+echo "This is a test message" | mail -s 'test email' mail1@test-cernet.com
+
+//配置maildrop
+参考：http://www.panticz.de/index.php/node/154
+
+```
+
 /home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/mail/dequeue/MessageDequeue.java line197 mailMessageDao.getMessage(messageId);
 +
 /home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/mail/dao/MailMessageDao.java
