@@ -264,7 +264,7 @@ sudo service sendmail restart //启动不起来看/var/log/mail.err
 依次执行：
 telnet hostname 25
 mail from:"hello"<mail1@test-cernet.com>
-rcpt to:mail1@test-cernet.com
+rcpt to:dbase@test-cernet.com
 data
 hello world!
 .
@@ -273,6 +273,69 @@ hello world!
 
 可以在/var/mail/mail1看到mail
 ```
+
+```
+安装maildrop
+下载地址：https://sourceforge.net/projects/courier/files/maildrop/
+
+wget https://sourceforge.net/projects/courier/files/maildrop/3.1.8/maildrop-3.1.8.tar.bz2/download
+tar xvfj maildrop-3.1.8.tar.bz2
+sudo apt-get install g++ libpcre3-dev
+groupadd maildrop
+sudo groupadd maildrop
+sudo useradd -g maildrop maildrop
+cd maildrop-3.1.8/
+sudo apt install libpcre2-dev
+id maildrop
+./configure --enable-maildrop-uid=1004 --enable-maildrop-gid=1004  --enable-trusted-users='root qmaild maildrop'
+
+
+https://ftp.debian.org/debian/pool/main/libu/libunistring/
+下载并安装libunistring2_1.0-2_amd64.deb 和 libunistring-dev
+sudo dpkg -i ./libunistring2_1.0-2_amd64.deb
+apt-cache policy libunistring2
+
+wget http://mirrors.kernel.org/ubuntu/pool/main/libi/libidn2/libidn2-0_2.2.0-2_amd64.deb
+wget http://mirrors.kernel.org/ubuntu/pool/main/libi/libidn2/libidn2-0-dev_2.2.0-2_amd64.deb 
+wget http://archive.ubuntu.com/ubuntu/pool/main/libi/libidn2/libidn2-dev_2.2.0-2_amd64.deb
+
+sudo dpkg -i libidn2-dev_2.2.0-2_amd64.deb
+sudo apt-mark hold libidn2-dev
+
+sudo dpkg -i libidn2-0-dev_2.2.0-2_amd64.deb 
+sudo apt-mark hold libidn2-0-dev
+
+sudo dpkg -i libidn2-0_2.2.0-2_amd64.deb
+sudo apt-mark hold libidn2-0
+```
+/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/mail/dequeue/MessageDequeue.java line197 mailMessageDao.getMessage(messageId);
++
+/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/mail/dao/MailMessageDao.java
++
+/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/mail/dao/MailMessageDaoJdbc.java
+
+email格式解析：
+/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/mail/dequeue/BouncedMessageParser.java
+
+/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/UpdateCreator.java
++
+/home/gwy/whois/whois/whois-update/src/main/java/net/ripe/db/whois/update/domain/UpdateContext.java addmessage向mysql中插入message
+
+```
+From mail1@test-cernet.com  Thu Sep 12 02:36:39 2024\nReturn-Path: <mail1@test-cernet.com>\nReceived: from test-cernet.com (test-cernet.com [1.51.2.207])\nby test-cernet.com (8.18.1/8.18.1/Debian-2) with SMTP id 48C2YPYl007825\nfor dbase@test-cernet.com; Thu, 12 Sep 2024 02:35:07 GMT\nDate: Thu, 12 Sep 2024 02:34:25 GMT\nFrom: mail1@test-cernet.com\nMessage-Id: <202409120235.48C2YPYl007825@test-cernet.com>\nSUBJECT: NEW\ninetnum: 182.16.6.0 - 182.16.6.255\nnetname: NL-RIPENCC-TCA6-20120101\nconn-i: BJ000003\norg: ORG-CO1-TEST\ndescr: RIPE NCC Training Services Attendee\nremarks: Allocation used in the training courses\ncountry: EU\nadmin-c: GWY-TEST\ntech-c: GWY-TEST\nstatus: ALLOCATED PA\nmnt-by: TEST-DBM-MNT\nsource: TEST\npassword: Cernet@572\n\n
+```
+```
+Date: Mon, 29 Jun 2009 18:39:03 +0800
+From: "=?gb2312?B?26zQocHB?=" <gaoxl@legendsec.com>
+To: "moreorless" <moreorless@live.cn>
+Cc: "gxl0620" <gxl0620@163.com>
+BCC: "=?gb2312?B?26zQocHB?=" <venus.oso@gmail.com>
+Subject: attach
+Message-ID: <200906291839032504254@legendsec.com>
+X-mailer: Foxmail 6, 15, 201, 21 [cn]
+Mime-Version: 1.0
+```
+
 
 ### MD5 password generate example
 ```
