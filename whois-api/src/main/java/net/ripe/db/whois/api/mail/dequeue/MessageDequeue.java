@@ -161,6 +161,7 @@ public class MessageDequeue implements ApplicationService {
 
                     LOGGER.debug("Queue {}", messageId);
                     freeThreads.decrementAndGet();
+
                     handlerExecutor.submit(new MessageHandler(messageId));
                 }
             } catch (DataAccessException e) {
@@ -251,6 +252,7 @@ public class MessageDequeue implements ApplicationService {
 
     private void handleMessageInContext(final String messageId, final MimeMessage message) throws MessagingException {
         loggerContext.log("msg-in.txt", new MailMessageLogCallback(message));
+        
         mailMessageDao.setStatus(messageId, DequeueStatus.LOGGED);
 
         final UpdateContext updateContext = new UpdateContext(loggerContext);
@@ -258,6 +260,7 @@ public class MessageDequeue implements ApplicationService {
         mailMessageDao.setStatus(messageId, DequeueStatus.PARSED);
 
         if (!messageFilter.shouldProcess(mailMessage)) {
+            LOGGER.info("[GWY LOG] !messageFilter.shouldProcess(mailMessage)");
             mailMessageDao.deleteMessage(messageId);
             return;
         }
@@ -274,6 +277,7 @@ public class MessageDequeue implements ApplicationService {
 
     private void handleUpdates(final MailMessage mailMessage, final UpdateContext updateContext) {
         final List<Update> updates = updatesParser.parse(updateContext, mailMessage.getContentWithCredentials());
+        LOGGER.info("[GWY LOG] enter handleUpdates()" + updates.toString());
         addWarnIfPasswordExists(updateContext, updates);
 
         final UpdateRequest updateRequest = new UpdateRequest(mailMessage, mailMessage.getKeyword(), updates);

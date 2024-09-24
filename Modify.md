@@ -10,6 +10,8 @@ Specific
 
 4.修改domain类型的存储与索引
 
+5.额外搭建一个邮件服务器用于接收email-update请求
+
 
 环境配置
 -----------------------------------------
@@ -359,20 +361,45 @@ email格式解析：
 /home/gwy/whois/whois/whois-update/src/main/java/net/ripe/db/whois/update/domain/UpdateContext.java addmessage向mysql中插入message
 
 ```
-From mail1@test-cernet.com  Thu Sep 12 02:36:39 2024\nReturn-Path: <mail1@test-cernet.com>\nReceived: from test-cernet.com (test-cernet.com [1.51.2.207])\nby test-cernet.com (8.18.1/8.18.1/Debian-2) with SMTP id 48C2YPYl007825\nfor dbase@test-cernet.com; Thu, 12 Sep 2024 02:35:07 GMT\nDate: Thu, 12 Sep 2024 02:34:25 GMT\nFrom: mail1@test-cernet.com\nMessage-Id: <202409120235.48C2YPYl007825@test-cernet.com>\nSUBJECT: NEW\ninetnum: 182.16.6.0 - 182.16.6.255\nnetname: NL-RIPENCC-TCA6-20120101\nconn-i: BJ000003\norg: ORG-CO1-TEST\ndescr: RIPE NCC Training Services Attendee\nremarks: Allocation used in the training courses\ncountry: EU\nadmin-c: GWY-TEST\ntech-c: GWY-TEST\nstatus: ALLOCATED PA\nmnt-by: TEST-DBM-MNT\nsource: TEST\npassword: Cernet@572\n\n
-```
-```
-Date: Mon, 29 Jun 2009 18:39:03 +0800
-From: "=?gb2312?B?26zQocHB?=" <gaoxl@legendsec.com>
-To: "moreorless" <moreorless@live.cn>
-Cc: "gxl0620" <gxl0620@163.com>
-BCC: "=?gb2312?B?26zQocHB?=" <venus.oso@gmail.com>
-Subject: attach
-Message-ID: <200906291839032504254@legendsec.com>
-X-mailer: Foxmail 6, 15, 201, 21 [cn]
-Mime-Version: 1.0
-```
+# email更新格式，注意在每条更新数据间隔两个空行（包括首行）
+telnet test-cernet.com smtp
+Trying 1.51.2.207...
+Connected to test-cernet.com.
+Escape character is '^]'.
+220 test-cernet.com ESMTP Postfix (Ubuntu)
+helo test-cernet.com
+250 test-cernet.com
+mail from: gwy@test-cernet.com
+250 2.1.0 Ok
+rcpt to: dbase@test-cernet.com
+250 2.1.5 Ok
+data
+354 End data with <CR><LF>.<CR><LF>
+From: gwy <gwy@test-cernet.com>
+To: dbase@test-cernet.com
+Subject: NEW
 
+
+password: ********
+inetnum: 182.16.6.0 - 182.16.6.255
+netname: NL-RIPENCC-TCA6-20120101
+conni: BJ000005
+org: ORG-CO1-TEST
+descr:          The whole IPv4 address space
+country:        CN # Country is really world wide
+admin-c:        GWY-TEST
+tech-c:         GWY-TEST
+status:         ALLOCATED UNSPECIFIED
+remarks:        The country is really worldwide.
+mnt-by:         TEST-DBM-MNT
+mnt-routes:     TEST-DBM-MNT
+remarks:        This is an automatically created object.
+source:         TEST
+.
+250 2.0.0 Ok: queued as EFB3F1206BA
+quit
+221 2.0.0 Bye
+```
 
 ### MD5 password generate example
 ```
