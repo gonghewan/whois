@@ -400,6 +400,69 @@ source:         TEST
 quit
 221 2.0.0 Bye
 ```
+```
+Escape character is '^]'.
+220 test-cernet.com ESMTP Postfix (Ubuntu)
+helo test-cernet.com
+250 test-cernet.com
+mail from: gwy@test-cernet.com
+250 2.1.0 Ok
+rcpt to: dbase@test-cernet.com
+250 2.1.5 Ok
+data
+354 End data with <CR><LF>.<CR><LF>
+From: gwy <gwy@test-cernet.com>
+To: dbase@test-cernet.com
+Subject: delete inetnum
+
+
+inetnum: 182.16.6.0 - 182.16.6.255
+source:         TEST
+delete:  no longer need
+password: ******
+.
+250 2.0.0 Ok: queued as C05F91212EC
+quit
+221 2.0.0 Bye
+```
+```
+Trying 1.51.2.207...
+Connected to test-cernet.com.
+Escape character is '^]'.
+220 test-cernet.com ESMTP Postfix (Ubuntu)
+helo test-cernet.com
+250 test-cernet.com
+mail from: gwy@test-cernet.com
+250 2.1.0 Ok
+rcpt to: dbase@test-cernet.com
+250 2.1.5 Ok
+data
+354 End data with <CR><LF>.<CR><LF>
+From: gwy <gwy@test-cernet.com>
+To: dbase@test-cernet.com
+Subject: update my objects
+
+
+inetnum:        182.16.7.0 - 182.16.7.255
+netname:        NL-RIPENCC-TCA6-20120102
+conni:          BJ000006
+org:            ORG-CO1-TEST
+descr:          The whole IPv4 address space
+country:        CN # Country is really world wide
+admin-c:        GWY-TEST
+tech-c:         GWY-TEST
+status:         ALLOCATED UNSPECIFIED
+remarks:        The country is really worldwide.
+mnt-by:         TEST-DBM-MNT
+mnt-routes:     TEST-DBM-MNT
+remarks:        This is test for email-updates
+source:         TEST
+password:       ******
+.
+250 2.0.0 Ok: queued as 862131212EC
+quit
+221 2.0.0 Bye
+```
 
 ### MD5 password generate example
 ```
