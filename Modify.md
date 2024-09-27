@@ -12,6 +12,10 @@ Specific
 
 5.额外搭建一个邮件服务器用于接收email-update请求
 
+Todo:
+
+1. 增加nserver类型，并实现相关项索引
+
 
 环境配置
 -----------------------------------------
@@ -481,3 +485,61 @@ $1$N2zhyJ3g$hzX7XTL84DtBkCWhBZE2c/
   * Press "Test" to confirm it's working.
 * Go to Build, Execution, Deployment -> Build Tools -> Maven -> Importing
   * Uncheck "Detect compiler automatically" (otherwise IntelliJ will revert from Ajc to JavaC)
+
+### 增加nserver
+```
+修改原nserver属性
+原search逻辑：
+/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/rest/WhoisSearchService.java @Path("/search")
+
+/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/rest/RpslObjectStreamer.java queryHandler.streamResults
+
+/home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/handler/QueryHandler.java queryExecutor.execute
+
+/home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/executor/SearchQueryExecutor.java rpslObjectSearcher.search
+
+/home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/executor/RpslObjectSearcher.java line133 executeForObjectType
+修改：
+1.增加NSERVER：
+/home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectType.java
+public enum ObjectType  
+
+2./home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/query/Query.java
+增加ObjectType.NSERVER：
+    private static final EnumSet<ObjectType> GRS_LIMIT_TYPES = EnumSet.of(ObjectType.AUT_NUM, ObjectType.INETNUM, ObjectType.INET6NUM, ObjectType.ROUTE, ObjectType.ROUTE6, ObjectType.DOMAIN);
+    private static final EnumSet<ObjectType> DEFAULT_TYPES_LOOKUP_IN_BOTH_DIRECTIONS = EnumSet.of(ObjectType.INETNUM, ObjectType.INET6NUM, ObjectType.ROUTE, ObjectType.ROUTE6, ObjectType.DOMAIN);
+    private static final EnumSet<ObjectType> DEFAULT_TYPES_ALL = EnumSet.allOf(ObjectType.class);
+3./home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/executor/RpslObjectSearcher.java
+不做改动，由private Iterable<ResponseObject> indexLookup需要做如下4改动
+由result.add(rpslObjectDao.findByKey(type, searchValue))需要做如下5改动
+
+4./home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
+修改domain的nserver字段为lookupkey属性/keyarrtribute属性，参考conni
+
+5. /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectDao.java
+类似
+/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/index/IndexWithConni.java
+实现IndexWithNServer.java
+
+6.从@Path("/syncupdates")看新增nserver的逻辑
+/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectUpdateDao.java line215 先更新index再更新last
+在/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectOperations.java中实现更新，逻辑不需要改
+nserver表已经有了，但是需要改一下表格式，将host字段设置为只能填域名AttributeSyntax
+```
+```
+# 增加属性
+/home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeType.java
+
+nserver:        dns2.edu.cn
+ipnum:       202.112.0.13 2001:da8:1:100::13
+notify:      dbm@net.edu.cn
+changed:     hostmaster@net.edu.cn 20021003
+source:      CERNIC
+```
+
+```
+
+```
+路由类 route
+
+/home/gwy/whois/whois/whois-client/src/main/java/net/ripe/db/whois/api/rest/client/RestClientTarget.java
