@@ -86,6 +86,8 @@ public final class IndexStrategies {
                 new Unindexed(AttributeType.MP_MEMBERS),
                 new Unindexed(AttributeType.MP_PEER),
                 new Unindexed(AttributeType.MP_PEERING),
+                new Unindexed(AttributeType.IPv4),
+                new Unindexed(AttributeType.IPv6),
                 new Unindexed(AttributeType.NETNAME),   // TODO: [AH] ATM this is handled by JdbcInetnumDao/JdbcInet6numDao as a special case
                 new IndexWithValueAndType(AttributeType.NIC_HDL, "person_role", "nic_hdl"),
                 new IndexWithValueAndType(AttributeType.NOTIFY, "notify", "notify"),
@@ -93,6 +95,7 @@ public final class IndexStrategies {
                 new IndexWithReference(AttributeType.ORG, "org", "org_id"),
                 new Unindexed(AttributeType.ORG_TYPE),
                 new IndexWithValue(AttributeType.ORGANISATION, "organisation", "organisation"),
+                new IndexWithValue(AttributeType.NAMESERVER, "nameserver", "nameserver"),
                 new IndexWithName(AttributeType.ORG_NAME, "org_name"),
                 new IndexWithOrigin(AttributeType.ORIGIN),
                 new Unindexed(AttributeType.OWNER),

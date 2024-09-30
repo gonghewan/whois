@@ -197,6 +197,7 @@ public class MessageDequeue implements ApplicationService {
         try {
             final EmailMessageInfo bouncedMessage = messageService.getBouncedMessageInfo(message);
             if (bouncedMessage != null) {
+                LOGGER.info("[GWY LOG]bouncedMessage != null");
                 messageService.verifyAndSetAsUndeliverable(bouncedMessage);
                 mailMessageDao.deleteMessage(messageId);
                 return;
@@ -204,6 +205,7 @@ public class MessageDequeue implements ApplicationService {
 
             final EmailMessageInfo unsubscribeMessage = messageService.getUnsubscribedMessageInfo(message);
             if (unsubscribeMessage != null) {
+                LOGGER.info("[GWY LOG]unsubscribeMessage != null");
                 messageService.verifyAndSetAsUnsubscribed(unsubscribeMessage);
                 mailMessageDao.deleteMessage(messageId);
                 return;
@@ -212,6 +214,7 @@ public class MessageDequeue implements ApplicationService {
             final EmailMessageInfo automatedFailureMessage = messageService.getAutomatedFailureMessageInfo(message);
             if (automatedFailureMessage != null) {
                 // TODO: verify and set as undeliverable
+                LOGGER.info("[GWY LOG]automatedFailureMessage != null");
                 mailMessageDao.deleteMessage(messageId);
                 return;
             }
@@ -252,6 +255,7 @@ public class MessageDequeue implements ApplicationService {
 
     private void handleMessageInContext(final String messageId, final MimeMessage message) throws MessagingException {
         loggerContext.log("msg-in.txt", new MailMessageLogCallback(message));
+        LOGGER.info("[GWY LOG] enter handleMessageInContext");
         
         mailMessageDao.setStatus(messageId, DequeueStatus.LOGGED);
 

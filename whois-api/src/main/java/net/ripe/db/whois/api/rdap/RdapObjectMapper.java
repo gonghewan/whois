@@ -610,28 +610,28 @@ class RdapObjectMapper {
                 ipIntervalSet = Sets.newHashSet();
                 hostnameMap.put(hostname, ipIntervalSet);
             }
-            final IpInterval ipInterval = nserver.getIpInterval();
-            if (ipInterval != null) {
-                ipIntervalSet.add(ipInterval);
-            }
+            // final IpInterval ipInterval = nserver.getIpInterval();
+            // if (ipInterval != null) {
+            //     ipIntervalSet.add(ipInterval);
+            // }
         }
 
         for (final CIString hostname : hostnameMap.keySet()) {
             final Nameserver nameserver = new Nameserver();
             nameserver.setLdhName(hostname.toString());
 
-            final Set<IpInterval> ipIntervals = hostnameMap.get(hostname);
-            if (!ipIntervals.isEmpty()) {
-                final Nameserver.IpAddresses ipAddresses = new Nameserver.IpAddresses();
-                for (IpInterval ipInterval : ipIntervals) {
-                    if (ipInterval instanceof Ipv4Resource) {
-                        ipAddresses.getIpv4().add(IpInterval.asIpInterval(ipInterval.beginAsInetAddress()).toString());
-                    } else if (ipInterval instanceof Ipv6Resource) {
-                        ipAddresses.getIpv6().add(IpInterval.asIpInterval(ipInterval.beginAsInetAddress()).toString());
-                    }
-                }
-                nameserver.setIpAddresses(ipAddresses);
-            }
+            // final Set<IpInterval> ipIntervals = hostnameMap.get(hostname);
+            // if (!ipIntervals.isEmpty()) {
+            //     final Nameserver.IpAddresses ipAddresses = new Nameserver.IpAddresses();
+            //     for (IpInterval ipInterval : ipIntervals) {
+            //         if (ipInterval instanceof Ipv4Resource) {
+            //             ipAddresses.getIpv4().add(IpInterval.asIpInterval(ipInterval.beginAsInetAddress()).toString());
+            //         } else if (ipInterval instanceof Ipv6Resource) {
+            //             ipAddresses.getIpv6().add(IpInterval.asIpInterval(ipInterval.beginAsInetAddress()).toString());
+            //         }
+            //     }
+            //     nameserver.setIpAddresses(ipAddresses);
+            // }
 
             domain.getNameservers().add(nameserver);
         }

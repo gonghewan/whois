@@ -58,8 +58,8 @@ public class StartDomainTestRequest extends ZonemasterRequest {
             try {
                 final NServer nserver = NServer.parse(nserverValue);
                 final String hostname = nserver.getHostname().toString();
-                final String glue = nserver.getGlue() != null ? nserver.getGlue().toString() : null;
-                nameservers.add(new StartDomainTestRequest.Nameserver(hostname, glue));
+              //  final String glue = nserver.getGlue() != null ? nserver.getGlue().toString() : null;
+                nameservers.add(new StartDomainTestRequest.Nameserver(hostname));
             } catch (AttributeParseException e) {
                 // this should not happen: nserver attributes have already been validated
                 throw new IllegalArgumentException("invalid nserver " + nserverValue + ": " + e.getMessage());
@@ -152,20 +152,16 @@ public class StartDomainTestRequest extends ZonemasterRequest {
     }
 
     public static class Nameserver {
-        @JsonProperty
-        private String ip;
         @JsonProperty("ns")
         private String nameserver;
 
-        public Nameserver(final String nameserver, final String ip) {
+        public Nameserver(final String nameserver) {
             this.nameserver = nameserver;
-            this.ip = ip;
         }
 
         @Override
         public String toString() {
             return MoreObjects.toStringHelper(this)
-                    .add("ip", ip)
                     .add("ns", nameserver)
                     .toString();
         }

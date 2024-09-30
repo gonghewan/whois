@@ -230,6 +230,12 @@ public interface AttributeSyntax extends Documented {
     AttributeSyntax IPV6_SYNTAX = new AttributeSyntaxParser(new AttributeParser.Ipv6ResourceParser(), "" +
             "<ipv6-address>/<prefix>");
 
+    AttributeSyntax IPV4ADDR_SYNTAX = new AttributeSyntaxRegexp(Pattern.compile("(((\\d{1,2})|(1\\d{2})|(2[0-4]\\d)|(25[0-5]))\\.){3}((\\d{1,2})|(1\\d{2})|(2[0-4]\\d)|(25[0-5]))"), "" +
+            "ipv4-address");
+
+    AttributeSyntax IPV6ADDR_SYNTAX = new AttributeSyntaxRegexp(Pattern.compile("^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$"), "" +
+            "ipv6-address");
+
     AttributeSyntax IRT_SYNTAX = new AttributeSyntaxRegexp(Pattern.compile("(?i)^irt-[A-Z0-9_-]*[A-Z0-9]$"), "" +
             "An irt name is made up of letters, digits, the character\n" +
             "underscore \"_\", and the character hyphen \"-\"; it must start\n" +

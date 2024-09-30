@@ -32,7 +32,8 @@ public enum ObjectType {
     ROUTE("route", "rt"),
     ROUTE6("route6", "r6"),
     ROUTE_SET("route-set", "rs"),
-    RTR_SET("rtr-set", "is");
+    RTR_SET("rtr-set", "is"),
+    NAMESERVER("nameserver", "nameserver");
 
     private static final Map<CIString, ObjectType> TYPE_NAMES;
     private static final Set<ObjectType> SET_OBJECTS;

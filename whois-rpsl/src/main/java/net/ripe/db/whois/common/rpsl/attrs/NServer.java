@@ -16,42 +16,40 @@ public final class NServer {
     private static final Splitter SPLITTER = Splitter.on(' ').trimResults().omitEmptyStrings();
 
     private final CIString hostname;
-    private final IpInterval ipInterval;
 
-    private NServer(final CIString hostname, final IpInterval ipInterval) {
+    private NServer(final CIString hostname) {
         this.hostname = hostname;
-        this.ipInterval = ipInterval;
     }
 
     public CIString getHostname() {
         return hostname;
     }
 
-    @CheckForNull
-    public IpInterval getIpInterval() {
-        return ipInterval;
-    }
+    // @CheckForNull
+    // public IpInterval getIpInterval() {
+    //     return ipInterval;
+    // }
 
-    @CheckForNull
-    public CIString getGlue() {
-        if (ipInterval == null) {
-            return null;
-        }
+    // @CheckForNull
+    // public CIString getGlue() {
+    //     if (ipInterval == null) {
+    //         return null;
+    //     }
 
-        final String glue = ipInterval.toString();
-        final int slash = glue.indexOf('/');
+    //     final String glue = ipInterval.toString();
+    //     final int slash = glue.indexOf('/');
 
-        return CIString.ciString((slash != -1) ? glue.substring(0, slash) : glue);
-    }
+    //     return CIString.ciString((slash != -1) ? glue.substring(0, slash) : glue);
+    // }
 
     @Override
     public String toString() {
         final StringBuilder s = new StringBuilder();
         s.append(hostname);
 
-        if (ipInterval != null) {
-            s.append(' ').append(getGlue());
-        }
+        // if (ipInterval != null) {
+        //     s.append(' ').append(getGlue());
+        // }
 
         return s.toString();
     }
@@ -75,26 +73,26 @@ public final class NServer {
             throw new AttributeParseException("Hostname does not match", value);
         }
 
-        final IpInterval ipInterval;
-        if (iterator.hasNext()) {
-            try {
-                ipInterval = IpInterval.parse(iterator.next());
-            } catch (IllegalArgumentException e) {
-                throw new AttributeParseException("Invalid ip address", value);
-            }
+        // final IpInterval ipInterval;
+        // if (iterator.hasNext()) {
+        //     try {
+        //         ipInterval = IpInterval.parse(iterator.next());
+        //     } catch (IllegalArgumentException e) {
+        //         throw new AttributeParseException("Invalid ip address", value);
+        //     }
 
-            final int maxPrefix = ipInterval instanceof Ipv4Resource ? 32 : 128;
-            if (ipInterval.getPrefixLength() != maxPrefix) {
-                throw new AttributeParseException("Not a single address", value);
-            }
-        } else {
-            ipInterval = null;
-        }
+        //     final int maxPrefix = ipInterval instanceof Ipv4Resource ? 32 : 128;
+        //     if (ipInterval.getPrefixLength() != maxPrefix) {
+        //         throw new AttributeParseException("Not a single address", value);
+        //     }
+        // } else {
+        //     ipInterval = null;
+        // }
 
         if (iterator.hasNext()) {
             throw new AttributeParseException("Too many sections", value);
         }
 
-        return new NServer(ciString(hostname), ipInterval);
+        return new NServer(ciString(hostname));
     }
 }

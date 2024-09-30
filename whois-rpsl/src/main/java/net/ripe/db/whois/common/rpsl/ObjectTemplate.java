@@ -48,6 +48,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.AUTHOR;
 import static net.ripe.db.whois.common.rpsl.AttributeType.AUT_NUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CERTIF;
 import static net.ripe.db.whois.common.rpsl.AttributeType.COMPONENTS;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CONN_i;
 import static net.ripe.db.whois.common.rpsl.AttributeType.COUNTRY;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CREATED;
 import static net.ripe.db.whois.common.rpsl.AttributeType.DEFAULT;
@@ -72,7 +73,8 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.IMPORT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.IMPORT_VIA;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INET6NUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INETNUM;
-import static net.ripe.db.whois.common.rpsl.AttributeType.CONN_i;
+import static net.ripe.db.whois.common.rpsl.AttributeType.IPv4;
+import static net.ripe.db.whois.common.rpsl.AttributeType.IPv6;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INET_RTR;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INJECT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INTERFACE;
@@ -101,6 +103,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.MP_IMPORT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.MP_MEMBERS;
 import static net.ripe.db.whois.common.rpsl.AttributeType.MP_PEER;
 import static net.ripe.db.whois.common.rpsl.AttributeType.MP_PEERING;
+import static net.ripe.db.whois.common.rpsl.AttributeType.NAMESERVER;
 import static net.ripe.db.whois.common.rpsl.AttributeType.NETNAME;
 import static net.ripe.db.whois.common.rpsl.AttributeType.NIC_HDL;
 import static net.ripe.db.whois.common.rpsl.AttributeType.NOTIFY;
@@ -519,6 +522,14 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(MNT_BY, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(CREATED, GENERATED, SINGLE),
                         new AttributeTemplate(LAST_MODIFIED, GENERATED, SINGLE),
+                        new AttributeTemplate(SOURCE, MANDATORY, SINGLE)),
+
+                new ObjectTemplate(ObjectType.NAMESERVER, 57,
+                        new AttributeTemplate(NAMESERVER, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
+                        new AttributeTemplate(IPv4, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(IPv6, OPTIONAL, MULTIPLE),
+                        new AttributeTemplate(MNT_BY, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(NOTIFY, MANDATORY, MULTIPLE),
                         new AttributeTemplate(SOURCE, MANDATORY, SINGLE)),
 
                 new ObjectTemplate(ObjectType.RTR_SET, 23,

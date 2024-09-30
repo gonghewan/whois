@@ -20,20 +20,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class WhoisObjectMapper {
 
     private final String baseUrl;
     private final Map<Class, AttributeMapper> objectMapperFunctions;
     private final AttributeMapper primaryKeyAttributeMapper;
+    private static final Logger LOGGER = LoggerFactory.getLogger(WhoisObjectMapper.class);
+
 
     @Autowired
     public WhoisObjectMapper(@Value("${api.rest.baseurl}") final String baseUrl,
                              final AttributeMapper[] objectMapperFunctions) {
+        LOGGER.info("[GWY LOG] enter WhoisObjectMapper");
+        
         this.baseUrl = baseUrl;
 
         this.objectMapperFunctions = new HashMap<>(objectMapperFunctions.length);
         for (AttributeMapper objectMapperFunction : objectMapperFunctions) {
+            LOGGER.info("[GWY LOG] objectMapperFunction.getClass(): " + objectMapperFunction.getClass());
             this.objectMapperFunctions.put(objectMapperFunction.getClass(), objectMapperFunction);
         }
         this.primaryKeyAttributeMapper = this.objectMapperFunctions.get(FormattedClientAttributeMapper.class);

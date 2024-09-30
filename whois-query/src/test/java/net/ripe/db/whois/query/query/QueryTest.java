@@ -947,7 +947,7 @@ public class QueryTest {
     public void inverse_query_should_not_filter_object_types() {
         final Query query = Query.parse("-i nic-hdl 10.0.0.1");
 
-        assertThat(query.getObjectTypes(), hasSize(21));
+        assertThat(query.getObjectTypes(), hasSize(22));
     }
 
     @Test

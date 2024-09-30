@@ -44,6 +44,8 @@ import static net.ripe.db.whois.common.rpsl.AttributeSyntax.IMPORT_VIA_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.INET_RTR_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.INJECT_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.INTERFACE_SYNTAX;
+import static net.ripe.db.whois.common.rpsl.AttributeSyntax.IPV4ADDR_SYNTAX;
+import static net.ripe.db.whois.common.rpsl.AttributeSyntax.IPV6ADDR_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.IPV4_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.IPV6_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.IRT_SYNTAX;
@@ -282,6 +284,14 @@ public enum AttributeType implements Documented {
             .doc("Specifies a multiprotocol interface address within an Internet router.")
             .syntax(INTERFACE_SYNTAX)),
 
+    IPv4(new Builder("ipv4", "ipv4")
+            .doc("Specifies IPv4 address that object presents. ")
+            .syntax(IPV4ADDR_SYNTAX)),
+    
+    IPv6(new Builder("ipv6", "ipv6")
+            .doc("Specifies IPv6 address that object presents. ")
+            .syntax(IPV6ADDR_SYNTAX)),
+
     IRT(new Builder("irt", "it")
             .doc("Specifies the name of the irt object. The name should start with the prefix \"IRT-\", " +
                     "reserved for this type of object.")
@@ -492,6 +502,10 @@ public enum AttributeType implements Documented {
             .syntax(EMAIL_SYNTAX)),
 
     NSERVER(new Builder("nserver", "ns")
+            .doc("Specifies the nameservers of the domain.")
+            .syntax(NSERVER_SYNTAX)),
+
+    NAMESERVER(new Builder("nameserver", "nameserver")
             .doc("Specifies the nameservers of the domain.")
             .syntax(NSERVER_SYNTAX)),
 

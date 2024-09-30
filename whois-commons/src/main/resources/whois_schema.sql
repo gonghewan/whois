@@ -33,6 +33,21 @@ CREATE TABLE `abuse_c` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `nameserver`
+--
+
+DROP TABLE IF EXISTS `nameserver`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `nameserver` (
+  `object_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `nameserver` varchar(80) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`object_id`),
+  KEY `nameserver` (`nameserver`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `abuse_mailbox`
 --
 

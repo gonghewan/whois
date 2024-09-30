@@ -42,11 +42,10 @@ public class NServerValidator implements BusinessRuleValidator {
                 {
                     final boolean endsWithDomain = domain.endsWithDomain(nServer.getHostname());
 
-                    if (endsWithDomain && nServer.getIpInterval() == null) {
+                    if (endsWithDomain) {
                         messages.add(UpdateMessages.glueRecordMandatory(nServerAttribute, domain.getValue()));
-                    } else if (!endsWithDomain && nServer.getIpInterval() != null) {
-                        messages.add(UpdateMessages.invalidGlueForEnumDomain(nServerAttribute,nServer.getIpInterval().toString()));
                     }
+
                     break;
                 }
                 case INADDR:
@@ -56,11 +55,10 @@ public class NServerValidator implements BusinessRuleValidator {
                     if (domain.getReverseIp() != null) {
                         validateRipeNsServerPrefixLength(domain, update, nServerAttribute, updateContext);
                     }
-                    if (endsWithDomain && nServer.getIpInterval() == null) {
+                    if (endsWithDomain) {
                         messages.add(UpdateMessages.glueRecordMandatory(nServerAttribute, domain.getValue()));
-                    } else if (!endsWithDomain && nServer.getIpInterval() != null) {
-                        messages.add(UpdateMessages.hostNameMustEndWith(nServerAttribute, domain.getValue()));
                     }
+                    
                     break;
                 }
             }

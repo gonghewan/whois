@@ -35,6 +35,7 @@ public class ObjectTypeIds {
         BY_OBJECT_TYPE.put(ObjectType.ROUTE6, 19);
         BY_OBJECT_TYPE.put(ObjectType.ROUTE_SET, 13);
         BY_OBJECT_TYPE.put(ObjectType.RTR_SET, 16);
+        BY_OBJECT_TYPE.put(ObjectType.NAMESERVER, 23);
 
         BY_TYPE_ID = Maps.newHashMapWithExpectedSize(BY_OBJECT_TYPE.size());
         for (final Map.Entry<ObjectType, Integer> objectTypeIntegerEntry : BY_OBJECT_TYPE.entrySet()) {

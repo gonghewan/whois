@@ -256,6 +256,7 @@ curl -v -4 -X DELETE -H 'Content-Type: application/json' -H 'Accept:application/
 ### Request with Search
 ```
 http://ip:port/whois/search?query-string=0.0.0.0
+http://1.51.2.207:1080/whois/search?query-string=ns.ripe.net&inverse-attribute=nserver //inverse search
 ```
 
 ### Request with mail
@@ -502,19 +503,21 @@ $1$N2zhyJ3g$hzX7XTL84DtBkCWhBZE2c/
 修改：
 1.增加NSERVER：
 /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectType.java
-public enum ObjectType  
+public enum ObjectType   yes
+/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/domain/ObjectTypeIds.java 增加nserver对应的typeid yes
 
 2./home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/query/Query.java
 增加ObjectType.NSERVER：
     private static final EnumSet<ObjectType> GRS_LIMIT_TYPES = EnumSet.of(ObjectType.AUT_NUM, ObjectType.INETNUM, ObjectType.INET6NUM, ObjectType.ROUTE, ObjectType.ROUTE6, ObjectType.DOMAIN);
     private static final EnumSet<ObjectType> DEFAULT_TYPES_LOOKUP_IN_BOTH_DIRECTIONS = EnumSet.of(ObjectType.INETNUM, ObjectType.INET6NUM, ObjectType.ROUTE, ObjectType.ROUTE6, ObjectType.DOMAIN);
     private static final EnumSet<ObjectType> DEFAULT_TYPES_ALL = EnumSet.allOf(ObjectType.class);
+yes
 3./home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/executor/RpslObjectSearcher.java
 不做改动，由private Iterable<ResponseObject> indexLookup需要做如下4改动
 由result.add(rpslObjectDao.findByKey(type, searchValue))需要做如下5改动
 
 4./home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
-修改domain的nserver字段为lookupkey属性/keyarrtribute属性，参考conni
+修改domain的nserver字段为lookupkey属性/keyarrtribute属性，参考conni no
 
 5. /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectDao.java
 类似
@@ -522,15 +525,17 @@ public enum ObjectType
 实现IndexWithNServer.java
 
 6.从@Path("/syncupdates")看新增nserver的逻辑
-/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectUpdateDao.java line215 先更新index再更新last
+/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectUpdateDao.java line215 先更新index再更新last，新增时先更新last再更新index
 在/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectOperations.java中实现更新，逻辑不需要改
 nserver表已经有了，但是需要改一下表格式，将host字段设置为只能填域名AttributeSyntax
+/home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/attrs/NServer.java yes
+
 ```
 ```
 # 增加属性
 /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeType.java
-
-nserver:        dns2.edu.cn
+/home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java yes
+nserver:     dns2.edu.cn
 ipnum:       202.112.0.13 2001:da8:1:100::13
 notify:      dbm@net.edu.cn
 changed:     hostmaster@net.edu.cn 20021003
@@ -543,3 +548,22 @@ source:      CERNIC
 路由类 route
 
 /home/gwy/whois/whois/whois-client/src/main/java/net/ripe/db/whois/api/rest/client/RestClientTarget.java
+
+```
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectType.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/domain/ObjectTypeIds.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/query/Query.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/index/IndexStrategies.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectType.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/attrs/NServer.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/resources/whois_schema.sql
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/test/java/net/ripe/db/whois/common/rpsl/AttributeSanitizerTest.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/query/AttributeMatcher.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeType.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeSyntax.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeType.java
+gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/index/IndexStrategies.java
+```

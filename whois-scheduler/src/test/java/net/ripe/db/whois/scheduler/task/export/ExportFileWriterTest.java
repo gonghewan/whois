@@ -72,7 +72,7 @@ public class ExportFileWriterTest {
 
         final File[] files = folder.listFiles();
         assertThat(files, is(not(nullValue())));
-        assertThat(files.length, is(21));
+        assertThat(files.length, is(22));
 
         for (final File file : files) {
             final String fileName = file.getName();

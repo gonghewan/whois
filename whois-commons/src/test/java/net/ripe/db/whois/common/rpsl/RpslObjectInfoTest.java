@@ -21,6 +21,7 @@ import static net.ripe.db.whois.common.rpsl.ObjectType.INET_RTR;
 import static net.ripe.db.whois.common.rpsl.ObjectType.IRT;
 import static net.ripe.db.whois.common.rpsl.ObjectType.KEY_CERT;
 import static net.ripe.db.whois.common.rpsl.ObjectType.MNTNER;
+import static net.ripe.db.whois.common.rpsl.ObjectType.NAMESERVER;
 import static net.ripe.db.whois.common.rpsl.ObjectType.ORGANISATION;
 import static net.ripe.db.whois.common.rpsl.ObjectType.PEERING_SET;
 import static net.ripe.db.whois.common.rpsl.ObjectType.PERSON;
@@ -109,6 +110,6 @@ public class RpslObjectInfoTest {
         }
 
 
-        assertThat(objectTypesFromResult, contains(INETNUM, INET6NUM, AS_BLOCK, AUT_NUM, AS_SET, ROUTE, ROUTE6, ROUTE_SET, INET_RTR, FILTER_SET, PEERING_SET, RTR_SET, DOMAIN, POETIC_FORM, POEM, MNTNER, IRT, KEY_CERT, ORGANISATION, ROLE, PERSON));
+        assertThat(objectTypesFromResult, contains(INETNUM, INET6NUM, AS_BLOCK, AUT_NUM, AS_SET, ROUTE, ROUTE6, ROUTE_SET, INET_RTR, FILTER_SET, PEERING_SET, RTR_SET, DOMAIN, POETIC_FORM, POEM, MNTNER, IRT, KEY_CERT, ORGANISATION, ROLE, PERSON, NAMESERVER));
     }
 }

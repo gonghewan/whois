@@ -31,6 +31,7 @@ abstract class AttributeMatcher { // TODO [AK] Figure out what can be delegated 
     static final AttributeMatcher POETIC_FORM_MATCHER = new RegExpMatcher("^FORM-[A-Z0-9][A-Z0-9_-]*$");
     static final AttributeMatcher ROUTE_SET_MATCHER = new RegExpMatcher("(^|.*:)RS-[A-Z0-9_-]*[A-Z0-9](:.*|$)");
     static final AttributeMatcher RTR_SET_MATCHER = new RegExpMatcher("(^|.*:)RTRS-[A-Z0-9_-]*[A-Z0-9](:.*|$)");
+    static final AttributeMatcher NAMESERVER_MATCHER = new RegExpMatcher("^[A-Z0-9/-]*(\\.[A-Z0-9-]+)*\\.?$");
 
     static final AttributeMatcher AS_BLOCK_MATCHER = new AttributeMatcher() {
         @Override
@@ -112,6 +113,7 @@ abstract class AttributeMatcher { // TODO [AK] Figure out what can be delegated 
         attributeMatchers.put(AttributeType.ROUTE6, Sets.newHashSet(AttributeMatcher.IPV6_MATCHER, AttributeMatcher.ROUTE6_MATCHER));
         attributeMatchers.put(AttributeType.ROUTE_SET, Sets.newHashSet(AttributeMatcher.ROUTE_SET_MATCHER));
         attributeMatchers.put(AttributeType.RTR_SET, Sets.newHashSet(AttributeMatcher.RTR_SET_MATCHER));
+        attributeMatchers.put(AttributeType.NAMESERVER, Sets.newHashSet(AttributeMatcher.NAMESERVER_MATCHER));
     }
 
     static boolean fetchableBy(final AttributeType attributeType, final Query query) {
