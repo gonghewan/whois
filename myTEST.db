@@ -1,0 +1,182 @@
+###
+### Objects inherited from legacy (pre-whois-cluster) test DB; simply a standard set of objects that seem to be useful
+### Attention: This file does not have the same content as the /export/services/<service>/TEST.db files
+###            that are used to reload the TEST database.
+
+person:         Gong Wanying
+address:        Example LTD
+                High street 12
+		        St.Mery Mead
+	            Essex, UK
+phone:          +44 1737 892 004
+e-mail:         gwy@test-cernet.com
+nic-hdl:        GWY-TEST
+remarks:        *******************************
+remarks:        This object is only an example!
+remarks:        *******************************
+mnt-by:         TEST-DBM-MNT
+abuse-mailbox:  gwy@test-cernet.com
+source:         TEST
+
+mntner:         TEST-DBM-MNT
+descr:          Mntner for TEST-DBM-MNT
+admin-c:        AA1-TEST
+tech-c:         AA2-TEST
+upd-to:         gwy@test-cernet.com
+mnt-nfy:        gwy@test-cernet.com
+auth:           MD5-PW $1$XXXXXXXX$XXXXXXXXXXXXXXXXXXXXX/
+notify:         gwy@test-cernet.com
+mnt-by:         TEST-DBM-MNT
+remarks:        This is an automatically created object.
+source:         TEST
+
+role:           TEST ROLE
+nic-hdl:        AA2-TEST
+address:        Somewhere in nowhere
+phone:          +12 34 567 8900
+fax-no:         +12 34 567 8900
+e-mail:         gwy@test-cernet.com
+abuse-mailbox:  gwy@test-cernet.com
+admin-c:        AA1-TEST
+tech-c:         AA2-TEST
+mnt-by:         TEST-DBM-MNT
+remarks:        This is an automatically created object.
+source:         TEST
+
+role:           ROLE TEST
+nic-hdl:        AA1-TEST
+address:        Somewhere in nowhere
+phone:          +12 34 567 8900
+fax-no:         +12 34 567 8900
+e-mail:         gwy@test-cernet.com
+abuse-mailbox:  gwy@test-cernet.com
+admin-c:        AA1-TEST
+tech-c:         AA2-TEST
+mnt-by:         TEST-DBM-MNT
+remarks:        This is an automatically created object.
+source:         TEST
+
+organisation: ORG-TT1-TEST
+org-name:     ORG TEST
+org-type:     RIR
+address:      Somewhere in nowhere
+phone:        +12 34 567 8900
+fax-no:       +12 34 567 8900
+e-mail:       gwy@test-cernet.com
+admin-c:      AA1-TEST
+tech-c:       AA2-TEST
+notify:       gwy@test-cernet.com
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+inetnum:      0.0.0.0 - 255.255.255.255
+netname:      IANA-BLK
+conni:        BJ00000001
+descr:        The whole IPv4 address space
+country:      EU # Country is really world wide
+org:          ORG-TT1-TEST
+admin-c:      AA1-TEST
+tech-c:       AA2-TEST
+status:       ALLOCATED UNSPECIFIED
+remarks:      The country is really worldwide.
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+inet6num:     0::/0
+netname:      ROOT
+conni:        BJ00000002
+descr:        Root inet6num object
+country:      EU # Country is really world wide
+org:          ORG-TT1-TEST
+admin-c:      AA1-TEST
+tech-c:       AA2-TEST
+mnt-by:       TEST-DBM-MNT
+status:       ALLOCATED-BY-RIR
+remarks:      This network in not allocated.
+remarks:      This is an automatically created object.
+source:       TEST
+
+as-block:     AS1 - AS4294967295
+descr:        whole as block
+org:          ORG-TT1-TEST
+admin-c:      AA1-TEST
+tech-c:       AA2-TEST
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+domain:       in-addr.arpa
+descr:        The whole IPv4 address space
+admin-c:      AA1-TEST
+tech-c:       AA2-TEST
+zone-c:       AA2-TEST
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+domain:       ip6.arpa
+descr:        The whole IPv6 address space
+admin-c:      AA1-TEST
+tech-c:       AA2-TEST
+zone-c:       AA2-TEST
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+domain:       e164.arpa
+descr:        The whole IPv6 address space
+admin-c:      AA1-TEST
+tech-c:       AA2-TEST
+zone-c:       AA2-TEST
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       TEST-DBM-MNT
+remarks:      This is an automatically created object.
+source:       TEST
+
+inetnum:        10.0.0.0 - 10.255.255.255
+netname:        IANA-ABLK-RESERVED1
+conni:        BJ00000003
+descr:          Class A address space for private internets
+descr:          See http://www.ripe.net/db/rfc1918.html for details
+country:        EU # Country is really world wide
+admin-c:        AA1-TEST
+tech-c:         AA2-TEST
+status:         ALLOCATED UNSPECIFIED
+remarks:        This network should never be routed outside an enterprise
+remarks:        See RFC1918 for further information
+mnt-by:         TEST-DBM-MNT
+geoloc:		52.37559917665907 4.888916015625
+org:		ORG-TT1-TEST
+source:         TEST
+
+inetnum:        10.11.11.0 - 10.11.11.255
+netname:        Example-Network
+conni:        BJ00000004
+descr:          This is a fictitious assignment for the
+descr:          End-User called "Example"
+country:        GB
+admin-c:        AA1-TEST
+tech-c:         AA1-TEST
+status:         ASSIGNED PA
+notify:         gwy@test-cernet.com
+mnt-by:         TEST-DBM-MNT
+source:         TEST
+
+aut-num:        AS101111
+as-name:        Test-AS-2
+descr:          AS for 10.11.11.0 - 10.11.11.255
+org:		ORG-TT1-TEST
+admin-c:        AA1-TEST
+tech-c:         AA1-TEST
+mnt-by:         TEST-DBM-MNT
+source:         TEST
+
+route:          10.11.11.0/24
+origin:         AS101111
+descr:          route
+mnt-by:         TEST-DBM-MNT
+source:         TEST
