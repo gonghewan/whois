@@ -55,7 +55,7 @@ public final class IndexStrategies {
                 new Unindexed(AttributeType.C_LEGAL_PERSON),
                 new Unindexed(AttributeType.C_NAME),
                 new Unindexed(AttributeType.POSTALCODE),
-                new IndexWithValue(AttributeType.DOMAIN, "domain", "domain"),
+                //new IndexWithValue(AttributeType.DOMAIN, "domain", "domain"),
                 new IndexWithValue(AttributeType.DS_RDATA, "ds_rdata", "ds_rdata"),
                 new Unindexed(AttributeType.ENCRYPTION),
                 new Unindexed(AttributeType.EXPORT),
@@ -75,6 +75,7 @@ public final class IndexStrategies {
                 new Unindexed(AttributeType.IMPORT_VIA),
                 new IndexWithInet6num(AttributeType.INET6NUM),
                 new IndexWithInetnum(AttributeType.INETNUM),
+                new IndexWithDomain(AttributeType.DOMAIN),
                 new IndexWithValue(AttributeType.INET_RTR, "inet_rtr", "inet_rtr"),
                 new Unindexed(AttributeType.INJECT),
                 new Unindexed(AttributeType.INTERFACE),
@@ -105,7 +106,7 @@ public final class IndexStrategies {
                 new Unindexed(AttributeType.MP_PEERING),
                 new Unindexed(AttributeType.IPv4),
                 new Unindexed(AttributeType.IPv6),
-                new Unindexed(AttributeType.NETNAME),   // TODO: [AH] ATM this is handled by JdbcInetnumDao/JdbcInet6numDao as a special case
+                new Unindexed(AttributeType.NETNAME),   // TODO: [AH] ATM this is handled by JdbcInetnumDao/JdbcInet6numDao/JdbcDomainDao as a special case
                 new IndexWithValueAndType(AttributeType.NIC_HDL, "person_role", "nic_hdl"),
                 new IndexWithValueAndType(AttributeType.NOTIFY, "notify", "notify"),
                 new IndexWithNServer(AttributeType.NSERVER, "nserver", "host"),

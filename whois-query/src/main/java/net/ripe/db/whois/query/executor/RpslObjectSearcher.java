@@ -160,8 +160,7 @@ class RpslObjectSearcher {
                 } 
                 return proxy(inet6numDao.findByConnp(query.getSearchValue()));
             // case DOMAIN:
-            //     LOGGER.info("[GWY LOG] DOMAIN");
-            //     return  proxy(domainDao.findByname(query.getSearchValue()));
+            //     return domainLookup(query);
             case ROUTE:
                 LOGGER.info("[GWY LOG] ROUTE");
                 return routeLookup(route4Tree, query);
@@ -203,6 +202,7 @@ class RpslObjectSearcher {
     }
 
     private Iterable<ResponseObject> domainLookup(final Query query) {
+
         String searchValue = query.getSearchValue().toLowerCase();
 
         if (searchValue.endsWith("e164.arpa")) {

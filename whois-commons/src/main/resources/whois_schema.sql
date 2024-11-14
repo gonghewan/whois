@@ -170,8 +170,10 @@ DROP TABLE IF EXISTS `domain`;
 CREATE TABLE `domain` (
   `object_id` int(10) unsigned NOT NULL DEFAULT '0',
   `domain` varchar(254) NOT NULL DEFAULT '',
+  `netname` varchar(254) NOT NULL DEFAULT '',
   PRIMARY KEY (`object_id`),
-  KEY `domain` (`domain`)
+  KEY `domain` (`domain`),
+  KEY `netname` (`netname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
