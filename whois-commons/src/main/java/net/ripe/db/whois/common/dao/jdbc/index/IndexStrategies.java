@@ -73,6 +73,7 @@ public final class IndexStrategies {
                 new IndexWithIfAddr(AttributeType.IFADDR),
                 new Unindexed(AttributeType.IMPORT),
                 new Unindexed(AttributeType.IMPORT_VIA),
+                new Unindexed(AttributeType.IPNUM),
                 new IndexWithInet6num(AttributeType.INET6NUM),
                 new IndexWithInetnum(AttributeType.INETNUM),
                 new IndexWithDomain(AttributeType.DOMAIN),
