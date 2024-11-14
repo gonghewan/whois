@@ -3235,7 +3235,7 @@ public class WhoisRestServiceTestIntegration extends AbstractIntegrationTest {
                         "        { \"name\": \"source\", \"value\": \"TEST\" }\n" +
                         "        ] }\n" +
                         "    }] \n" +
-                        "}}", new MediaType("application", "json", StandardCharsets.ISO_8859_1.displayName())), String.class);
+                        "}}", new MediaType("application", "json", StandardCharsets.UTF_8.displayName())), String.class);
             fail();
         } catch (BadRequestException e) {
             final WhoisResources whoisResources = e.getResponse().readEntity(WhoisResources.class);

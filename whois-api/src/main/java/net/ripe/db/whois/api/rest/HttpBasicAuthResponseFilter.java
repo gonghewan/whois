@@ -16,12 +16,12 @@ public class HttpBasicAuthResponseFilter implements ContainerResponseFilter {
     @Context
     private HttpServletRequest request;
 
-    public static final String BASIC_CHARSET_ISO_8859_1_LATIN_1 = "Basic ,charset=\"iso-8859-1 / Latin-1\"";
+    public static final String BASIC_CHARSET_UTF8_1 = "Basic ,charset=\"utf8\"";
 
     @Override
     public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) throws IOException {
         if (responseContext.getStatus() == UNAUTHORIZED.getStatusCode() && RestServiceHelper.isBasicAuth((request))) {
-            responseContext.getHeaders().putSingle(HttpHeaders.WWW_AUTHENTICATE, BASIC_CHARSET_ISO_8859_1_LATIN_1);
+            responseContext.getHeaders().putSingle(HttpHeaders.WWW_AUTHENTICATE, BASIC_CHARSET_UTF8_1);
         }
     }
 }

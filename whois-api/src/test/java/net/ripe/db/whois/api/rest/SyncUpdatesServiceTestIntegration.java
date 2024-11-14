@@ -736,8 +736,8 @@ public class SyncUpdatesServiceTestIntegration extends AbstractIntegrationTest {
                                 "nic-hdl:    TP1-TEST\n" +
                                 "mnt-by:     mntner\n" +
                                 "source:     INVALID\n" +
-                                "password:   emptypassword", StandardCharsets.ISO_8859_1),
-                        MediaType.valueOf("application/x-www-form-urlencoded; charset=ISO-8859-1")), String.class);
+                                "password:   emptypassword", StandardCharsets.UTF_8),
+                        MediaType.valueOf("application/x-www-form-urlencoded; charset=utf8")), String.class);
 
         assertThat(response, containsString("***Error:   Unrecognized source: INVALID"));
         assertThat(response, containsString("address:        Flughafenstraße 109/a"));
@@ -758,7 +758,7 @@ public class SyncUpdatesServiceTestIntegration extends AbstractIntegrationTest {
                                 "nic-hdl:    TP1-TEST\n" +
                                 "mnt-by:     mntner-mnt\n" +
                                 "source:     TEST\n" +
-                                "password:   emptypassword", StandardCharsets.ISO_8859_1),
+                                "password:   emptypassword", StandardCharsets.UTF_8),
                         MediaType.valueOf("application/x-www-form-urlencoded; charset=ISO-8859-1")), String.class);
 
         assertThat(response, containsString("Modify SUCCEEDED: [person] TP1-TEST"));
@@ -971,7 +971,7 @@ public class SyncUpdatesServiceTestIntegration extends AbstractIntegrationTest {
                 .field("NEW", "yes");
         RestTest.target(getPort(), "whois/syncupdates/test")
                 .request()
-                .post(Entity.entity(multipart, new MediaType("multipart", "form-data", StandardCharsets.ISO_8859_1.displayName())), String.class);
+                .post(Entity.entity(multipart, new MediaType("multipart", "form-data", StandardCharsets.UTF_8.displayName())), String.class);
 
         assertThat(databaseHelper.lookupObject(ObjectType.PERSON, "TP2-TEST").toString(), containsString("address:        ÅçÅç"));
     }
@@ -994,7 +994,7 @@ public class SyncUpdatesServiceTestIntegration extends AbstractIntegrationTest {
                 .field("NEW", "yes");
         RestTest.target(getPort(), "whois/syncupdates/test")
                 .request()
-                .post(Entity.entity(multipart, new MediaType("multipart", "form-data", StandardCharsets.ISO_8859_1.displayName())), String.class);
+                .post(Entity.entity(multipart, new MediaType("multipart", "form-data", StandardCharsets.UTF_8.displayName())), String.class);
 
         assertThat(databaseHelper.lookupObject(ObjectType.PERSON, "TP2-TEST").toString(), containsString("e-mail:         no-reply@xn--zrich-kva.example"));
     }
@@ -1098,7 +1098,7 @@ public class SyncUpdatesServiceTestIntegration extends AbstractIntegrationTest {
 
         final String response = RestTest.target(getPort(), "whois/syncupdates/test")
                 .request()
-                .post(Entity.entity(multipart, new MediaType("multipart", "form-data", StandardCharsets.ISO_8859_1.displayName())), String.class);
+                .post(Entity.entity(multipart, new MediaType("multipart", "form-data", StandardCharsets.UTF_8.displayName())), String.class);
 
         assertThat(databaseHelper.lookupObject(ObjectType.PERSON, "TP2-TEST").toString(), containsString("address:        ÅçÅç"));
         assertThat(response, containsString("Create SUCCEEDED"));

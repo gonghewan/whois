@@ -678,7 +678,7 @@ public class Query {
     }
 
     private static Charset getDefaultCharset(){
-        return StandardCharsets.ISO_8859_1;
+        return StandardCharsets.UTF_8;
     }
 
     public enum SystemInfoOption {

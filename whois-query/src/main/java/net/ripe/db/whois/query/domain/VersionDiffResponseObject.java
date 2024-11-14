@@ -28,7 +28,7 @@ public class VersionDiffResponseObject implements ResponseObject {
 
     @Override
     public byte[] toByteArray() {
-        return formattedText.getBytes(StandardCharsets.ISO_8859_1);
+        return formattedText.getBytes(StandardCharsets.UTF_8);
     }
 
     @Override

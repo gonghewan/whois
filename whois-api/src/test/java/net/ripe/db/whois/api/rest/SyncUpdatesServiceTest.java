@@ -314,7 +314,7 @@ public class SyncUpdatesServiceTest {
         final String redirect = null;
         final String source = "test";
         final String ssoToken = "valid-token";
-        final String contentType = "charset=\"latin1\"";
+        final String contentType = "charset=\"utf8\"";
 
         subject.doMultipartPost(request, source, data, help, nnew, diff, redirect, contentType, ssoToken);
 
@@ -349,7 +349,7 @@ public class SyncUpdatesServiceTest {
         final String redirect = null;
         final String source = "test";
         final String ssoToken = "invalid-token";
-        final String contentType = "charset=\"latin1\"";
+        final String contentType = "charset=\"utf8\"";
 
         subject.doMultipartPost(request, source, data, help, nnew, diff, redirect, contentType, ssoToken);
 

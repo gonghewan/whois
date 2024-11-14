@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 
 import static jakarta.ws.rs.core.Response.Status.OK;
-import static net.ripe.db.whois.api.rest.HttpBasicAuthResponseFilter.BASIC_CHARSET_ISO_8859_1_LATIN_1;
+import static net.ripe.db.whois.api.rest.HttpBasicAuthResponseFilter.BASIC_CHARSET_UTF8_1;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -196,7 +196,7 @@ public class WhoisRestBasicAuthTestIntegration extends AbstractHttpsIntegrationT
                 .post(Entity.entity(map(PAULETH_PALTHEN), MediaType.APPLICATION_XML), Response.class);
 
         assertThat(response.getStatus(), is(HttpStatus.UNAUTHORIZED_401));
-        assertThat(response.getHeaderString(HttpHeaders.WWW_AUTHENTICATE), is(BASIC_CHARSET_ISO_8859_1_LATIN_1));
+        assertThat(response.getHeaderString(HttpHeaders.WWW_AUTHENTICATE), is(BASIC_CHARSET_UTF8_1));
     }
 
     @Test

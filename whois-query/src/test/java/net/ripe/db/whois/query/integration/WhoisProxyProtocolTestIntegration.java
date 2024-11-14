@@ -91,10 +91,10 @@ public class WhoisProxyProtocolTestIntegration extends AbstractQueryIntegrationT
              final InputStream in = socket.getInputStream()) {
 
             out.write(createProxyProtocolHeader(clientIp));
-            out.write((query + "\r\n").getBytes(StandardCharsets.ISO_8859_1));
+            out.write((query + "\r\n").getBytes(StandardCharsets.UTF_8));
             out.flush();
 
-            return IOUtils.toString(new InputStreamReader(in, StandardCharsets.ISO_8859_1));
+            return IOUtils.toString(new InputStreamReader(in, StandardCharsets.UTF_8));
         } catch (IOException ioe) {
             throw new RuntimeException(ioe);
         }

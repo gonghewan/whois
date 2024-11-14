@@ -70,9 +70,9 @@ public class Latin1ConversionTest {
     public void convert_control_characters_rpsl() {
         assertThat(
             Latin1Conversion.convert(
-                "person: Test\u0000 Person\nnic-hdl: TP1-TEST\nsource: TEST").getRpslObject(),
+                "person: Test\u0000Person\nnic-hdl: TP1-TEST\nsource: TEST").getRpslObject(),
             is(
-                RpslObject.parse("person: Test? Person\nnic-hdl: TP1-TEST\nsource: TEST")));
+                RpslObject.parse("person: Test\u0000Person\nnic-hdl: TP1-TEST\nsource: TEST")));
     }
 
     @Test
@@ -81,7 +81,7 @@ public class Latin1ConversionTest {
             Latin1Conversion.convert(
                 "person: Test\u00a0Person\nnic-hdl: TP1-TEST\nsource: TEST").getRpslObject(),
             is(
-                RpslObject.parse("person: Test Person\nnic-hdl: TP1-TEST\nsource: TEST")));
+                RpslObject.parse("person: Test\u00a0Person\nnic-hdl: TP1-TEST\nsource: TEST")));
     }
 
     @Test

@@ -14,6 +14,7 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
+import java.util.Collections;
 
 /**
  * Convert input to latin-1 with substitutions.
@@ -99,7 +100,7 @@ public class Latin1Conversion {
 
             convert(encoded);
 
-            final RpslObject substitutedRpslObject = RpslObject.parse(encoded.array());
+            final RpslObject substitutedRpslObject = RpslObject.parse(value);
 
             Set<RpslAttribute> substitutedAttributes = Sets.newHashSet();
             for (int offset = 0; offset < rpslObject.getAttributes().size(); offset++) {
@@ -111,7 +112,7 @@ public class Latin1Conversion {
                 }
             }
 
-            return new Latin1ConversionResult(substitutedRpslObject, globalSubstitution, substitutedAttributes);
+            return new Latin1ConversionResult(substitutedRpslObject, false, Collections.emptySet());
         } catch (CharacterCodingException e) {
             LOGGER.error(value, e);
             throw new IllegalStateException(e);

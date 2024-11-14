@@ -79,7 +79,7 @@ public class HttpsBasicAuthCustomizer implements Filter {
         final String base64Credentials = authHeader.substring(BASIC_AUTH.length()).trim();
         final byte[] credDecoded = new Base64().decode(base64Credentials);
 
-        final String usernameWithPassword = new String(credDecoded, StandardCharsets.ISO_8859_1);
+        final String usernameWithPassword = new String(credDecoded, StandardCharsets.UTF_8);
 
         return usernameWithPassword.contains(":") ?  StringUtils.substringAfter(usernameWithPassword, ":") : null;
     }

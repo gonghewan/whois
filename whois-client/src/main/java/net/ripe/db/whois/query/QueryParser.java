@@ -42,10 +42,10 @@ public class QueryParser {
     public QueryParser(final String query) {
         originalStringQuery = query;
 
-        final String substituted = Latin1Conversion.convertString(query);
-        hasSubstitutions = !substituted.equals(query);
+        // final String substituted = Latin1Conversion.convertString(query);
+        hasSubstitutions = false;
 
-        options = PARSER.parse(Iterables.toArray(SPACE_SPLITTER.split(substituted), String.class));
+        options = PARSER.parse(Iterables.toArray(SPACE_SPLITTER.split(query), String.class));
 
 
         final List<?> searchKeys = options.nonOptionArguments();

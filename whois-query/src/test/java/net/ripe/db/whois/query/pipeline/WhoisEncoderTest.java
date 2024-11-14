@@ -76,7 +76,7 @@ public class WhoisEncoderTest {
         when(contextMock.alloc()).thenReturn(ByteBufAllocator.DEFAULT);
         when(contextMock.channel()).thenReturn(channelMock);
         when(channelMock.attr(CHARSET_ATTRIBUTE)).thenReturn(attributeMock);
-        when(attributeMock.get()).thenReturn(StandardCharsets.ISO_8859_1.name());
+        when(attributeMock.get()).thenReturn(StandardCharsets.UTF_8.name());
 
         ByteBuf result = encode(objectMock);
 
