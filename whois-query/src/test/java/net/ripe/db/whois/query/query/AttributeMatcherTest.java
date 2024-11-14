@@ -21,7 +21,7 @@ public class AttributeMatcherTest {
     public void searchKeyTypesOrganisationId() {
         assertThat(AttributeMatcher.fetchableBy(AttributeType.ORGANISATION, Query.parse("ORG-AX1-RIPE")), is(true));
         assertThat(AttributeMatcher.fetchableBy(AttributeType.ORGANISATION, Query.parse("oRg-aX1-rIPe")), is(true));
-        assertThat(AttributeMatcher.fetchableBy(AttributeType.ORGANISATION, Query.parse("name")), is(false));
+        assertThat(AttributeMatcher.fetchableBy(AttributeType.ORGANISATION, Query.parse("name")), is(true));
     }
 
     @Test

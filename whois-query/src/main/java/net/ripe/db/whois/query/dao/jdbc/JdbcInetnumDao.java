@@ -34,13 +34,13 @@ public class JdbcInetnumDao implements InetnumDao {
     }
 
     @Override
-    public List<Ipv4Entry> findByConni(final String conni) {
+    public List<Ipv4Entry> findByConnp(final String connp) {
         return jdbcTemplate.query(
                 "SELECT begin_in, end_in, object_id " +
                         "FROM inetnum " +
-                        "WHERE conni = ? " +
+                        "WHERE connp = ? " +
                         "ORDER BY begin_in ASC, end_in DESC",
                 new Ipv4EntryMapper(),
-                conni);
+                connp);
     }
 }

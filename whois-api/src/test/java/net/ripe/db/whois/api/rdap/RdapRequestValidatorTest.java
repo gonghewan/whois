@@ -14,18 +14,6 @@ public class RdapRequestValidatorTest {
     private RdapRequestValidator validator;
 
     @Test
-    public void shouldThrowExceptionForInvalidOrganisation() {
-        assertThrows(RdapException.class, () -> {
-            validator.validateEntity("ORG-Test");
-        });
-    }
-
-    @Test
-    public void shouldNotThrowAnyExceptionForValidEntity() {
-        validator.validateEntity("ORG-BAD1-TEST");
-    }
-
-    @Test
     public void shouldThrowExceptionForInvalidAutnum() {
         assertThrows(RdapException.class, () -> {
             validator.validateAutnum("TEST");

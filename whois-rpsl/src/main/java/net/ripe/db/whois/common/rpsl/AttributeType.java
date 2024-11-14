@@ -169,9 +169,8 @@ public enum AttributeType implements Documented {
             .doc("The \"components:\" attribute defines what component routes are used to form the aggregate.")
             .syntax(COMPONENTS_SYNTAX)),
 
-    //test by gwy
-    CONN_i(new Builder("conni","ci")
-          .doc("test by gwy").syntax(NETNAME_SYNTAX)),
+    CONN_P(new Builder("conn-p","cp")
+          .doc("route info").syntax(NETNAME_SYNTAX)),
 
     COUNTRY(new Builder("country", "cy")
             .doc("Identifies the country.")
@@ -522,9 +521,70 @@ public enum AttributeType implements Documented {
                     "the \"descr:\" attribute if required.")
             .syntax(ORG_NAME_SYNTAX)),
 
+    IPNUM(new Builder("ipnum", "ipnum")
+            .doc("ipnum consists ipv4 and ipv6, such as 1.1.1.1 0::0.")
+            .syntax(FREE_FORM_SYNTAX)),
+
+    C_ORG_NAME(new Builder("c-org-name", "con")
+            .doc("organisation name in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+            
+    C_NAME(new Builder("c-name", "cname")
+            .doc("person name in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+            
     ORG_TYPE(new Builder("org-type", "ot")
             .doc("Specifies the type of the organisation.")
-            .syntax(ORG_TYPE_SYNTAX)),
+            .syntax(FREE_FORM_SYNTAX)),
+
+    CERT_TYPE(new Builder("cert-type", "ct")
+            .doc("Specifies the type of the organisation certification.")
+            .syntax(FREE_FORM_SYNTAX)),
+    CERT_NO(new Builder("cert-no", "cn")
+            .doc("Specifies the no. of the organisation certification.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_ADDRESS(new Builder("c-address", "ca")
+            .doc("Specifies the address of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    STREET(new Builder("street", "str")
+            .doc("Specifies the street of the organisation.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_STREET(new Builder("c-street", "cstr")
+            .doc("Specifies the street of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    CITY(new Builder("city", "city")
+            .doc("Specifies the city of the organisation.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_CITY(new Builder("c-city", "ccity")
+            .doc("Specifies the city of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    PROVINCE(new Builder("province", "prv")
+            .doc("Specifies the province of the organisation.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_PROVINCE(new Builder("c-province", "cprv")
+            .doc("Specifies the province of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_COUNTRY(new Builder("c-country", "ccy")
+            .doc("Specifies the country of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_DISTRICT(new Builder("c-district", "cdt")
+            .doc("Specifies the district of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_PROVINCE_ID(new Builder("c-provinceId", "cpid")
+            .doc("Specifies the province ID of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_CITY_ID(new Builder("c-cityId", "ctid")
+            .doc("Specifies the city ID of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    LEGAL_PERSON(new Builder("legal-person", "lp")
+            .doc("Specifies the legal-person of the organisation.")
+            .syntax(FREE_FORM_SYNTAX)),
+    C_LEGAL_PERSON(new Builder("c-legal-person", "clp")
+            .doc("Specifies the legal-person of the organisation in chinese.")
+            .syntax(FREE_FORM_SYNTAX)),
+    POSTALCODE(new Builder("postalcode", "ptd")
+            .doc("Specifies the postalcode of the organisation.")
+            .syntax(FREE_FORM_SYNTAX)),
 
     ORGANISATION(new Builder("organisation", "oa")
             .doc("Specifies the ID of an organisation object. When creating an object, one has to specify " +

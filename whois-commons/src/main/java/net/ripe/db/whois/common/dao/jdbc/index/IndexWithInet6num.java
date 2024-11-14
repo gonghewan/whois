@@ -28,17 +28,17 @@ class IndexWithInet6num extends IndexStrategyWithSingleLookupTable {
         final CIString netnameAttribute = object.getValueOrNullForAttribute(AttributeType.NETNAME);
         final String netname = netnameAttribute == null ? "" : netnameAttribute.toString();
 
-        final CIString conniAttribute = object.getValueOrNullForAttribute(AttributeType.CONN_i);
-        final String conni = conniAttribute == null ? "" : conniAttribute.toString();
+        final CIString connpAttribute = object.getValueOrNullForAttribute(AttributeType.CONN_P);
+        final String connp = connpAttribute == null ? "" : connpAttribute.toString();
 
         return jdbcTemplate.update(
-                "INSERT INTO inet6num (object_id, i6_msb, i6_lsb, prefix_length, netname, conni) VALUES (?, ?, ?, ?, ?, ?)",
+                "INSERT INTO inet6num (object_id, i6_msb, i6_lsb, prefix_length, netname, connp) VALUES (?, ?, ?, ?, ?, ?)",
                 objectInfo.getObjectId(),
                 Long.toString(Ipv6Resource.msb(resource.begin())),
                 Long.toString(Ipv6Resource.lsb(resource.begin())),
                 resource.getPrefixLength(),
                 netname,
-                conni);
+                connp);
     }
 
     @Override

@@ -152,13 +152,9 @@ public class DummifierNrtmTest {
                         "created:        2001-02-04T17:00:00Z\n" +
                         "last-modified:  2001-02-04T17:00:00Z\n" +
                         "abuse-c:        FOO\n" +
-                        "address:        Dummy address for FOO\n" +
                         "country:        FOO\n" +
-                        "e-mail:         unread@ripe.net\n" +
                         "mnt-by:         FOO\n" +
-                        "mnt-ref:        FOO\n" +
                         "org-name:       FOO\n" +
-                        "org-type:       FOO\n" +
                         "source:         FOO\n"));
     }
 
@@ -255,8 +251,6 @@ public class DummifierNrtmTest {
                 "organisation:   FOO\n" +
                 "created:        2001-02-04T17:00:00Z\n" +
                 "last-modified:  2001-02-04T17:00:00Z\n" +
-                "address:        Dummy address for FOO\n" +
-                "e-mail:         unread@ripe.net\n" +
                 "source:         TEST\n" +
                 "remarks:        ****************************\n" +
                 "remarks:        * THIS OBJECT IS MODIFIED\n" +

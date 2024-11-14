@@ -2,7 +2,6 @@
 
 aut-num: 278
 owner:   FUNDAÇÃO DE AMPARO À PESQUISA DO ESTADO SÃO PAULO
-city:    Mexico
 country: MX
 created: 1989-03-31
 changed: 2011-05-03
@@ -11,7 +10,6 @@ source:  LACNIC
 inetnum:    24.232.16/24
 status:     reallocated
 owner:      Description
-city:       
 country:    AR
 owner-c:    
 tech-c:     
@@ -23,7 +21,6 @@ source:     LACNIC
 inetnum:    2001:1200:2000::/48
 status:     reallocated
 owner:      Description
-city:       Tlapan
 country:    MX
 owner-c:    IIM
 tech-c:     IIM

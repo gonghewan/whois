@@ -12,9 +12,7 @@ Specific
 
 5.额外搭建一个邮件服务器用于接收email-update请求
 
-Todo:
-
-1. 增加nserver类型，并实现相关项索引
+6.增加nserver类型，并实现相关项索引
 
 
 环境配置
@@ -107,27 +105,27 @@ INTERNALS_LOCAL; NRTM_LOCAL;
 
 // 写入test数据  
 use WHOIS_LOCAL;
-source ./who is-commons/src/main/resources/who is_schema.sql 
+source ./whois-commons/src/main/resources/whois_schema.sql 
 use MAILUPDATES_LOCAL;
-source ./who is-commons/src/main/resources/mailupdates_schema.sql 
+source ./whois-commons/src/main/resources/mailupdates_schema.sql 
 use ACL_LOCAL;
-source ./who is-commons/src/main/resources/acl_schema.sql 
+source ./whois-commons/src/main/resources/acl_schema.sql 
 use INTERNALS_LOCAL;
-source ./who is-commons/src/main/resources/internals_schema.sql
+source ./whois-commons/src/main/resources/internals_schema.sql
 
 use NRTM_LOCAL;
-source ./who is-commons/src/main/resources/nrtm_schema.sql 
+source ./whois-commons/src/main/resources/nrtm_schema.sql 
 use WHOIS_LOCAL;
-source ./who is-commons/src/main/resources/who is_data.sql 
+source ./whois-commons/src/main/resources/whois_data.sql 
 use INTERNALS_LOCAL;
-source ./who is-commons/src/main/resources/internals_data.sql 
+source ./whois-commons/src/main/resources/internals_data.sql 
 use NRTM_LOCAL;
-source ./who is-commons/src/main/resources/nrtm_data.sql
+source ./whois-commons/src/main/resources/nrtm_data.sql
 ```
 
 切换dbase用户
 ```
-//启动whois，注意看报错
+//启动whois，注意看报错 nrtm目前有报错
 /usr/bin/java -Dwhois -Djsse.enableSNIExtension=false -Dcom.sun.management.jmxremote -Dhazelcast.jmx=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=1099 -Xms1024m -Xmx8g -Dwhois.config=properties -Duser.timezone=UTC -Dhazelcast.config=hazelcast.xml -Dlog4j.configurationFile=file:log4j2.xml -jar whois.jar
 //验证一下
 telnet localhost 1043
@@ -388,16 +386,15 @@ Subject: NEW
 password: ********
 inetnum: 182.16.6.0 - 182.16.6.255
 netname: NL-RIPENCC-TCA6-20120101
-conni: BJ000005
-org: ORG-CO1-TEST
-descr:          The whole IPv4 address space
+conni: BJ00000009
+org: ORG-CO2-TEST
+descr:          IPv4 address space
 country:        CN # Country is really world wide
 admin-c:        GWY-TEST
 tech-c:         GWY-TEST
 status:         ALLOCATED UNSPECIFIED
 remarks:        The country is really worldwide.
 mnt-by:         TEST-DBM-MNT
-mnt-routes:     TEST-DBM-MNT
 remarks:        This is an automatically created object.
 source:         TEST
 .
@@ -471,6 +468,7 @@ quit
 
 ### MD5 password generate example
 ```
+# python2
 import crypt
 password = 'emptypassword'
 salt = '$1$N2zhyJ3g$'
@@ -527,7 +525,7 @@ yes
 6.从@Path("/syncupdates")看新增nserver的逻辑
 /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectUpdateDao.java line215 先更新index再更新last，新增时先更新last再更新index
 在/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectOperations.java中实现更新，逻辑不需要改
-nserver表已经有了，但是需要改一下表格式，将host字段设置为只能填域名AttributeSyntax
+nserver表已经有了，将host字段设置为只能填域名AttributeSyntax，需要新增nameserver表，
 /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/attrs/NServer.java yes
 
 ```

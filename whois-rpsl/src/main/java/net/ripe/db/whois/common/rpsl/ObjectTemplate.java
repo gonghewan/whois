@@ -47,10 +47,25 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.AUTH;
 import static net.ripe.db.whois.common.rpsl.AttributeType.AUTHOR;
 import static net.ripe.db.whois.common.rpsl.AttributeType.AUT_NUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CERTIF;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CERT_TYPE;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CERT_NO;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CITY;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CHANGED;
 import static net.ripe.db.whois.common.rpsl.AttributeType.COMPONENTS;
-import static net.ripe.db.whois.common.rpsl.AttributeType.CONN_i;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CONN_P;
 import static net.ripe.db.whois.common.rpsl.AttributeType.COUNTRY;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CREATED;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_ADDRESS;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_LEGAL_PERSON;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_CITY;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_CITY_ID;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_COUNTRY;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_DISTRICT;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_NAME;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_ORG_NAME;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_PROVINCE;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_PROVINCE_ID;
+import static net.ripe.db.whois.common.rpsl.AttributeType.C_STREET;
 import static net.ripe.db.whois.common.rpsl.AttributeType.DEFAULT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.DESCR;
 import static net.ripe.db.whois.common.rpsl.AttributeType.DOMAIN;
@@ -75,6 +90,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.INET6NUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INETNUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.IPv4;
 import static net.ripe.db.whois.common.rpsl.AttributeType.IPv6;
+import static net.ripe.db.whois.common.rpsl.AttributeType.IPNUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INET_RTR;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INJECT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.INTERFACE;
@@ -83,6 +99,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.IRT_NFY;
 import static net.ripe.db.whois.common.rpsl.AttributeType.KEY_CERT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.LANGUAGE;
 import static net.ripe.db.whois.common.rpsl.AttributeType.LAST_MODIFIED;
+import static net.ripe.db.whois.common.rpsl.AttributeType.LEGAL_PERSON;
 import static net.ripe.db.whois.common.rpsl.AttributeType.LOCAL_AS;
 import static net.ripe.db.whois.common.rpsl.AttributeType.MBRS_BY_REF;
 import static net.ripe.db.whois.common.rpsl.AttributeType.MEMBERS;
@@ -123,6 +140,8 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.PINGABLE;
 import static net.ripe.db.whois.common.rpsl.AttributeType.PING_HDL;
 import static net.ripe.db.whois.common.rpsl.AttributeType.POEM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.POETIC_FORM;
+import static net.ripe.db.whois.common.rpsl.AttributeType.POSTALCODE;
+import static net.ripe.db.whois.common.rpsl.AttributeType.PROVINCE;
 import static net.ripe.db.whois.common.rpsl.AttributeType.REF_NFY;
 import static net.ripe.db.whois.common.rpsl.AttributeType.REMARKS;
 import static net.ripe.db.whois.common.rpsl.AttributeType.ROLE;
@@ -134,6 +153,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.SIGNATURE;
 import static net.ripe.db.whois.common.rpsl.AttributeType.SOURCE;
 import static net.ripe.db.whois.common.rpsl.AttributeType.SPONSORING_ORG;
 import static net.ripe.db.whois.common.rpsl.AttributeType.STATUS;
+import static net.ripe.db.whois.common.rpsl.AttributeType.STREET;
 import static net.ripe.db.whois.common.rpsl.AttributeType.TECH_C;
 import static net.ripe.db.whois.common.rpsl.AttributeType.TEXT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.UPD_TO;
@@ -201,16 +221,18 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
 
                 new ObjectTemplate(ObjectType.DOMAIN, 30,
                         new AttributeTemplate(DOMAIN, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
+                        new AttributeTemplate(NETNAME, OPTIONAL, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(DESCR, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(ORG, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(ADMIN_C, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(TECH_C, MANDATORY, MULTIPLE, INVERSE_KEY),
-                        new AttributeTemplate(ZONE_C, MANDATORY, MULTIPLE, INVERSE_KEY),
+                        new AttributeTemplate(ZONE_C, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(NSERVER, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(DS_RDATA, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(REMARKS, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(NOTIFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_BY, MANDATORY, MULTIPLE, INVERSE_KEY),
+                        new AttributeTemplate(CHANGED, OPTIONAL, SINGLE),
                         new AttributeTemplate(CREATED, GENERATED, SINGLE),
                         new AttributeTemplate(LAST_MODIFIED, GENERATED, SINGLE),
                         new AttributeTemplate(SOURCE, MANDATORY, SINGLE)),
@@ -254,19 +276,18 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                 new ObjectTemplate(ObjectType.INET6NUM, 6,
                         new AttributeTemplate(INET6NUM, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
                         new AttributeTemplate(NETNAME, MANDATORY, SINGLE, LOOKUP_KEY),
-                        // test by gwy
-                        new AttributeTemplate(CONN_i, MANDATORY, SINGLE, LOOKUP_KEY),
+                        new AttributeTemplate(ORG, OPTIONAL, SINGLE, INVERSE_KEY),
+                        new AttributeTemplate(CONN_P, OPTIONAL, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(DESCR, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(COUNTRY, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(COUNTRY, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(GEOFEED, OPTIONAL, SINGLE),
                         new AttributeTemplate(GEOLOC, OPTIONAL, SINGLE),
                         new AttributeTemplate(LANGUAGE, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(ORG, OPTIONAL, SINGLE, INVERSE_KEY),
                         new AttributeTemplate(SPONSORING_ORG, OPTIONAL, SINGLE, INVERSE_KEY),
                         new AttributeTemplate(ADMIN_C, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(TECH_C, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(ABUSE_C, OPTIONAL, SINGLE, INVERSE_KEY),
-                        new AttributeTemplate(STATUS, MANDATORY, SINGLE),
+                        new AttributeTemplate(STATUS, OPTIONAL, SINGLE),
                         new AttributeTemplate(ASSIGNMENT_SIZE, OPTIONAL, SINGLE),
                         new AttributeTemplate(REMARKS, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(NOTIFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
@@ -275,6 +296,7 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(MNT_ROUTES, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_DOMAINS, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_IRT, OPTIONAL, MULTIPLE, INVERSE_KEY),
+                        new AttributeTemplate(CHANGED, OPTIONAL, SINGLE),
                         new AttributeTemplate(CREATED, GENERATED, SINGLE),
                         new AttributeTemplate(LAST_MODIFIED, GENERATED, SINGLE),
                         new AttributeTemplate(SOURCE, MANDATORY, SINGLE)),
@@ -282,19 +304,18 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                 new ObjectTemplate(ObjectType.INETNUM, 5,
                         new AttributeTemplate(INETNUM, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
                         new AttributeTemplate(NETNAME, MANDATORY, SINGLE, LOOKUP_KEY),
-                        // test by gwy
-                        new AttributeTemplate(CONN_i, MANDATORY, SINGLE, LOOKUP_KEY),
+                        new AttributeTemplate(ORG, OPTIONAL, SINGLE, INVERSE_KEY),
+                        new AttributeTemplate(CONN_P, OPTIONAL, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(DESCR, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(COUNTRY, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(COUNTRY, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(GEOFEED, OPTIONAL, SINGLE),
                         new AttributeTemplate(GEOLOC, OPTIONAL, SINGLE),
                         new AttributeTemplate(LANGUAGE, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(ORG, OPTIONAL, SINGLE, INVERSE_KEY),
                         new AttributeTemplate(SPONSORING_ORG, OPTIONAL, SINGLE, INVERSE_KEY),
                         new AttributeTemplate(ADMIN_C, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(TECH_C, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(ABUSE_C, OPTIONAL, SINGLE, INVERSE_KEY),
-                        new AttributeTemplate(STATUS, MANDATORY, SINGLE),
+                        new AttributeTemplate(STATUS, OPTIONAL, SINGLE),
                         new AttributeTemplate(ASSIGNMENT_SIZE, OPTIONAL, SINGLE),
                         new AttributeTemplate(REMARKS, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(NOTIFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
@@ -303,6 +324,7 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(MNT_DOMAINS, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_ROUTES, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_IRT, OPTIONAL, MULTIPLE, INVERSE_KEY),
+                        new AttributeTemplate(CHANGED, OPTIONAL, SINGLE),
                         new AttributeTemplate(CREATED, GENERATED, SINGLE),
                         new AttributeTemplate(LAST_MODIFIED, GENERATED, SINGLE),
                         new AttributeTemplate(SOURCE, MANDATORY, SINGLE)),
@@ -364,22 +386,39 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                 new ObjectTemplate(ObjectType.ORGANISATION, 48,
                         new AttributeTemplate(ORGANISATION, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
                         new AttributeTemplate(ORG_NAME, MANDATORY, SINGLE, LOOKUP_KEY),
-                        new AttributeTemplate(ORG_TYPE, MANDATORY, SINGLE),
+                        new AttributeTemplate(C_ORG_NAME, OPTIONAL, SINGLE, LOOKUP_KEY),
+                        new AttributeTemplate(ORG_TYPE, OPTIONAL, SINGLE),
+                        new AttributeTemplate(CERT_TYPE, OPTIONAL, SINGLE),
+                        new AttributeTemplate(CERT_NO, OPTIONAL, SINGLE),
                         new AttributeTemplate(DESCR, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(REMARKS, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(ADDRESS, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(ADDRESS, OPTIONAL, MULTIPLE),
+                        new AttributeTemplate(C_ADDRESS, OPTIONAL, MULTIPLE),
+                        new AttributeTemplate(STREET, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_STREET, OPTIONAL, SINGLE),
+                        new AttributeTemplate(CITY, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_CITY, OPTIONAL, SINGLE),
+                        new AttributeTemplate(PROVINCE, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_PROVINCE, OPTIONAL, SINGLE),
                         new AttributeTemplate(COUNTRY, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_COUNTRY, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_DISTRICT, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_PROVINCE_ID, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_CITY_ID, OPTIONAL, SINGLE),
+                        new AttributeTemplate(ADMIN_C, OPTIONAL, MULTIPLE, INVERSE_KEY), // not use
+                        new AttributeTemplate(LEGAL_PERSON, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_LEGAL_PERSON, OPTIONAL, SINGLE),
+                        new AttributeTemplate(ABUSE_C, OPTIONAL, SINGLE, INVERSE_KEY),
                         new AttributeTemplate(PHONE, OPTIONAL, MULTIPLE),
+                        new AttributeTemplate(POSTALCODE, OPTIONAL, SINGLE),
+                        new AttributeTemplate(CHANGED, OPTIONAL, SINGLE),
                         new AttributeTemplate(FAX_NO, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(E_MAIL, MANDATORY, MULTIPLE, LOOKUP_KEY),
+                        new AttributeTemplate(E_MAIL, OPTIONAL, MULTIPLE, LOOKUP_KEY),
                         new AttributeTemplate(GEOLOC, OPTIONAL, SINGLE),
                         new AttributeTemplate(LANGUAGE, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(ORG, OPTIONAL, MULTIPLE, INVERSE_KEY),
-                        new AttributeTemplate(ADMIN_C, OPTIONAL, MULTIPLE, INVERSE_KEY),
-                        new AttributeTemplate(TECH_C, OPTIONAL, MULTIPLE, INVERSE_KEY),
-                        new AttributeTemplate(ABUSE_C, OPTIONAL, SINGLE, INVERSE_KEY),
+                        new AttributeTemplate(TECH_C, OPTIONAL, MULTIPLE, INVERSE_KEY), // not use
                         new AttributeTemplate(REF_NFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
-                        new AttributeTemplate(MNT_REF, MANDATORY, MULTIPLE, INVERSE_KEY),
+                        new AttributeTemplate(MNT_REF, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(NOTIFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_BY, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(CREATED, GENERATED, SINGLE),
@@ -404,6 +443,7 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
 
                 new ObjectTemplate(ObjectType.PERSON, 50,
                         new AttributeTemplate(PERSON, MANDATORY, SINGLE, LOOKUP_KEY),
+                        new AttributeTemplate(C_NAME, OPTIONAL, SINGLE),
                         new AttributeTemplate(ADDRESS, MANDATORY, MULTIPLE),
                         new AttributeTemplate(PHONE, MANDATORY, MULTIPLE),
                         new AttributeTemplate(FAX_NO, OPTIONAL, MULTIPLE),
@@ -414,6 +454,7 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(NOTIFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_BY, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_REF, OPTIONAL, MULTIPLE, INVERSE_KEY),
+                        new AttributeTemplate(CHANGED, OPTIONAL, SINGLE),
                         new AttributeTemplate(CREATED, GENERATED, SINGLE),
                         new AttributeTemplate(LAST_MODIFIED, GENERATED, SINGLE),
                         new AttributeTemplate(SOURCE, MANDATORY, SINGLE)),
@@ -526,10 +567,11 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
 
                 new ObjectTemplate(ObjectType.NAMESERVER, 57,
                         new AttributeTemplate(NAMESERVER, MANDATORY, SINGLE, PRIMARY_KEY, LOOKUP_KEY),
-                        new AttributeTemplate(IPv4, MANDATORY, MULTIPLE),
-                        new AttributeTemplate(IPv6, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(MNT_BY, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(IPNUM, MANDATORY, MULTIPLE),
                         new AttributeTemplate(NOTIFY, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(CHANGED, OPTIONAL, SINGLE),
+                        new AttributeTemplate(CREATED, GENERATED, SINGLE),
+                        new AttributeTemplate(LAST_MODIFIED, GENERATED, SINGLE),
                         new AttributeTemplate(SOURCE, MANDATORY, SINGLE)),
 
                 new ObjectTemplate(ObjectType.RTR_SET, 23,
@@ -779,9 +821,9 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
             if (attributeType == null) {
                 objectMessages.addMessage(attribute, ValidationMessages.unknownAttribute(attribute.getKey()));
             } else {
-                if (attributeType == AttributeType.CHANGED) {
-                    continue;
-                }
+                // if (attributeType == AttributeType.CHANGED) {
+                //     continue;
+                // }
                 if ((rpslObject.getType() == ObjectType.AUT_NUM) && (attributeType == MNT_ROUTES || attributeType == MNT_LOWER)) {
                     continue;
                 }

@@ -12,9 +12,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.Collections;
 import java.util.List;
 
-class IndexWithConni extends IndexStrategyWithSingleLookupTable {
-    public IndexWithConni(final AttributeType attributeType) {
-        super(attributeType, "conni");
+class IndexWithConnp extends IndexStrategyWithSingleLookupTable {
+    public IndexWithConnp(final AttributeType attributeType) {
+        super(attributeType, "connp");
     }
 
     @Override
@@ -27,7 +27,7 @@ class IndexWithConni extends IndexStrategyWithSingleLookupTable {
     @Override
     public List<RpslObjectInfo> findInIndex(final JdbcTemplate jdbcTemplate, final String value) {
         return jdbcTemplate.query("SELECT l.object_id, l.object_type, l.pkey " + 
-                                  "FROM last l JOIN conni c ON l.object_id = c.object_id " + 
+                                  "FROM last l JOIN connp c ON l.object_id = c.object_id " + 
                                   "WHERE c.name = ? AND l.sequence_id != 0",
                 new RpslObjectInfoResultSetExtractor(),
                 value);

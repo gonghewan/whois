@@ -33,10 +33,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 // TODO: [AH] further separate concerns of query parsing and business logic
 // TODO: [AH] merge QueryBuilder and Query to cooperate better
 // TODO: [ES] class is not immutable
 public class Query {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Query.class);
+    
     public static final EnumSet<ObjectType> ABUSE_CONTACT_OBJECT_TYPES = EnumSet.of(ObjectType.INETNUM, ObjectType.INET6NUM, ObjectType.AUT_NUM);
     private static final EnumSet<ObjectType> GRS_LIMIT_TYPES = EnumSet.of(ObjectType.AUT_NUM, ObjectType.INETNUM, ObjectType.INET6NUM, ObjectType.ROUTE, ObjectType.ROUTE6, ObjectType.DOMAIN, ObjectType.NAMESERVER);
     private static final EnumSet<ObjectType> DEFAULT_TYPES_LOOKUP_IN_BOTH_DIRECTIONS = EnumSet.of(ObjectType.INETNUM, ObjectType.INET6NUM, ObjectType.ROUTE, ObjectType.ROUTE6, ObjectType.DOMAIN, ObjectType.NAMESERVER);
@@ -526,7 +530,9 @@ public class Query {
             nextObjectType:
             for (Iterator<ObjectType> it = response.iterator(); it.hasNext(); ) {
                 ObjectType objectType = it.next();
+                LOGGER.debug("[GWY] before enter fetchableby objectType is " + objectType.getName());
                 for (final AttributeType attribute : ObjectTemplate.getTemplate(objectType).getLookupAttributes()) {
+                    LOGGER.debug("[GWY] before enter fetchableby attributeType is " + attribute.getName());
                     if (AttributeMatcher.fetchableBy(attribute, this)) {
                         continue nextObjectType;
                     }

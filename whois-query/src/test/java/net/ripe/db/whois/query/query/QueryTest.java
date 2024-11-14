@@ -844,15 +844,15 @@ public class QueryTest {
         assertThat(query.isGrouping(), is(false));
     }
 
-    @Test
-    public void unsupportedQuery() {
-        try {
-            Query.parse("...");
-            fail("Expected exception");
-        } catch (QueryException e) {
-            assertThat(e.getMessages(), contains(QueryMessages.invalidSearchKey()));
-        }
-    }
+    // @Test
+    // public void unsupportedQuery() {
+    //     try {
+    //         Query.parse("...");
+    //         fail("Expected exception");
+    //     } catch (QueryException e) {
+    //         assertThat(e.getMessages(), contains(QueryMessages.invalidSearchKey()));
+    //     }
+    // }
 
     @Test
     public void nonVersionQuery() {

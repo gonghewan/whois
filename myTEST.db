@@ -24,7 +24,7 @@ admin-c:        AA1-TEST
 tech-c:         AA2-TEST
 upd-to:         gwy@test-cernet.com
 mnt-nfy:        gwy@test-cernet.com
-auth:           MD5-PW $1$XXXXXXXX$XXXXXXXXXXXXXXXXXXXXX/
+auth:           MD5-PW $1$N1zhaJ9k$sCafRM3IdtA4Ol/9vYfZC1
 notify:         gwy@test-cernet.com
 mnt-by:         TEST-DBM-MNT
 remarks:        This is an automatically created object.

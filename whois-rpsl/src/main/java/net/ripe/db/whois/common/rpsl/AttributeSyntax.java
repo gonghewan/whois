@@ -398,7 +398,7 @@ public interface AttributeSyntax extends Documented {
     );
 
     AttributeSyntax ORGANISATION_SYNTAX = new AttributeSyntaxRegexp(30,
-            Pattern.compile("(?i)^(ORG-[A-Z]{2,4}([1-9][0-9]{0,5})?-[A-Z][A-Z0-9_-]*[A-Z0-9]|AUTO-[1-9][0-9]*([A-Z]{2,4})?)$"), "" +
+            Pattern.compile("(?i)^([A-Z]{2,4}([0-9]{0,6})?|AUTO-[1-9][0-9]*([A-Z]{2,4})?)$"), "" +
             "The 'ORG-' string followed by 2 to 4 characters, followed by up to 5 digits\n" +
             "followed by a source specification.  The first digit must not be \"0\".\n" +
             "Source specification starts with \"-\" followed by source name up to\n" +

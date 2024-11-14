@@ -62,12 +62,7 @@ public class RdapRequestValidator {
     }
 
     public void validateEntity(final String key) {
-        if (key.toUpperCase().startsWith("ORG-")) {
-            if (!AttributeType.ORGANISATION.isValidValue(ORGANISATION, key)) {
-                throw new RdapException("400 Bad Request", "Bad organisation or mntner syntax: " + key,
-                        HttpStatus.BAD_REQUEST_400);
-            }
-        } else {
+        if (!key.toUpperCase().startsWith("ORG-")) {
             if (!AttributeType.MNTNER.isValidValue(MNTNER, key)) {
                 throw new RdapException("400 Bad Request", "Bad organisation or mntner syntax: " + key,
                         HttpStatus.BAD_REQUEST_400);

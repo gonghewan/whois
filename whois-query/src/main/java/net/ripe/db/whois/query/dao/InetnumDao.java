@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface InetnumDao {
     List<Ipv4Entry> findByNetname(String netname);
-    List<Ipv4Entry> findByConni(String conni);
+    List<Ipv4Entry> findByConnp(String connp);
 }

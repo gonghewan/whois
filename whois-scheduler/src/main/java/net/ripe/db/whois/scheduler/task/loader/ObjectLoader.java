@@ -31,10 +31,14 @@ import java.io.StringWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Component
 public class ObjectLoader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectLoader.class);
     private static final Pattern X509_PATTERN = Pattern.compile("(?i)^X509-([1-9][0-9]+)$");
-    private static final Pattern ORGID_PATTERN = Pattern.compile("(?i)^ORG-([A-Z]{2,4})([0-9]+)-([A-Z0-9_-]+)$");
+    private static final Pattern ORGID_PATTERN = Pattern.compile("(?i)^([A-Z]{2,4})([0-9]+)$");
 
     private final RpslObjectDao rpslObjectDao;
     private final RpslObjectUpdateDao rpslObjectUpdateDao;
@@ -150,7 +154,8 @@ public class ObjectLoader {
 
                     final String space = orgMatcher.group(1);
                     final int index = orgMatcher.group(2).length() > 0 ? Integer.parseInt(orgMatcher.group(2)) : 0;
-                    final String suffix = orgMatcher.group(3);
+                    final String suffix = "TEST";
+                    LOGGER.info("space is " + space + "index is " + index + "suffix is " + suffix);
 
                     OrganisationId organisationId = new OrganisationId(space, index, suffix);
                     organisationIdRepository.claimSpecified(organisationId);

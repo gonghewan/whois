@@ -134,6 +134,8 @@ public class JdbcRpslObjectOperations {
         final ObjectTemplate objectTemplate = ObjectTemplate.getTemplate(rpslObjectInfo.getObjectType());
 
         for (AttributeTemplate attributeTemplate : objectTemplate.getAttributeTemplates()) {
+            LOGGER.info("[GWY LOG] rpslObjectInfo.getObjectType() is: " + rpslObjectInfo.getObjectType().getName());
+            LOGGER.info("[GWY LOG] attributeTemplate.getAttributeType() is: " + attributeTemplate.getAttributeType().getName());
             IndexStrategies.get(attributeTemplate.getAttributeType()).removeFromIndex(jdbcTemplate, rpslObjectInfo);
         }
     }

@@ -18,6 +18,6 @@ public class OrganisationIdTest {
     @Test
     public void string() {
         final OrganisationId subject = new OrganisationId("SAT", 1, "RIPE");
-        assertThat(subject.toString(), is("ORG-SAT1-RIPE"));
+        assertThat(subject.toString(), is("SAT000001"));
     }
 }

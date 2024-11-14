@@ -66,12 +66,12 @@ public class AutoKeyResolver {
             return;
         }
 
-        final RpslAttribute keyAttribute = object.findAttribute(keyAttributeType);
-        final CIString value = object.getValueForAttribute(keyAttributeType);
+        final RpslAttribute keyAttribute = object.findAttribute(keyAttributeType); // such as: "organisation"
+        final CIString value = object.getValueForAttribute(keyAttributeType); // such as: AUTO-1
 
         if (autoKeyFactory.isApplicableFor(object)) {
             if (autoKeyFactory.isKeyPlaceHolder(value)) {
-                final CIString keyPlaceHolder = autoKeyFactory.getKeyPlaceholder(value);
+                final CIString keyPlaceHolder = autoKeyFactory.getKeyPlaceholder(value); // such as: AUTO-1
 
                 final GeneratedKey existing = updateContext.getGeneratedKey(keyPlaceHolder);
                 if (existing != null) {

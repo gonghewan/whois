@@ -146,7 +146,8 @@ class RpslObjectSearcher {
                         return tmp_result;
                     }
                 }
-                return  proxy(inetnumDao.findByConni(query.getSearchValue()));
+                return proxy(inetnumDao.findByConnp(query.getSearchValue()));
+                
             case INET6NUM:
                 LOGGER.info("[GWY LOG] INET6NUM");
                 if (query.getIpKeyOrNull() != null){
@@ -156,8 +157,8 @@ class RpslObjectSearcher {
                     for (final ResponseObject itr_tmp_result : tmp_result){
                         return tmp_result;
                     }
-                }
-                return  proxy(inet6numDao.findByConni(query.getSearchValue()));
+                } 
+                return proxy(inet6numDao.findByConnp(query.getSearchValue()));
             // case DOMAIN:
             //     LOGGER.info("[GWY LOG] DOMAIN");
             //     return  proxy(domainDao.findByname(query.getSearchValue()));

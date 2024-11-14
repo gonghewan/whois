@@ -41,6 +41,7 @@ public class DummifierNrtm implements Dummifier {
         DUMMIFICATION_REPLACEMENTS.put(AttributeType.E_MAIL, "unread@ripe.net");
         DUMMIFICATION_REPLACEMENTS.put(AttributeType.FAX_NO, "+31205354444");
         DUMMIFICATION_REPLACEMENTS.put(AttributeType.PHONE, "+31205354444");
+        DUMMIFICATION_REPLACEMENTS.put(AttributeType.C_ORG_NAME, "测试");
         DUMMIFICATION_REPLACEMENTS.put(AttributeType.UPD_TO, "unread@ripe.net");
     }
 

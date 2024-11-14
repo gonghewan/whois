@@ -72,25 +72,25 @@ public class OrganisationIdFactoryTest {
         when(organisationIdRepository.claimNextAvailableIndex("DW", SOURCE)).thenReturn(new OrganisationId("DW", 10, SOURCE));
 
         final OrganisationId organisationId = subject.generate("AUTO-1234567DW", RpslObject.parse("organisation: AUTO\norg-name: name"));
-        assertThat(organisationId.toString(), is("ORG-DW10-RIPE"));
+        assertThat(organisationId.toString(), is("DW000010"));
     }
 
     @Test
     public void generate_unspecified_space_single_word_name() {
-        when(organisationIdRepository.claimNextAvailableIndex("TA", SOURCE)).thenReturn(new OrganisationId("TA", 1, SOURCE));
+        when(organisationIdRepository.claimNextAvailableIndex("CN", SOURCE)).thenReturn(new OrganisationId("CN", 1, SOURCE));
         RpslObject orgObject = RpslObject.parse("organisation: AUTO-1\norg-name: Tesco");
 
         final OrganisationId organisationId = subject.generate("AUTO-1", orgObject);
 
-        assertThat(organisationId.toString(), is("ORG-TA1-RIPE"));
+        assertThat(organisationId.toString(), is("CN000001"));
     }
 
     @Test
     public void generate_unspecified_space() {
-        when(organisationIdRepository.claimNextAvailableIndex("SATG", SOURCE)).thenReturn(new OrganisationId("SATG", 10, SOURCE));
+        when(organisationIdRepository.claimNextAvailableIndex("CN", SOURCE)).thenReturn(new OrganisationId("CN", 10, SOURCE));
 
         final OrganisationId organisationId = subject.generate("AUTO-111", RpslObject.parse("organisation: AUTO\norg-name: Satellite advisory Technologies Group Ltd"));
-        assertThat(organisationId.toString(), is("ORG-SATG10-RIPE"));
+        assertThat(organisationId.toString(), is("CN000010"));
     }
 
     @Test

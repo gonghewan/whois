@@ -68,12 +68,14 @@ abstract class AbstractAutoKeyFactory<T extends AutoKey> implements AutoKeyFacto
     }
 
     private String getSpace(final String space, final String name) {
+        // name such as: "CERNET ORG"
         if (StringUtils.isNotEmpty(space)) {
             return space;
         }
 
         final StringBuilder spaceBuilder = new StringBuilder();
         for (final String namePart : NAME_SPLITTER.split(name)) {
+            // use first char of each word, "CERNET ORG" -> "CO"
             final char c = namePart.charAt(0);
             if (Character.isLetter(c)) {
                 spaceBuilder.append(Character.toUpperCase(c));

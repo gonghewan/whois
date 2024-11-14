@@ -15,9 +15,13 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
 class OrganisationIdRepositoryJdbc implements OrganisationIdRepository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrganisationIdRepositoryJdbc.class);
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -40,6 +44,7 @@ class OrganisationIdRepositoryJdbc implements OrganisationIdRepository {
         final OrganisationIdRange organisationIdRange = getOrganisationIdRange(autoKey.getSpace(), autoKey.getSuffix());
 
         if (organisationIdRange == null) {
+            LOGGER.info("organisationIdRange == null");
             createRange(autoKey.getSpace(), autoKey.getSuffix(), autoKey.getIndex());
             return true;
         }
@@ -54,6 +59,7 @@ class OrganisationIdRepositoryJdbc implements OrganisationIdRepository {
 
     @Override
     public OrganisationId claimNextAvailableIndex(final String space, final String suffix) {
+        // space: "CERNET ORG" -> "CO", suffix: "TEST"
         final OrganisationIdRange organisationIdRange = getOrganisationIdRange(space, suffix);
 
         final int availableIndex;
@@ -82,6 +88,7 @@ class OrganisationIdRepositoryJdbc implements OrganisationIdRepository {
     }
 
     void createRange(final String space, final String suffix, final int end) {
+        LOGGER.info("enter createRange end is " + end);
         jdbcTemplate.update("" +
                 "insert into organisation_id(range_end, space, source) " +
                 "  values(?, ?, ?)",
@@ -89,6 +96,7 @@ class OrganisationIdRepositoryJdbc implements OrganisationIdRepository {
     }
 
     void updateRange(final int rangeId, final int end) {
+        LOGGER.info("enter updateRange end is " + end);
         jdbcTemplate.update(
                 "update organisation_id set range_end = ? where range_id = ?",
                 end, rangeId);
