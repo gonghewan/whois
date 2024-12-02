@@ -439,7 +439,7 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
 
                 new ObjectTemplate(ObjectType.PERSON, 50,
                         new AttributeTemplate(PERSON, MANDATORY, SINGLE, LOOKUP_KEY),
-                        new AttributeTemplate(C_NAME, OPTIONAL, SINGLE),
+                        new AttributeTemplate(C_NAME, OPTIONAL, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(ADDRESS, MANDATORY, MULTIPLE),
                         new AttributeTemplate(PHONE, MANDATORY, MULTIPLE),
                         new AttributeTemplate(FAX_NO, OPTIONAL, MULTIPLE),

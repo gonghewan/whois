@@ -822,6 +822,21 @@ CREATE TABLE `person_role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `c_name`
+--
+
+DROP TABLE IF EXISTS `c_name`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `c_name` (
+  `object_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(64) NOT NULL DEFAULT '',
+  PRIMARY KEY (`name`,`object_id`),
+  KEY `object_id` (`object_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `ping_hdl`
 --
 
