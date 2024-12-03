@@ -14,6 +14,12 @@ Specific
 
 6.增加nserver类型，并实现相关项索引
 
+7.修改默认编码为utf8
+
+8.修改organisationid的生成规则，按省份代码命名并全局自增
+
+9.启动HTTPS
+
 
 环境配置
 -----------------------------------------
@@ -477,13 +483,6 @@ print(crypt.crypt(password, salt))
 output:
 $1$N2zhyJ3g$hzX7XTL84DtBkCWhBZE2c/
 ```
-* First install the AspectJ plugin provided by JetBrains from the IDE plugin repository
-* Go to Build, Execution, Deployment -> Compiler -> Java Compiler
-  * Choose "Use Compiler: Ajc"
-  * Configure Path to aspectjtools.jar, e.g. ~/.m2/repository/org/aspectj/aspectjtools/1.9.8/aspectjtools-1.9.7.jar
-  * Press "Test" to confirm it's working.
-* Go to Build, Execution, Deployment -> Build Tools -> Maven -> Importing
-  * Uncheck "Detect compiler automatically" (otherwise IntelliJ will revert from Ajc to JavaC)
 
 ### 开启HTTPS
 选择PKCS#1或者PKCS#8，修改/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/httpserver/WhoisKeystore.java，重新编译，修改properties
@@ -494,6 +493,17 @@ whois.private.keys=/home/dbase/tmp_server_tra.key
 whois.certificates=/home/dbase/tmp_server.crt
 whois.keystore=/home/dbase/cerbot/server.jks
 port.api.secure=0
+
+# generate key
+keytool -genkeypair -alias whois -keyalg RSA -keysize 4096 -storetype JKS -keystore whois.jks -valid
+ity 3650 -storepass 20240731
+# The JKS keystore uses a proprietary format. It is recommended to 
+# migrate to PKCS12 which is an industry standard format using 
+# "keytool -importkeystore -srckeystore whois.jks -destkeystore 
+# whois.jks -deststoretype pkcs12".
+keytool -export -alias "whois" -keystore whois.jks -storetype JKS -storepass "20240731" -rfc -file "whois.cer"
+keytool -v -importkeystore -srckeystore whois.jks -srcstoretype jks -srcstorepass 20240731 -destkeystore whois.pfx -deststoretype pkcs12 -deststorepass 20240731 -destkeypass 20240731 
+openssl pkcs12 -in whois.pfx -nocerts -nodes -out whois.pri.key
 ```
 
 ### 增加nserver
