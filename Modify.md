@@ -538,41 +538,8 @@ yes
 在/home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/JdbcRpslObjectOperations.java中实现更新，逻辑不需要改
 nserver表已经有了，将host字段设置为只能填域名AttributeSyntax，需要新增nameserver表，
 /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/attrs/NServer.java yes
-
-```
-```
-# 增加属性
-/home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeType.java
-/home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java yes
-nserver:     dns2.edu.cn
-ipnum:       202.112.0.13 2001:da8:1:100::13
-notify:      dbm@net.edu.cn
-changed:     hostmaster@net.edu.cn 20021003
-source:      CERNIC
 ```
 
-```
-
-```
-路由类 route
+### 路由类 route
 
 /home/gwy/whois/whois/whois-client/src/main/java/net/ripe/db/whois/api/rest/client/RestClientTarget.java
-
-```
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectType.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/domain/ObjectTypeIds.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/query/Query.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/index/IndexStrategies.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectType.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/attrs/NServer.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/resources/whois_schema.sql
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/test/java/net/ripe/db/whois/common/rpsl/AttributeSanitizerTest.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-query/src/main/java/net/ripe/db/whois/query/query/AttributeMatcher.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeType.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeSyntax.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/ObjectTemplate.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-rpsl/src/main/java/net/ripe/db/whois/common/rpsl/AttributeType.java
-gwy@test-cernet:~/whois/whois$ git add /home/gwy/whois/whois/whois-commons/src/main/java/net/ripe/db/whois/common/dao/jdbc/index/IndexStrategies.java
-```
