@@ -485,6 +485,17 @@ $1$N2zhyJ3g$hzX7XTL84DtBkCWhBZE2c/
 * Go to Build, Execution, Deployment -> Build Tools -> Maven -> Importing
   * Uncheck "Detect compiler automatically" (otherwise IntelliJ will revert from Ajc to JavaC)
 
+### 开启HTTPS
+选择PKCS#1或者PKCS#8，修改/home/gwy/whois/whois/whois-api/src/main/java/net/ripe/db/whois/api/httpserver/WhoisKeystore.java，重新编译，修改properties
+```
+# Service ports
+# HTTPS
+whois.private.keys=/home/dbase/tmp_server_tra.key
+whois.certificates=/home/dbase/tmp_server.crt
+whois.keystore=/home/dbase/cerbot/server.jks
+port.api.secure=0
+```
+
 ### 增加nserver
 ```
 修改原nserver属性
