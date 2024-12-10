@@ -18,7 +18,7 @@ public class OrganisationId extends AutoKey {
     @Override
     public String toString() {
         String actualIndex = String.format("%06d", getIndex());
-        LOGGER.info("enter OrganisationId.toString() is " + getSpace().toUpperCase() + actualIndex);
+        //LOGGER.info("enter OrganisationId.toString() is " + getSpace().toUpperCase() + actualIndex);
         return new StringBuilder()
                 .append(getSpace().toUpperCase())
                 .append(actualIndex)

@@ -43,7 +43,6 @@ public class JdbcVersionDao implements VersionDao {
                             "AND sequence_id != 0",
                     new RpslObjectRowMapper(), info.getObjectId());
         }
-
         return jdbcTemplate.queryForObject("" +
                         "SELECT object_id, object " +
                         "FROM history " +
@@ -54,7 +53,7 @@ public class JdbcVersionDao implements VersionDao {
 
 
     public List<Integer> getObjectIds(final ObjectType type, final String searchKey) {
-        return jdbcTemplate.queryForList("" +
+        List<Integer> objectIds = jdbcTemplate.queryForList("" +
                         "SELECT object_id " +
                         "FROM last " +
                         "WHERE object_type = ? " +
@@ -63,6 +62,19 @@ public class JdbcVersionDao implements VersionDao {
                 ObjectTypeIds.getId(type),
                 searchKey
         );
+        
+        if (objectIds.isEmpty()) {
+            objectIds = jdbcTemplate.queryForList("" +
+                        "SELECT object_id " +
+                        "FROM history " +
+                        "WHERE object_type = ? " +
+                        "AND pkey = ? ",
+                Integer.class,
+                ObjectTypeIds.getId(type),
+                searchKey
+        );
+        }
+        return objectIds;
     }
 
     @Override
@@ -93,7 +105,7 @@ public class JdbcVersionDao implements VersionDao {
                                     "       serials.operation, " +
                                     "       COALESCE(last.timestamp, history.timestamp) AS timestamp " +
                                     "FROM   serials " +
-                                    "       LEFT JOIN last ON last.object_id = serials.object_id AND (serials.atlast = 1 OR serials.operation = 2) " +
+                                    "       LEFT JOIN last ON last.object_id = serials.object_id " +
                                     "       LEFT JOIN history ON history.object_id = serials.object_id AND history.sequence_id = serials.sequence_id " +
                                     "WHERE serials.object_id = ? " +
                                     "ORDER BY timestamp, serials.sequence_id",

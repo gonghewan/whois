@@ -37,6 +37,7 @@ import java.util.Set;
 
 @Component
 public class VersionQueryExecutor implements QueryExecutor {
+
     public static final Set<ObjectType> NO_VERSION_HISTORY_FOR = Sets.immutableEnumSet(ObjectType.PERSON, ObjectType.ROLE);
 
     private final static String VERSION_HEADER = "rev#";
@@ -115,6 +116,7 @@ public class VersionQueryExecutor implements QueryExecutor {
 
             final List<VersionInfo> versionInfos = versionLookupResult.getMostRecentlyCreatedVersions();
             final VersionDateTime lastDeletionTimestamp = versionLookupResult.getLastDeletionTimestamp();
+
             if (versionInfos.isEmpty() && lastDeletionTimestamp != null) {
                 results.add(new MessageObject(QueryMessages.versionListStart(objectType.getName().toUpperCase(), searchKey)));
                 results.add(new DeletedVersionResponseObject(lastDeletionTimestamp, objectType, searchKey));
@@ -123,7 +125,6 @@ public class VersionQueryExecutor implements QueryExecutor {
 
             final int version = query.getObjectVersion();
             final int[] versions = query.getObjectVersions();
-
             if (version > versionInfos.size() || versions[0] > versionInfos.size() || versions[1] > versionInfos.size()) {
                 results.add(new MessageObject(QueryMessages.versionOutOfRange(versionInfos.size())));
                 continue;
@@ -142,6 +143,7 @@ public class VersionQueryExecutor implements QueryExecutor {
     }
 
     private Iterable<? extends ResponseObject> getAllVersions(final VersionLookupResult res, final String searchKey) {
+
         final ObjectType objectType = res.getObjectType();
         final List<ResponseObject> messages = Lists.newArrayList();
         messages.add(new MessageObject(QueryMessages.versionListStart(objectType.getName().toUpperCase(), searchKey)));
@@ -170,6 +172,7 @@ public class VersionQueryExecutor implements QueryExecutor {
     private Iterable<? extends ResponseObject> getVersion(final VersionLookupResult res, final int version) {
         final List<VersionInfo> versionInfos = res.getMostRecentlyCreatedVersions();
         final VersionInfo info = versionInfos.get(version - 1);
+
         final RpslObject rpslObject = versionDao.getRpslObject(info);
 
         return Lists.newArrayList(

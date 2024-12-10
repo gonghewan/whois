@@ -24,7 +24,8 @@ public class VersionLookupResult {
 
         for (int i = daoLookupResults.size() - 1; i >= 0; i--) {
             if (daoLookupResults.get(i).getOperation() == Operation.DELETE) {
-                mostRecentlyCreatedVersions = Collections.unmodifiableList(daoLookupResults.subList(i + 1, daoLookupResults.size()));  // could be empty
+                mostRecentlyCreatedVersions = Collections.unmodifiableList(daoLookupResults);
+                // mostRecentlyCreatedVersions = Collections.unmodifiableList(daoLookupResults.subList(i + 1, daoLookupResults.size()));  // could be empty
                 lastDeletionTimestamp = daoLookupResults.get(i).getTimestamp();
                 return;
             }

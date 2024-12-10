@@ -99,6 +99,7 @@ public class WhoisVersionService {
         while (!mappedVersions.isEmpty() && mappedVersions.get(0).getDeletedDate() != null) {
             mappedVersions.remove(0);
         }
+
         final WhoisVersions whoisVersions = new WhoisVersions(type, key, mappedVersions);
 
         final WhoisResources whoisResources = new WhoisResources();
