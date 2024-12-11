@@ -80,7 +80,7 @@ public class VersionQueryExecutor implements QueryExecutor {
     private Iterable<? extends ResponseObject> decorate(final Query query, Iterable<? extends ResponseObject> responseObjects) {
         final Iterable<ResponseObject> objects = Iterables.transform(responseObjects, responseObject -> {
                 if (responseObject instanceof RpslObject) {
-                    ResponseObject filtered = filter((RpslObject) responseObject);
+                    ResponseObject filtered = (RpslObject) responseObject;
                     if (query.isObjectVersion()) {
                         filtered = new VersionWithRpslResponseObject((RpslObject) filtered, query.getObjectVersion());
                     }
