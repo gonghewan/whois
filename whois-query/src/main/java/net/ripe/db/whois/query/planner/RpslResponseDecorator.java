@@ -100,7 +100,7 @@ public class RpslResponseDecorator {
         decoratedResult = abuseCInfoDecorator.decorate(query, decoratedResult);
 
         decoratedResult = applySyntaxFilter(query, decoratedResult);
-        decoratedResult = filterEmail(query, decoratedResult);
+        // decoratedResult = filterEmail(query, decoratedResult);
         decoratedResult = filterAuth(query, decoratedResult);
         decoratedResult = filterChanged(decoratedResult);
 
