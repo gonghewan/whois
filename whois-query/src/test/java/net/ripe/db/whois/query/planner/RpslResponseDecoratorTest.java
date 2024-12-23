@@ -87,7 +87,7 @@ public class RpslResponseDecoratorTest {
                 clientAuthCertificateValidator,
                 decorator);
         lenient().when(sourceContext.getCurrentSource()).thenReturn(Source.slave("RIPE"));
-        when(sourceContext.isAcl()).thenReturn(true);
+        // when(sourceContext.isAcl()).thenReturn(true);
         lenient().when(sourceContext.isMain()).thenReturn(true);
         Fixture.mockRpslObjectDaoLoadingBehavior(rpslObjectDaoMock);
 
@@ -186,8 +186,6 @@ public class RpslResponseDecoratorTest {
                 RpslObject.parse(1, "organisation: BAR-ORG\nsource: RIPE\n"));
 
         assertThat(response, equalTo(
-                QueryMessages.outputFilterNotice() +
-                "\n" +
                 "organisation:   FOO-ORG\n" +
                 "source:         RIPE\n" +
                 "\n" +
@@ -198,7 +196,7 @@ public class RpslResponseDecoratorTest {
 
     @Test
     public void shouldNotFilterWhenNoAclUsed() {
-        when(sourceContext.isAcl()).thenReturn(false);
+        // when(sourceContext.isAcl()).thenReturn(false);
         when(sourceContext.isMain()).thenReturn(false);
 
         final String response = execute("-r -G -T organisation FOO-MNT",
@@ -216,7 +214,7 @@ public class RpslResponseDecoratorTest {
 
     @Test
     public void shouldNotFilterForGrsSources() {
-        when(sourceContext.isAcl()).thenReturn(false);
+        // when(sourceContext.isAcl()).thenReturn(false);
         when(sourceContext.isMain()).thenReturn(false);
 
         final String response = execute("-r -G -T organisation FOO-MNT",
@@ -438,9 +436,11 @@ public class RpslResponseDecoratorTest {
         when(dummifyDecorator.decorate(any(Query.class), any(Iterable.class))).thenReturn(Collections.EMPTY_LIST);
 
         final String response = execute("-s TEST-GRS -T person test", RpslObject.parse("person: Test Person\nnic-hdl: TP1-TEST"));
-        assertThat(response, is("" +
-                "% Note: this output has been filtered.\n" +
-                "%       To receive output for a database update, use the \"-B\" flag.\n\n"));
+        // assertThat(response, is("" +
+        //         "% Note: this output has been filtered.\n" +
+        //         "%       To receive output for a database update, use the \"-B\" flag.\n\n"));
+
+        assertThat(response, is(""));
 
         verify(dummifyDecorator, atLeastOnce()).decorate(any(Query.class), any(Iterable.class));
     }
