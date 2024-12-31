@@ -570,10 +570,10 @@ public enum AttributeType implements Documented {
     C_DISTRICT(new Builder("c-district", "cdt")
             .doc("Specifies the district of the organisation in chinese.")
             .syntax(FREE_FORM_SYNTAX)),
-    C_PROVINCE_ID(new Builder("c-provinceId", "cpid")
+    C_PROVINCE_ID(new Builder("c-provinceid", "cpid")
             .doc("Specifies the province ID of the organisation in chinese.")
             .syntax(FREE_FORM_SYNTAX)),
-    C_CITY_ID(new Builder("c-cityId", "ctid")
+    C_CITY_ID(new Builder("c-cityid", "ctid")
             .doc("Specifies the city ID of the organisation in chinese.")
             .syntax(FREE_FORM_SYNTAX)),
     LEGAL_PERSON(new Builder("legal-person", "lp")
