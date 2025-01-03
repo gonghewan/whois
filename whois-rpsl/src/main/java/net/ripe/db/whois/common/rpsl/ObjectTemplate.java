@@ -49,6 +49,8 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.AUT_NUM;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CERTIF;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CERT_TYPE;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CERT_NO;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CERT_VALID_START;
+import static net.ripe.db.whois.common.rpsl.AttributeType.CERT_VALID_END;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CITY;
 import static net.ripe.db.whois.common.rpsl.AttributeType.CHANGED;
 import static net.ripe.db.whois.common.rpsl.AttributeType.COMPONENTS;
@@ -387,6 +389,8 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(ORG_TYPE, OPTIONAL, SINGLE),
                         new AttributeTemplate(CERT_TYPE, OPTIONAL, SINGLE),
                         new AttributeTemplate(CERT_NO, OPTIONAL, SINGLE),
+                        new AttributeTemplate(CERT_VALID_START, OPTIONAL, SINGLE),
+                        new AttributeTemplate(CERT_VALID_END, OPTIONAL, SINGLE),
                         new AttributeTemplate(DESCR, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(REMARKS, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(ADDRESS, OPTIONAL, MULTIPLE),

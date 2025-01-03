@@ -34,6 +34,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeSyntax.EXPORT_VIA_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.FILTER_SET_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.FILTER_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.FREE_FORM_SYNTAX;
+import static net.ripe.db.whois.common.rpsl.AttributeSyntax.CERT_VALID_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.GENERATED_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.GEOFEED_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.GEOLOC_SYNTAX;
@@ -158,6 +159,16 @@ public enum AttributeType implements Documented {
     CERTIF(new Builder("certif", "ce")
             .doc("Contains the public key.")
             .syntax(CERTIF_SYNTAX)),
+
+    CERT_VALID_START(new Builder("cert-valid-start", "cvs")
+            .doc("This attributes reflects certificate's start time\n" +
+                 "ISO8601 format (yyyy-MM-dd).")
+            .syntax(CERT_VALID_SYNTAX)),
+            
+    CERT_VALID_END(new Builder("cert-valid-end", "cve")
+        .doc("This attributes reflects certificate's end time\n" +
+                "ISO8601 format (yyyy-MM-dd).")
+        .syntax(CERT_VALID_SYNTAX)),
 
     CHANGED(new Builder("changed", "ch")
             .doc("Specifies who submitted the update, and when the object was updated.\n" +
