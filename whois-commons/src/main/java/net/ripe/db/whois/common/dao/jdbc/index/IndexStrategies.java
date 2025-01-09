@@ -53,6 +53,8 @@ public final class IndexStrategies {
                 new Unindexed(AttributeType.C_PROVINCE_ID),
                 new Unindexed(AttributeType.LEGAL_PERSON),
                 new Unindexed(AttributeType.C_LEGAL_PERSON),
+                new Unindexed(AttributeType.CERT_VALID_START),
+                new Unindexed(AttributeType.CERT_VALID_END),
                 //new Unindexed(AttributeType.C_NAME),
                 new Unindexed(AttributeType.POSTALCODE),
                 //new IndexWithValue(AttributeType.DOMAIN, "domain", "domain"),

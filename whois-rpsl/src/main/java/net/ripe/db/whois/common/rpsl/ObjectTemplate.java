@@ -410,6 +410,7 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(LEGAL_PERSON, OPTIONAL, SINGLE),
                         new AttributeTemplate(C_LEGAL_PERSON, OPTIONAL, SINGLE),
                         new AttributeTemplate(ABUSE_C, OPTIONAL, SINGLE, INVERSE_KEY),
+                        new AttributeTemplate(ABUSE_MAILBOX, OPTIONAL, SINGLE),
                         new AttributeTemplate(PHONE, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(POSTALCODE, OPTIONAL, SINGLE),
                         new AttributeTemplate(FAX_NO, OPTIONAL, MULTIPLE),
