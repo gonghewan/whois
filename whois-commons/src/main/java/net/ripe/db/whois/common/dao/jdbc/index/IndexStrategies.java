@@ -57,7 +57,7 @@ public final class IndexStrategies {
                 new Unindexed(AttributeType.CERT_VALID_END),
                 //new Unindexed(AttributeType.C_NAME),
                 new Unindexed(AttributeType.POSTALCODE),
-                //new IndexWithValue(AttributeType.DOMAIN, "domain", "domain"),
+                // new IndexWithValue(AttributeType.DOMAIN, "domain", "domain"),
                 new IndexWithValue(AttributeType.DS_RDATA, "ds_rdata", "ds_rdata"),
                 new Unindexed(AttributeType.ENCRYPTION),
                 new Unindexed(AttributeType.EXPORT),

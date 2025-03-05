@@ -228,6 +228,23 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
     }
 
     @Override
+    public List<RpslObjectInfo> findDomainByNetname(final CIString searchKey) {
+        return findDomainByNetname(searchKey.toString());
+    }
+
+    @Override
+    public List<RpslObjectInfo> findDomainByNetname(final String searchKey) {
+        return jdbcTemplate.query(" " +
+                "SELECT l.object_id, l.object_type, l.pkey " +
+                "  FROM last l " +
+                "  LEFT JOIN domain d ON l.object_id = d.object_id " +
+                "  WHERE d.netname = ? " + 
+                "  AND l.sequence_id != 0 ",
+                new RpslObjectInfoResultSetExtractor(),
+                searchKey);
+    }
+
+    @Override
     public List<RpslObject> findAsBlockIntersections(final long begin, final long end) {
         Map<String, Object> params = Maps.newHashMap();
         params.put("begin", begin);

@@ -30,6 +30,10 @@ public interface RpslObjectDao extends ProxyLoader<Identifiable, RpslObject> {
 
     RpslObject findAsBlock(long begin, long end);
 
+    List<RpslObjectInfo> findDomainByNetname(String searchKey);
+
+    List<RpslObjectInfo> findDomainByNetname(CIString searchKey);
+
     List<RpslObject> findAsBlockIntersections(long begin, long end);
 
     RpslObjectInfo findByKey(ObjectType type, String searchKey);

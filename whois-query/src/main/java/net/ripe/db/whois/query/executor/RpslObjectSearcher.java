@@ -159,8 +159,8 @@ class RpslObjectSearcher {
                     }
                 } 
                 return proxy(inet6numDao.findByConnp(query.getSearchValue()));
-            // case DOMAIN:
-            //     return domainLookup(query);
+            case DOMAIN:
+                return domainLookup(query, type);
             case ROUTE:
                 LOGGER.info("[GWY LOG] ROUTE");
                 return routeLookup(route4Tree, query);
@@ -201,27 +201,41 @@ class RpslObjectSearcher {
         return Collections.emptyList();
     }
 
-    private Iterable<ResponseObject> domainLookup(final Query query) {
+    private Iterable<ResponseObject> domainLookup(final Query query, final ObjectType type) {
 
         String searchValue = query.getSearchValue().toLowerCase();
+        LOGGER.info("[GWY LOG] has enter domainLookup -- up, type is: " + type + " searchvalue is: " + searchValue);
+        
+        final ObjectTemplate objectTemplate = ObjectTemplate.getTemplate(ObjectType.DOMAIN);
+        final Set<AttributeType> keyAttributes = objectTemplate.getKeyAttributes();
 
-        if (searchValue.endsWith("e164.arpa")) {
-            return indexLookup(query, ObjectType.DOMAIN, searchValue);
+        final Set<RpslObjectInfo> result = Sets.newTreeSet();
+        for (final AttributeType lookupAttribute : objectTemplate.getLookupAttributes()) {
+            if (!query.matchesObjectTypeAndAttribute(type, lookupAttribute)) {
+                LOGGER.info("[GWY LOG] not query.matchesObjectTypeAndAttribute");
+                continue;
+            }
+            LOGGER.info("[GWY LOG] yes query.matchesObjectTypeAndAttribute");
+            if (keyAttributes.contains(lookupAttribute)){
+                try {
+                    LOGGER.info("[GWY LOG] yes keyAttributes.contains");
+                    result.add(rpslObjectDao.findByKey(type, searchValue));
+                } catch (EmptyResultDataAccessException ignored) {
+                    LOGGER.debug("{}: {}", ignored.getClass().getName(), ignored.getMessage());
+                }
+            }else{
+                if(lookupAttribute.getName().equals("netname")){
+                    result.addAll(rpslObjectDao.findDomainByNetname(searchValue));
+                }else{
+                    LOGGER.info("[GWY LOG] not keyAttributes.contains, will enter rpslObjectDao.findByAttribute");
+                    result.addAll(filterByType(type, rpslObjectDao.findByAttribute(lookupAttribute, searchValue)));
+                    LOGGER.info("[GWY LOG] result size: " + result.size());
+                }
+            }
         }
+        LOGGER.info("[GWY LOG] result size: " + result.size());
 
-        final IpInterval<?> ipInterval = query.getIpKeyOrNullReverse();
-        if (ipInterval == null) {
-            return Collections.emptyList();
-        }
-
-        switch (ipInterval.getAttributeType()) {
-            case INETNUM:
-                return proxy(ipTreeLookup(ipv4DomainTree, ipInterval, query));
-            case INET6NUM:
-                return proxy(ipTreeLookup(ipv6DomainTree, ipInterval, query));
-            default:
-                throw new IllegalArgumentException(String.format("Unexpected type: %s", ipInterval.getAttributeType()));
-        }
+        return proxy(result);
     }
 
     private List<IpEntry> ipTreeLookup(final IpTree tree, final IpInterval<?> key, Query query) {

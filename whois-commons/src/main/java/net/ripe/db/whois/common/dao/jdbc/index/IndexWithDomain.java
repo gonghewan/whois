@@ -38,10 +38,9 @@ class IndexWithDomain extends IndexStrategyWithSingleLookupTable {
                 "SELECT l.object_id, l.object_type, l.pkey " +
                 "  FROM domain " +
                 "  LEFT JOIN last l ON l.object_id = domain.object_id " +
-                "  WHERE domain = ? OR netname = ? " +
+                "  WHERE domain = ? " +
                 "  AND l.sequence_id != 0 ",
                 new RpslObjectInfoResultSetExtractor(),
-                value,
                 value);
     }
 }
