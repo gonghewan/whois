@@ -326,6 +326,41 @@ public class WhoisRestService {
         return rpslObjectStreamer.handleQueryAndStreamResponse(query, request, InetAddresses.forString(request.getRemoteAddr()), parameters, null);
     }
 
+    /**
+     * (Read) get statistics
+     *
+     * @param request request context
+     * @param source (Mandatory) source database to search
+     * @param objectType (Mandatory) object type
+     * @return
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+    @Path("/{source}/statistics/{objectType}")
+    public Response domains(
+            @Context final HttpServletRequest request,
+            @PathParam("source") final String source,
+            @PathParam("objectType") final String objectType) {
+
+        if (!isValidSource(source)) {
+            throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST)
+                    .entity(RestServiceHelper.createErrorEntity(request, RestMessages.invalidSource(source)))
+                    .build());
+        }
+
+        switch(objectType) {
+            case "domain":
+                return Response.ok(rpslObjectDao.domains()).build();
+            case "ip":
+                return Response.ok(rpslObjectDao.ips()).build();
+            default:
+                return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .type(MediaType.TEXT_PLAIN_TYPE)
+                    .entity("Access Denied").build();
+        }
+    }
+
     private boolean requiresNonAuthRedirect(final String source, final String objectType, final String key) {
         if (sourceContext.getMasterSource().getName().equals(source)) {
             switch (ObjectType.getByName(objectType)) {

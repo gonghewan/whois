@@ -27,20 +27,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.dao.RecoverableDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.text.MessageFormat;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -354,5 +359,43 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
         }
 
         return result;
+    }
+
+    @Override
+    public Map<String, Integer> domains(){
+
+        String sql = "SELECT org, count(*) FROM domain GROUP BY org";
+        return jdbcTemplate.query(sql, new ResultSetExtractor<Map<String, Integer>>() {
+            @Override
+            public Map<String, Integer> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                Map<String, Integer> result = Maps.newHashMap();
+                while (rs.next()) {
+                    result.put(rs.getString(1), rs.getInt(2));
+                }
+                String result_str = result.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining(", "));
+                LOGGER.info("Objects in domain statistics");
+                LOGGER.info(result_str);
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public Map<Integer, Integer> ips(){
+        // object_type: ipv4=6 and ipv6=5
+        String sql = "SELECT object_type, count(*) FROM last WHERE object_type = 5 or object_type = 6 GROUP BY object_type";
+        return jdbcTemplate.query(sql, new ResultSetExtractor<Map<Integer, Integer>>() {
+            @Override
+            public Map<Integer, Integer> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                Map<Integer, Integer> result = Maps.newHashMap();
+                while (rs.next()) {
+                    result.put(rs.getInt(1), rs.getInt(2));
+                }
+                String result_str = result.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining(", "));
+                LOGGER.info("Objects in ip statistics");
+                LOGGER.info(result_str);
+                return result;
+            }
+        });
     }
 }

@@ -25,11 +25,15 @@ class IndexWithDomain extends IndexStrategyWithSingleLookupTable {
         final CIString netnameAttribute = object.getValueOrNullForAttribute(AttributeType.NETNAME);
         final String netname = netnameAttribute == null ? "" : netnameAttribute.toString();
 
+        final CIString orgAttribute = object.getValueOrNullForAttribute(AttributeType.ORG);
+        final String org = orgAttribute == null ? "" : orgAttribute.toString();
+
         return jdbcTemplate.update(
-                "INSERT INTO domain (object_id, domain, netname) VALUES (?, ?, ?)",
+                "INSERT INTO domain (object_id, domain, netname, org) VALUES (?, ?, ?, ?)",
                 objectInfo.getObjectId(),
                 domain,
-                netname);
+                netname,
+                org);
     }
 
     @Override

@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
 
 // these should return Collection<> instead of List<> to allow for greater flexibility in implementation
 public interface RpslObjectDao extends ProxyLoader<Identifiable, RpslObject> {
@@ -51,4 +52,8 @@ public interface RpslObjectDao extends ProxyLoader<Identifiable, RpslObject> {
     List<RpslObjectInfo> findMemberOfByObjectTypeWithoutMbrsByRef(ObjectType objectType, String attributeValue);
 
     Collection<RpslObjectInfo> relatedTo(RpslObject identifiable, Set<ObjectType> excludeObjectTypes);
+
+    Map<String, Integer> domains();
+
+    Map<Integer, Integer> ips();
 }
