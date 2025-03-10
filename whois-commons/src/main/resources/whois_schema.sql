@@ -1110,3 +1110,17 @@ CREATE TABLE `zone_c` (
 
 -- Dump completed on 2013-09-27 12:13:22
 
+--
+-- Table structure for table `statistics`
+--
+
+DROP TABLE IF EXISTS `statistics`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `statistics` (
+  `object_type` int(10) unsigned NOT NULL DEFAULT '0',
+  `totalcount` tinyint(3) NOT NULL DEFAULT '0',
+  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
+  KEY `object_type` (`object_type`),
+  KEY `timestamp` (`timestamp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
