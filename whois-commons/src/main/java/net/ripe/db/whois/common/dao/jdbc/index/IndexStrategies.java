@@ -115,7 +115,7 @@ public final class IndexStrategies {
                 new IndexWithNServer(AttributeType.NSERVER, "nserver", "host"),
                 new IndexWithReference(AttributeType.ORG, "org", "org_id"),
                 new Unindexed(AttributeType.ORG_TYPE),
-                new IndexWithValue(AttributeType.ORGANISATION, "organisation", "organisation"),
+                new IndexWithOrganisation(AttributeType.ORGANISATION, "organisation", "organisation"),
                 new IndexWithValue(AttributeType.NAMESERVER, "nameserver", "nameserver"),
                 new IndexWithName(AttributeType.ORG_NAME, "org_name"),
                 new IndexWithName(AttributeType.C_ORG_NAME, "c_org_name"),

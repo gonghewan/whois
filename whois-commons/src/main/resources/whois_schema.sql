@@ -768,6 +768,7 @@ DROP TABLE IF EXISTS `organisation`;
 CREATE TABLE `organisation` (
   `object_id` int(10) unsigned NOT NULL DEFAULT '0',
   `organisation` varchar(80) NOT NULL DEFAULT '',
+  `city_id` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`organisation`,`object_id`),
   KEY `object_id` (`object_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

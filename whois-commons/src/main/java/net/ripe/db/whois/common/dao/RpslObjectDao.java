@@ -53,7 +53,7 @@ public interface RpslObjectDao extends ProxyLoader<Identifiable, RpslObject> {
 
     Collection<RpslObjectInfo> relatedTo(RpslObject identifiable, Set<ObjectType> excludeObjectTypes);
 
-    Map<String, Integer> domains();
+    Map<String, String> domains();
 
     Map<Integer, Integer> ips();
 }

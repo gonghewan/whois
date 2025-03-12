@@ -362,18 +362,17 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
     }
 
     @Override
-    public Map<String, Integer> domains(){
-
-        String sql = "SELECT org, count(*) FROM domain GROUP BY org";
-        return jdbcTemplate.query(sql, new ResultSetExtractor<Map<String, Integer>>() {
+    public Map<String, String> domains(){
+        String sql = "SELECT d.domain, o.city_id FROM domain d LEFT JOIN organisation o ON d.org=o.organisation";
+        return jdbcTemplate.query(sql, new ResultSetExtractor<Map<String, String>>() {
             @Override
-            public Map<String, Integer> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                Map<String, Integer> result = Maps.newHashMap();
+            public Map<String, String> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                Map<String, String> result = Maps.newHashMap();
                 while (rs.next()) {
-                    result.put(rs.getString(1), rs.getInt(2));
+                    result.put(rs.getString(1), rs.getString(2));
                 }
                 String result_str = result.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining(", "));
-                LOGGER.info("Objects in domain statistics");
+                LOGGER.info("[LOG GWY] Objects in domain statistics");
                 LOGGER.info(result_str);
                 return result;
             }

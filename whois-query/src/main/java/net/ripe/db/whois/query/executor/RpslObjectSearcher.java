@@ -361,4 +361,6 @@ class RpslObjectSearcher {
     private Iterable<ResponseObject> proxy(final Iterable<? extends Identifiable> identifiables) {
         return CollectionHelper.iterateProxy(rpslObjectDao, identifiables);
     }
+
+    
 }
