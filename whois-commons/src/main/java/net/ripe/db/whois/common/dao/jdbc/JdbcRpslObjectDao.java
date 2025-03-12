@@ -371,9 +371,6 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
                 while (rs.next()) {
                     result.put(rs.getString(1), rs.getString(2));
                 }
-                String result_str = result.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining(", "));
-                LOGGER.info("[LOG GWY] Objects in domain statistics");
-                LOGGER.info(result_str);
                 return result;
             }
         });
@@ -390,9 +387,22 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
                 while (rs.next()) {
                     result.put(rs.getInt(1), rs.getInt(2));
                 }
-                String result_str = result.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining(", "));
-                LOGGER.info("Objects in ip statistics");
-                LOGGER.info(result_str);
+                return result;
+            }
+        });
+    }
+
+    @Override
+    public List<Map<Integer, Map<String, Integer>>> offlines(){
+        // object_type: ipv4=6 and ipv6=5
+        String sql = "SELECT object_type, timestamp, totalcount FROM statistics";
+        return jdbcTemplate.query(sql, new ResultSetExtractor<List<Map<Integer, Map<String, Integer>>>>() {
+            @Override
+            public List<Map<Integer, Map<String, Integer>>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                List<Map<Integer, Map<String, Integer>>> result = new ArrayList<Map<Integer, Map<String, Integer>>>();
+                while (rs.next()) {
+                    result.add(Map.of(rs.getInt(1), Map.of(rs.getString(2), rs.getInt(3))));
+                }
                 return result;
             }
         });

@@ -56,4 +56,6 @@ public interface RpslObjectDao extends ProxyLoader<Identifiable, RpslObject> {
     Map<String, String> domains();
 
     Map<Integer, Integer> ips();
+
+    List<Map<Integer, Map<String, Integer>>> offlines();
 }

@@ -336,7 +336,7 @@ public class WhoisRestService {
      */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
-    @Path("/{source}/statistics/{objectType}")
+    @Path("/{source}/statistics/online/{objectType}")
     public Response domains(
             @Context final HttpServletRequest request,
             @PathParam("source") final String source,
@@ -359,6 +359,22 @@ public class WhoisRestService {
                     .type(MediaType.TEXT_PLAIN_TYPE)
                     .entity("Access Denied").build();
         }
+    }
+
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+    @Path("/{source}/statistics/offline")
+    public Response domains(
+            @Context final HttpServletRequest request,
+            @PathParam("source") final String source) {
+
+        if (!isValidSource(source)) {
+            throw new WebApplicationException(Response.status(Response.Status.BAD_REQUEST)
+                    .entity(RestServiceHelper.createErrorEntity(request, RestMessages.invalidSource(source)))
+                    .build());
+        }
+
+        return Response.ok(rpslObjectDao.offlines()).build();
     }
 
     private boolean requiresNonAuthRedirect(final String source, final String objectType, final String key) {
