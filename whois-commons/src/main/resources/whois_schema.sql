@@ -1121,7 +1121,7 @@ DROP TABLE IF EXISTS `statistics`;
 CREATE TABLE `statistics` (
   `object_type` int(10) unsigned NOT NULL DEFAULT '0',
   `totalcount` tinyint(3) NOT NULL DEFAULT '0',
-  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
+  `timestamp` varchar(20) NOT NULL DEFAULT '',
   KEY `object_type` (`object_type`),
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
