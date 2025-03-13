@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.HashMap;
 
 // these should return Collection<> instead of List<> to allow for greater flexibility in implementation
 public interface RpslObjectDao extends ProxyLoader<Identifiable, RpslObject> {
@@ -57,5 +58,5 @@ public interface RpslObjectDao extends ProxyLoader<Identifiable, RpslObject> {
 
     Map<Integer, Integer> ips();
 
-    List<Map<Integer, Map<String, Integer>>> offlines();
+    Map<String, HashMap<Integer, Integer>> offlines();
 }

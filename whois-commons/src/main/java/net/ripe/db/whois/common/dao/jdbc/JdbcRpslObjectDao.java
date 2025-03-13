@@ -53,6 +53,7 @@ import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 
 @Repository
@@ -393,15 +394,20 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
     }
 
     @Override
-    public List<Map<Integer, Map<String, Integer>>> offlines(){
+    public Map<String, HashMap<Integer, Integer>> offlines(){
         // object_type: ipv4=6 and ipv6=5
         String sql = "SELECT object_type, timestamp, totalcount FROM statistics";
-        return jdbcTemplate.query(sql, new ResultSetExtractor<List<Map<Integer, Map<String, Integer>>>>() {
+        return jdbcTemplate.query(sql, new ResultSetExtractor<Map<String, HashMap<Integer, Integer>>>() {
             @Override
-            public List<Map<Integer, Map<String, Integer>>> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                List<Map<Integer, Map<String, Integer>>> result = new ArrayList<Map<Integer, Map<String, Integer>>>();
+            public Map<String, HashMap<Integer, Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                Map<String, HashMap<Integer, Integer>> result = new HashMap<String, HashMap<Integer, Integer>>();
                 while (rs.next()) {
-                    result.add(Map.of(rs.getInt(1), Map.of(rs.getString(2), rs.getInt(3))));
+                    HashMap<Integer, Integer> tmp_map = new HashMap<Integer, Integer>() {{put(rs.getInt(1), rs.getInt(3));}};
+                    if(result.containsKey(rs.getString(2))){
+                        tmp_map = result.get(rs.getString(2));
+                        tmp_map.put(rs.getInt(1), rs.getInt(3));
+                    }
+                    result.put(rs.getString(2), tmp_map);
                 }
                 return result;
             }

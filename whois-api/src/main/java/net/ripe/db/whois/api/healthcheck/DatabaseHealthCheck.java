@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.util.stream.Collectors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 
 @Component
@@ -64,8 +65,20 @@ public class DatabaseHealthCheck implements HealthCheck {
         }
     }
 
-    @Scheduled(cron = "0 0 * * * ?") // 每天0点 dump 统计数据到statistics表
+    @Scheduled(cron = "0 * * * * ?") // 每天0点 dump 统计数据到statistics表
     public void dump_user_info() {
+        LOGGER.info("[LOG GWY] schedule dump user info task prepare");
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String currentTime = sdf.format(date);
+        List<String> is_exsist = readTemplate.queryForList(
+                        "SELECT object_type from statistics where timestamp = ?",
+                        String.class, currentTime);
+        if(is_exsist.size() > 0){
+            LOGGER.info("[LOG GWY] schedule dump done before, user info task exit");
+            return ;
+        }
+
         LOGGER.info("[LOG GWY] schedule dump user info task start");
         Map<Integer, Integer> tmp_map = readTemplate.query(USER_INFO_DUMP_QUERY, new ResultSetExtractor<Map<Integer, Integer>>() {
             @Override
@@ -78,16 +91,12 @@ public class DatabaseHealthCheck implements HealthCheck {
             }
         });
 
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String currentTime = sdf.format(date);
-
         for (Map.Entry<Integer, Integer> entry : tmp_map.entrySet()) {
             Integer key = entry.getKey(); //object_type
             Integer value = entry.getValue(); //totalcount
-            writeTemplate.update("insert into statistics (object_type, totalcount, timestamp) values (?,?,?)", key, value, currentTime);
-            LOGGER.info("[LOG GWY] schedule dump user info task end");
+            writeTemplate.update("insert into statistics (object_type, totalcount, timestamp) values (?,?,?)", key, value, currentTime);  
         }
+        LOGGER.info("[LOG GWY] schedule dump user info task end");
     }
 
 }

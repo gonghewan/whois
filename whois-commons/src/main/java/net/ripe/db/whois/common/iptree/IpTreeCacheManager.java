@@ -122,18 +122,18 @@ public class IpTreeCacheManager {
                     update(ipv6RouteTreeCache, Ipv6RouteEntry.parse(ipTreeUpdate.pkey, ipTreeUpdate.objectId), ipTreeUpdate.operation);
                     break;
                 case DOMAIN:
-                    final Domain domain = Domain.parse(ipTreeUpdate.pkey);
-                    switch (domain.getType()) {
-                        case INADDR:
-                            update(ipv4DomainTreeCache, new Ipv4Entry((Ipv4Resource) domain.getReverseIp(), ipTreeUpdate.objectId), ipTreeUpdate.operation);
-                            break;
-                        case IP6:
-                            update(ipv6DomainTreeCache, new Ipv6Entry((Ipv6Resource) domain.getReverseIp(), ipTreeUpdate.objectId), ipTreeUpdate.operation);
-                            break;
-                        default:
-                            LOGGER.debug("Ignoring domain: {}", domain.getValue());
-                            break;
-                    }
+                    // final Domain domain = Domain.parse(ipTreeUpdate.pkey);
+                    // switch (domain.getType()) {
+                    //     case INADDR:
+                    //         update(ipv4DomainTreeCache, new Ipv4Entry((Ipv4Resource) domain.getReverseIp(), ipTreeUpdate.objectId), ipTreeUpdate.operation);
+                    //         break;
+                    //     case IP6:
+                    //         update(ipv6DomainTreeCache, new Ipv6Entry((Ipv6Resource) domain.getReverseIp(), ipTreeUpdate.objectId), ipTreeUpdate.operation);
+                    //         break;
+                    //     default:
+                    //         LOGGER.debug("Ignoring domain: {}", domain.getValue());
+                    //         break;
+                    // }
 
                     break;
                 default:
