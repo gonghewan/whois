@@ -380,7 +380,7 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
     @Override
     public Map<Integer, Integer> ips(){
         // object_type: ipv4=6 and ipv6=5
-        String sql = "SELECT object_type, count(*) FROM last WHERE object_type = 5 or object_type = 6 GROUP BY object_type";
+        String sql = "SELECT object_type, count(*) FROM last WHERE object_type = 5 or object_type = 6 or object_type = 3 GROUP BY object_type";
         return jdbcTemplate.query(sql, new ResultSetExtractor<Map<Integer, Integer>>() {
             @Override
             public Map<Integer, Integer> extractData(ResultSet rs) throws SQLException, DataAccessException {

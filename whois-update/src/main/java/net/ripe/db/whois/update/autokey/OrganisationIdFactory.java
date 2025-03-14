@@ -30,7 +30,7 @@ public class OrganisationIdFactory extends AbstractAutoKeyFactory<OrganisationId
             PROVINCE_CODE.put("FJ","S H");
             PROVINCE_CODE.put("JX","S H");
             PROVINCE_CODE.put("SD","N J");
-            PROVINCE_CODE.put("HN","W H");
+            PROVINCE_CODE.put("HA","W H");
             PROVINCE_CODE.put("HB","W H");
             PROVINCE_CODE.put("HN","W H");
             PROVINCE_CODE.put("GD","G Z");
