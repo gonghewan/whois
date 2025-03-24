@@ -1,0 +1,135 @@
+###
+### Objects inherited from legacy (pre-whois-cluster) test DB; simply a standard set of objects that seem to be useful
+### Attention: This file does not have the same content as the /export/services/<service>/TEST.db files
+###            that are used to reload the TEST database.
+
+person:         Gong Wanying
+address:        Li Zhao Ji 572
+                XueYuan street 
+	            BeiJing, CN
+phone:          +86 15776831165
+e-mail:         gongwanying@cernet.edu.cn
+nic-hdl:        GWY1-CERNIC
+remarks:        *******************************
+remarks:        This object is only an example!
+remarks:        *******************************
+mnt-by:         CERNIC-DBM-MNT
+abuse-mailbox:  gongwanying@tsinghua.edu.cn
+source:         CERNIC
+
+mntner:         CERNIC-ROOT-MNT
+descr:          Mntner for TEST-DBM-MNT
+admin-c:        GWY1-CERNIC
+tech-c:         GWY1-CERNIC
+upd-to:         gongwanying@cernet.edu.cn
+mnt-nfy:        gongwanying@cernet.edu.cn
+auth:           MD5-PW $1$XXXXXXXX$XXXXXXXXXXXXXXXXXXXXX/
+notify:         gongwanying@cernet.edu.cn
+mnt-by:         CERNIC-ROOT-MNT
+remarks:        This is an automatically created object.
+source:         CERNIC
+
+mntner:         CERNIC-DBM-MNT
+descr:          Mntner for TEST DBM objects.
+admin-c:        GWY1-CERNIC
+tech-c:         GWY1-CERNIC
+upd-to:         gongwanying@cernet.edu.cn
+mnt-nfy:        gongwanying@cernet.edu.cn
+auth:           MD5-PW $1$N2zhyJ3g$hzX7XTL84DtBkCWhBZE2c/
+remarks:        **********************************************************************
+remarks:        Password is "emptypassword" without the quotes.
+remarks:        **********************************************************************
+notify:         gongwanying@cernet.edu.cn
+mnt-by:         CERNIC-ROOT-MNT
+remarks:        This is an automatically created object.
+source:         CERNIC
+
+organisation: BJ000001
+org-name:     ORG MNT
+org-type:     None
+c-cityid:     110000
+address:      Somewhere in nowhere
+phone:        +12 34 567 8900
+fax-no:       +12 34 567 8900
+e-mail:       gongwanying@cernet.edu.cn
+admin-c:      GWY1-CERNIC
+tech-c:       GWY1-CERNIC
+ref-nfy:      gongwanying@cernet.edu.cn
+mnt-ref:      CERNIC-DBM-MNT
+notify:       gongwanying@cernet.edu.cn
+mnt-by:       CERNIC-ROOT-MNT
+remarks:      This is an automatically created object.
+source:       CERNIC
+
+inetnum:      0.0.0.0 - 255.255.255.255
+netname:      WHOLE-SPACE
+descr:        The whole IPv4 address space
+country:      CN # Country is really world wide
+org:          BJ000001
+admin-c:      GWY1-CERNIC
+tech-c:       GWY1-CERNIC
+status:       ALLOCATED UNSPECIFIED
+remarks:      The country is really worldwide.
+mnt-by:       CERNIC-ROOT-MNT
+mnt-lower:    CERNIC-DBM-MNT
+mnt-routes:   CERNIC-DBM-MNT
+remarks:      This is an automatically created object.
+source:       CERNIC
+
+inet6num:     0::/0
+netname:      ROOT
+descr:        Root inet6num object
+country:      CN # Country is really world wide
+org:          BJ000001
+admin-c:      GWY1-CERNIC
+tech-c:       GWY1-CERNIC
+mnt-by:       CERNIC-ROOT-MNT
+mnt-lower:    CERNIC-DBM-MNT
+mnt-routes:   CERNIC-DBM-MNT
+status:       ALLOCATED-BY-RIR
+remarks:      This network in not allocated.
+remarks:      This is an automatically created object.
+source:       CERNIC
+
+as-block:     AS1 - AS4294967295
+descr:        whole as block
+org:          BJ000001
+admin-c:      GWY1-CERNIC
+tech-c:       GWY1-CERNIC
+mnt-by:       CERNIC-ROOT-MNT
+mnt-lower:    CERNIC-DBM-MNT
+remarks:      This is an automatically created object.
+source:       CERNIC
+
+domain:       in-addr.arpa
+descr:        The whole IPv4 address space
+admin-c:      GWY1-CERNIC
+tech-c:       GWY1-CERNIC
+zone-c:       GWY1-CERNIC
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       CERNIC-ROOT-MNT
+mnt-lower:    CERNIC-DBM-MNT
+remarks:      This is an automatically created object.
+source:       CERNIC
+
+domain:       ip6.arpa
+descr:        The whole IPv6 address space
+admin-c:      GWY1-CERNIC
+tech-c:       GWY1-CERNIC
+zone-c:       GWY1-CERNIC
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       CERNIC-ROOT-MNT
+mnt-lower:    CERNIC-DBM-MNT
+remarks:      This is an automatically created object.
+source:       CERNIC
+
+domain:       e164.arpa
+descr:        The whole IPv6 address space
+admin-c:      GWY1-CERNIC
+tech-c:       GWY1-CERNIC
+zone-c:       GWY1-CERNIC
+nserver:      ns.ripe.net # this is just a placeholder
+mnt-by:       CERNIC-ROOT-MNT
+mnt-lower:    CERNIC-DBM-MNT
+remarks:      This is an automatically created object.
+source:       CERNIC
