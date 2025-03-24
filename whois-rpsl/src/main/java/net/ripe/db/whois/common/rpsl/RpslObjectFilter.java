@@ -61,6 +61,10 @@ public class RpslObjectFilter {
         final Set<AttributeType> keyAttributes = Sets.newHashSet();
         keyAttributes.addAll(template.getLookupAttributes());
         keyAttributes.addAll(template.getKeyAttributes());
+        // c-cityid fix
+        if (template.getObjectType().getName().equals("organisation")){
+            keyAttributes.add(AttributeType.C_CITY_ID);
+        }
         return builder.retainAttributeTypes(keyAttributes);
     }
 
