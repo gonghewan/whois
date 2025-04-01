@@ -33,7 +33,7 @@ public class DatabaseHealthCheck implements HealthCheck {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHealthCheck.class);
 
     private final static String DB_HEALTH_CHECK_QUERY = "select object_id from last limit 1";
-    private final static String USER_INFO_DUMP_QUERY = "select object_type, count(*) from last group by object_type";
+    private final static String USER_INFO_DUMP_QUERY = "select object_type, count(*) from last where sequence_id != 0 group by object_type";
 
     private final AtomicBoolean databaseHealthy = new AtomicBoolean(true);
     private final JdbcTemplate readTemplate;

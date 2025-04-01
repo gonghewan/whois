@@ -56,6 +56,8 @@ import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Repository
 @Primary
@@ -397,7 +399,11 @@ public class JdbcRpslObjectDao implements RpslObjectDao {
     @Override
     public Map<String, LinkedHashMap<Integer, Integer>> offlines(){
         // object_type: ipv4=6 and ipv6=5
-        String sql = "SELECT object_type, timestamp, totalcount FROM statistics ORDER BY timestamp ASC";
+        LocalDate today = LocalDate.now();
+        LocalDate twoMonthsAgo = today.minusMonths(2);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = twoMonthsAgo.format(formatter);
+        String sql = "SELECT object_type, timestamp, totalcount FROM statistics WHERE STR_TO_DATE(timestamp, '%Y-%m-%d') > " + formattedDate +" ORDER BY timestamp ASC";
         return jdbcTemplate.query(sql, new ResultSetExtractor<Map<String, LinkedHashMap<Integer, Integer>>>() {
             @Override
             public Map<String, LinkedHashMap<Integer, Integer>> extractData(ResultSet rs) throws SQLException, DataAccessException {
