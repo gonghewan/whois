@@ -151,6 +151,7 @@ public class DummifierNrtmTest {
                         "organisation:   FOO\n" +
                         "created:        2001-02-04T17:00:00Z\n" +
                         "last-modified:  2001-02-04T17:00:00Z\n" +
+                        "admin-c:        DUMY-RIPE\n" +
                         "abuse-c:        FOO\n" +
                         "country:        FOO\n" +
                         "mnt-by:         FOO\n" +
@@ -340,6 +341,9 @@ public class DummifierNrtmTest {
             case ROUTE:
             case ROUTE6:
                 attributeList.add(new RpslAttribute(AttributeType.ORIGIN, "AS3333"));
+                break;
+            case ORGANISATION:
+                attributeList.add(new RpslAttribute(AttributeType.ADMIN_C, ""));
                 break;
             case PERSON:
             case ROLE:

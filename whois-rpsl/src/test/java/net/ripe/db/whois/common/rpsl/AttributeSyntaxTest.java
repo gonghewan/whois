@@ -1218,8 +1218,8 @@ public class AttributeSyntaxTest {
     @Test
     public void phone() {
         verifySuccess(ObjectType.PERSON, AttributeType.PHONE, "+3161021077");
-        verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "06-4826083");
-        verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "020-720375");
+        verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "4826083");
+        verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "720375");
 
         verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "112");
         verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "06-11");
@@ -1229,9 +1229,6 @@ public class AttributeSyntaxTest {
         verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "06-48260830");
         verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "020-6720375");
         verifyFailure(ObjectType.PERSON, AttributeType.PHONE, "1-855-698-3248");
-
-        verifySuccess(ObjectType.PERSON, AttributeType.PHONE, "+31610210776 ext.123");
-        verifySuccess(ObjectType.PERSON, AttributeType.PHONE, "+31610210776 EXT.123");
     }
 
     @Test

@@ -463,6 +463,16 @@ public interface AttributeSyntax extends Documented {
             "'+' <integer-list> \"(\" integer list \")\" <integer-list> ext. <integer-list>\n"
     );
 
+    AttributeSyntax MOBILE_PHONE_SYNTAX = new AttributeSyntaxRegexp(30,
+            Pattern.compile("" +
+                    "(?i)^" +
+                    "[+][0-9. ]+" +                   // "normal" phone numbers
+                    "$"), "" +
+            "Contact telephone number. Can take one of the forms:\n" +
+            "\n" +
+            "'+' <integer-list>\n"
+    );
+
     AttributeSyntax ROUTE_SET_SYNTAX = new AttributeSyntaxParser(new AttributeParser.RouteSetParser(), "" +
             "An route-set name is made up of letters, digits, the\n" +
             "character underscore \"_\", and the character hyphen \"-\"; it\n" +

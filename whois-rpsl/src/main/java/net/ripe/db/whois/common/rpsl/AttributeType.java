@@ -77,6 +77,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeSyntax.PEERING_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.PEER_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.PERSON_ROLE_NAME_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.PHONE_SYNTAX;
+import static net.ripe.db.whois.common.rpsl.AttributeSyntax.MOBILE_PHONE_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.PINGABLE_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.POEM_SYNTAX;
 import static net.ripe.db.whois.common.rpsl.AttributeSyntax.POETIC_FORM_SYNTAX;
@@ -631,7 +632,7 @@ public enum AttributeType implements Documented {
 
     PHONE(new Builder("phone", "ph")
             .doc("Specifies a telephone number of the contact.")
-            .syntax(PHONE_SYNTAX)),
+            .syntax(MOBILE_PHONE_SYNTAX)),
 
     PING_HDL(new Builder("ping-hdl", "pc")
             .doc("References a person or role capable of responding to queries concerning the IP address(es) " +
@@ -704,7 +705,12 @@ public enum AttributeType implements Documented {
             .syntax(STATUS_SYNTAX)),
 
     TECH_C(new Builder("tech-c", "tc")
-            .doc("References a technical contact.")
+            .doc("References a IP technical contact.")
+            .syntax(NIC_HANDLE_SYNTAX)
+            .references(ObjectType.PERSON, ObjectType.ROLE)),
+
+    TECH_D(new Builder("tech-d", "td")
+            .doc("References a domain technical contact.")
             .syntax(NIC_HANDLE_SYNTAX)
             .references(ObjectType.PERSON, ObjectType.ROLE)),
 

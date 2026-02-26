@@ -157,6 +157,7 @@ import static net.ripe.db.whois.common.rpsl.AttributeType.SPONSORING_ORG;
 import static net.ripe.db.whois.common.rpsl.AttributeType.STATUS;
 import static net.ripe.db.whois.common.rpsl.AttributeType.STREET;
 import static net.ripe.db.whois.common.rpsl.AttributeType.TECH_C;
+import static net.ripe.db.whois.common.rpsl.AttributeType.TECH_D;
 import static net.ripe.db.whois.common.rpsl.AttributeType.TEXT;
 import static net.ripe.db.whois.common.rpsl.AttributeType.UPD_TO;
 import static net.ripe.db.whois.common.rpsl.AttributeType.ZONE_C;
@@ -406,18 +407,19 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(C_DISTRICT, OPTIONAL, SINGLE),
                         new AttributeTemplate(C_PROVINCE_ID, OPTIONAL, SINGLE),
                         new AttributeTemplate(C_CITY_ID, OPTIONAL, SINGLE),
-                        new AttributeTemplate(ADMIN_C, OPTIONAL, MULTIPLE, INVERSE_KEY), // not use
+                        new AttributeTemplate(ADMIN_C, MANDATORY, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(LEGAL_PERSON, OPTIONAL, SINGLE),
                         new AttributeTemplate(C_LEGAL_PERSON, OPTIONAL, SINGLE),
                         new AttributeTemplate(ABUSE_C, OPTIONAL, SINGLE, INVERSE_KEY),
                         new AttributeTemplate(ABUSE_MAILBOX, OPTIONAL, SINGLE),
-                        new AttributeTemplate(PHONE, OPTIONAL, MULTIPLE),
+                        new AttributeTemplate(PHONE, OPTIONAL, MULTIPLE), // not use
                         new AttributeTemplate(POSTALCODE, OPTIONAL, SINGLE),
-                        new AttributeTemplate(FAX_NO, OPTIONAL, MULTIPLE),
+                        new AttributeTemplate(FAX_NO, OPTIONAL, MULTIPLE),// not use
                         new AttributeTemplate(E_MAIL, OPTIONAL, MULTIPLE, LOOKUP_KEY),
                         new AttributeTemplate(GEOLOC, OPTIONAL, SINGLE),
                         new AttributeTemplate(LANGUAGE, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(TECH_C, OPTIONAL, MULTIPLE, INVERSE_KEY), // not use
+                        new AttributeTemplate(TECH_C, OPTIONAL, MULTIPLE, INVERSE_KEY),
+                        new AttributeTemplate(TECH_D, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(REF_NFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(MNT_REF, OPTIONAL, MULTIPLE, INVERSE_KEY),
                         new AttributeTemplate(NOTIFY, OPTIONAL, MULTIPLE, INVERSE_KEY),
@@ -446,7 +448,7 @@ public final class ObjectTemplate implements Comparable<ObjectTemplate> {
                         new AttributeTemplate(PERSON, MANDATORY, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(C_NAME, OPTIONAL, SINGLE, LOOKUP_KEY),
                         new AttributeTemplate(ADDRESS, OPTIONAL, MULTIPLE),
-                        new AttributeTemplate(PHONE, MANDATORY, MULTIPLE),
+                        new AttributeTemplate(PHONE, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(FAX_NO, OPTIONAL, MULTIPLE),
                         new AttributeTemplate(E_MAIL, OPTIONAL, MULTIPLE, LOOKUP_KEY),
                         new AttributeTemplate(ORG, OPTIONAL, MULTIPLE, INVERSE_KEY),
